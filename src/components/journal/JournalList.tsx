@@ -12,7 +12,11 @@ interface JournalEntry {
   created_at: string;
 }
 
-export function JournalList() {
+interface JournalListProps {
+  limit?: number;
+}
+
+export function JournalList({ limit }: JournalListProps) {
   const { user } = useAuth();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,11 +26,17 @@ export function JournalList() {
       if (!user) return;
 
       try {
-        const { data, error } = await supabase
+        let query = supabase
           .from('journal_entries')
           .select('*')
           .eq('user_id', user.id)
           .order('created_at', { ascending: false });
+        
+        if (limit) {
+          query = query.limit(limit);
+        }
+
+        const { data, error } = await query;
 
         if (error) throw error;
         setEntries(data || []);
@@ -38,10 +48,18 @@ export function JournalList() {
     }
 
     fetchEntries();
-  }, [user]);
+  }, [user, limit]);
 
   if (loading) {
     return <div>Loading entries...</div>;
+  }
+
+  if (entries.length === 0) {
+    return (
+      <div className="text-center py-8 text-muted-foreground">
+        No journal entries yet. Start writing to track your thoughts and feelings.
+      </div>
+    );
   }
 
   return (

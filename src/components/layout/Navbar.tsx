@@ -1,8 +1,7 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User, Moon, Sun } from "lucide-react";
+import { Menu, User, Moon, Sun, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Navbar: React.FC = () => {
@@ -34,7 +33,12 @@ const Navbar: React.FC = () => {
           <Link to="/mood" className="text-sm font-medium hover:text-primary transition-colors">Mood</Link>
           <Link to="/meditate" className="text-sm font-medium hover:text-primary transition-colors">Meditate</Link>
           <Link to="/journal" className="text-sm font-medium hover:text-primary transition-colors">Journal</Link>
+          <Link to="/gratitude" className="text-sm font-medium hover:text-primary transition-colors">Gratitude</Link>
           <Link to="/resources" className="text-sm font-medium hover:text-primary transition-colors">Resources</Link>
+          <Link to="/chat" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
+            <MessageSquare size={16} />
+            Chat
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
