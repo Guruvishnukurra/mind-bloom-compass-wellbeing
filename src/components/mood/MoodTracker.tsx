@@ -1,122 +1,132 @@
+import React, { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Slider } from '@/components/ui/slider';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
 
-import React, { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
-import { Textarea } from "@/components/ui/textarea";
-import { 
-  SmilePlus, 
-  Smile, 
-  Meh, 
-  Frown,
-  Save
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { MoodEntry, getMoodEntries, saveMoodEntries } from "@/utils/storageUtils";
-
-interface MoodTrackerProps {
-  onMoodSaved?: () => void;
-}
-
-const moods = [
-  { value: 1, icon: Frown, label: "Very Bad", color: "text-red-500" },
-  { value: 2, icon: Frown, label: "Bad", color: "text-orange-400" },
-  { value: 3, icon: Meh, label: "Okay", color: "text-yellow-400" },
-  { value: 4, icon: Smile, label: "Good", color: "text-green-400" },
-  { value: 5, icon: SmilePlus, label: "Great", color: "text-green-500" },
+const ACTIVITIES = [
+  'Exercise', 'Work', 'Social', 'Family', 'Hobbies',
+  'Reading', 'Meditation', 'Nature', 'Music', 'Rest'
 ];
 
-const MoodTracker: React.FC<MoodTrackerProps> = ({ onMoodSaved }) => {
-  const [moodValue, setMoodValue] = useState<number>(3);
-  const [notes, setNotes] = useState<string>("");
-  const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
-  const { toast } = useToast();
+export function MoodTracker() {
+  const { user } = useAuth();
+  const [moodScore, setMoodScore] = useState<number>(5);
+  const [energyLevel, setEnergyLevel] = useState<number>(5);
+  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+  const [notes, setNotes] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    setMoodHistory(getMoodEntries());
-  }, []);
+  const handleActivityToggle = (activity: string) => {
+    setSelectedActivities(prev =>
+      prev.includes(activity)
+        ? prev.filter(a => a !== activity)
+        : [...prev, activity]
+    );
+  };
 
-  const handleSaveMood = () => {
-    const newEntry: MoodEntry = {
-      id: Date.now(),
-      date: new Date().toISOString(),
-      mood: moodValue,
-      notes: notes
-    };
-
-    const updatedHistory = [...moodHistory, newEntry];
+  const handleSubmit = async () => {
+    if (!user) return;
     
-    setMoodHistory(updatedHistory);
-    saveMoodEntries(updatedHistory);
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('mood_entries')
+        .insert([
+          {
+            user_id: user.id,
+            mood_score: moodScore,
+            energy_level: energyLevel,
+            activities: selectedActivities,
+            notes
+          }
+        ]);
 
-    toast({
-      title: "Mood saved",
-      description: "Your mood has been recorded successfully.",
-    });
-    
-    setNotes("");
-    
-    if (onMoodSaved) {
-      onMoodSaved();
+      if (error) throw error;
+
+      toast.success('Mood tracked successfully!');
+      // Reset form
+      setMoodScore(5);
+      setEnergyLevel(5);
+      setSelectedActivities([]);
+      setNotes('');
+    } catch (error) {
+      toast.error('Failed to track mood');
+      console.error('Error:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const currentMood = moods.find((mood) => mood.value === moodValue);
-  const MoodIcon = currentMood?.icon || Meh;
-
   return (
-    <Card className="wellness-card">
-      <div className="space-y-6">
-        <div className="text-center">
-          <h3 className="text-lg font-medium mb-2">How are you feeling today?</h3>
-          <div className="flex justify-center mb-4">
-            <MoodIcon className={`w-16 h-16 ${currentMood?.color}`} />
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle>How are you feeling today?</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium">Mood Level: {moodScore}</label>
+            <Slider
+              value={[moodScore]}
+              onValueChange={([value]) => setMoodScore(value)}
+              max={10}
+              min={1}
+              step={1}
+              className="mt-2"
+            />
           </div>
-          <p className="text-xl font-medium">{currentMood?.label}</p>
+
+          <div>
+            <label className="text-sm font-medium">Energy Level: {energyLevel}</label>
+            <Slider
+              value={[energyLevel]}
+              onValueChange={([value]) => setEnergyLevel(value)}
+              max={10}
+              min={1}
+              step={1}
+              className="mt-2"
+            />
+          </div>
         </div>
 
-        <div className="py-4">
-          <Slider
-            value={[moodValue]}
-            min={1}
-            max={5}
-            step={1}
-            onValueChange={(value) => setMoodValue(value[0])}
-            className="w-full"
-          />
-          <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-            {moods.map((mood) => (
-              <div key={mood.value} className="flex flex-col items-center gap-1">
-                <mood.icon className={`w-4 h-4 ${moodValue === mood.value ? mood.color : ''}`} />
-              </div>
+        <div>
+          <label className="text-sm font-medium">Activities</label>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-2">
+            {ACTIVITIES.map(activity => (
+              <Button
+                key={activity}
+                variant={selectedActivities.includes(activity) ? "default" : "outline"}
+                onClick={() => handleActivityToggle(activity)}
+                className="h-auto py-2"
+              >
+                {activity}
+              </Button>
             ))}
           </div>
         </div>
 
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium mb-2">
-            What's on your mind? (optional)
-          </label>
+          <label className="text-sm font-medium">Notes</label>
           <Textarea
-            id="notes"
-            placeholder="Write any thoughts or feelings here..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            rows={4}
-            className="w-full"
+            placeholder="How are you feeling? What's on your mind?"
+            className="mt-2"
           />
         </div>
 
         <Button 
-          className="w-full flex items-center gap-2" 
-          onClick={handleSaveMood}
+          onClick={handleSubmit} 
+          disabled={isSubmitting}
+          className="w-full"
         >
-          <Save size={16} />
-          Save Mood
+          {isSubmitting ? 'Tracking...' : 'Track Mood'}
         </Button>
-      </div>
+      </CardContent>
     </Card>
   );
-};
-
-export default MoodTracker;
+}
