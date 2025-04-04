@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -12,6 +12,12 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+interface MoodEntry {
+  date: string;
+  mood: number;
+  notes: string;
+}
+
 const moods = [
   { value: 1, icon: Frown, label: "Very Bad", color: "text-red-500" },
   { value: 2, icon: Frown, label: "Bad", color: "text-orange-400" },
@@ -23,9 +29,24 @@ const moods = [
 const MoodTracker = () => {
   const [moodValue, setMoodValue] = useState<number>(3);
   const [notes, setNotes] = useState<string>("");
+  const [moodHistory, setMoodHistory] = useState<MoodEntry[]>(() => {
+    const savedMoods = localStorage.getItem('moodEntries');
+    return savedMoods ? JSON.parse(savedMoods) : [];
+  });
   const { toast } = useToast();
 
   const handleSaveMood = () => {
+    const newEntry: MoodEntry = {
+      date: new Date().toISOString(),
+      mood: moodValue,
+      notes: notes
+    };
+
+    const updatedHistory = [...moodHistory, newEntry];
+    
+    setMoodHistory(updatedHistory);
+    localStorage.setItem('moodEntries', JSON.stringify(updatedHistory));
+
     toast({
       title: "Mood saved",
       description: "Your mood has been recorded successfully.",

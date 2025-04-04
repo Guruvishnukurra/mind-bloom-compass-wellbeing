@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import MoodTracker from "@/components/mood/MoodTracker";
@@ -10,6 +9,9 @@ import {
   FileText, 
   List
 } from "lucide-react";
+import { getMeditationRecommendations } from "@/utils/moodMeditationMapper";
+import MoodInsightsWidget from "@/components/mood/MoodInsightsWidget";
+import MeditationCard from "@/components/meditation/MeditationCard";
 
 // Dummy data for visualizations
 const moodHistoryData = [
@@ -42,6 +44,9 @@ const moodEntries = [
 
 const MoodPage = () => {
   const [activeTab, setActiveTab] = useState("track");
+
+  const [currentMood, setCurrentMood] = useState(3);
+  const recommendedMeditations = getMeditationRecommendations(currentMood);
 
   return (
     <Layout>
@@ -178,6 +183,26 @@ const MoodPage = () => {
               </div>
             </TabsContent>
           </Tabs>
+        </div>
+      </section>
+      
+      <section className="py-8">
+        <div className="container px-4 md:px-6">
+          <MoodInsightsWidget />
+          {recommendedMeditations.length > 0 && (
+            <div className="mt-8">
+              <h3 className="text-lg font-medium mb-4">Recommended Meditations</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {recommendedMeditations.map((meditation, index) => (
+                  <MeditationCard 
+                    key={index}
+                    {...meditation}
+                    onClick={() => {/* Open meditation player */}}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </Layout>
