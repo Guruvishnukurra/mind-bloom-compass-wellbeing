@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,14 +7,13 @@ import {
   SmilePlus, 
   Smile, 
   Meh, 
-  Frown, 
-  Frown as FrownPlus,  // Replace with the standard Frown icon
+  Frown,
   Save
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const moods = [
-  { value: 1, icon: FrownPlus, label: "Very Bad", color: "text-red-500" },
+  { value: 1, icon: Frown, label: "Very Bad", color: "text-red-500" },
   { value: 2, icon: Frown, label: "Bad", color: "text-orange-400" },
   { value: 3, icon: Meh, label: "Okay", color: "text-yellow-400" },
   { value: 4, icon: Smile, label: "Good", color: "text-green-400" },
@@ -28,8 +26,6 @@ const MoodTracker = () => {
   const { toast } = useToast();
 
   const handleSaveMood = () => {
-    // Here we would normally save to a database
-    // For now, just show a success toast
     toast({
       title: "Mood saved",
       description: "Your mood has been recorded successfully.",
