@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import MoodTracker from "@/components/mood/MoodTracker";
-import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BarChart as BarChartIcon, 
@@ -9,44 +8,28 @@ import {
   FileText, 
   List
 } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { getMeditationRecommendations } from "@/utils/moodMeditationMapper";
 import MoodInsightsWidget from "@/components/mood/MoodInsightsWidget";
 import MeditationCard from "@/components/meditation/MeditationCard";
-
-// Dummy data for visualizations
-const moodHistoryData = [
-  { date: "Mon", mood: 3 },
-  { date: "Tue", mood: 4 },
-  { date: "Wed", mood: 2 },
-  { date: "Thu", mood: 5 },
-  { date: "Fri", mood: 4 },
-  { date: "Sat", mood: 3 },
-  { date: "Sun", mood: 4 },
-];
-
-const moodEntries = [
-  {
-    date: "Apr 4, 2025",
-    mood: 4,
-    notes: "Had a productive day at work. Managed stress well during the team meeting.",
-  },
-  {
-    date: "Apr 3, 2025",
-    mood: 3,
-    notes: "Felt okay. Sleep was interrupted but managed to focus during the day.",
-  },
-  {
-    date: "Apr 2, 2025",
-    mood: 2,
-    notes: "Difficult day with anxiety. Breathing exercises helped somewhat.",
-  },
-];
+import MoodAnalytics from "@/components/analytics/MoodAnalytics";
+import { MoodEntry, getMoodEntries } from "@/utils/storageUtils";
 
 const MoodPage = () => {
   const [activeTab, setActiveTab] = useState("track");
-
   const [currentMood, setCurrentMood] = useState(3);
   const recommendedMeditations = getMeditationRecommendations(currentMood);
+  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    const entries = getMoodEntries();
+    setMoodEntries(entries);
+  }, [refreshKey]);
+
+  const handleMoodUpdate = () => {
+    setRefreshKey(prev => prev + 1);
+  };
 
   return (
     <Layout>
@@ -62,7 +45,7 @@ const MoodPage = () => {
       <section className="py-8">
         <div className="container px-4 md:px-6">
           <Tabs defaultValue="track" className="w-full" onValueChange={setActiveTab}>
-            <TabsList className="grid grid-cols-3 mb-8">
+            <TabsList className="grid grid-cols-4 mb-8">
               <TabsTrigger value="track" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 <span>Track</span>
@@ -75,11 +58,15 @@ const MoodPage = () => {
                 <BarChartIcon className="h-4 w-4" />
                 <span>Insights</span>
               </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                <span>Analytics</span>
+              </TabsTrigger>
             </TabsList>
             
             <TabsContent value="track">
               <div className="max-w-md mx-auto">
-                <MoodTracker />
+                <MoodTracker onMoodSaved={handleMoodUpdate} />
                 
                 <div className="mt-8">
                   <h3 className="text-lg font-medium mb-4">Tips for Tracking</h3>
@@ -107,24 +94,31 @@ const MoodPage = () => {
                   <h3 className="text-lg font-medium">Your Recent Entries</h3>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Calendar className="h-4 w-4" />
-                    <span>Last 7 days</span>
+                    <span>Last {Math.min(moodEntries.length, 7)} days</span>
                   </div>
                 </div>
                 
                 <div className="space-y-4">
-                  {moodEntries.map((entry, index) => (
-                    <Card key={index} className="p-4">
+                  {moodEntries.length > 0 ? moodEntries
+                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                    .slice(0, 7)
+                    .map((entry) => (
+                    <Card key={entry.id} className="p-4">
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-sm text-muted-foreground">{entry.date}</p>
-                          <p className="mt-2">{entry.notes}</p>
+                          <p className="text-sm text-muted-foreground">{new Date(entry.date).toLocaleDateString()}</p>
+                          <p className="mt-2">{entry.notes || "No notes added"}</p>
                         </div>
                         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-wellness-light-blue">
                           <span className="font-medium">{entry.mood}</span>
                         </div>
                       </div>
                     </Card>
-                  ))}
+                  )) : (
+                    <Card className="p-6 text-center">
+                      <p className="text-muted-foreground">No mood entries yet. Start tracking your mood to see your history here.</p>
+                    </Card>
+                  )}
                 </div>
               </div>
             </TabsContent>
@@ -181,6 +175,10 @@ const MoodPage = () => {
                   </Card>
                 </div>
               </div>
+            </TabsContent>
+            
+            <TabsContent value="analytics">
+              <MoodAnalytics />
             </TabsContent>
           </Tabs>
         </div>

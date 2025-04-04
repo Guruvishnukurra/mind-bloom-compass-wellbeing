@@ -5,17 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { RefreshCw, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { JournalEntry, getJournalEntries, saveJournalEntries } from "@/utils/storageUtils";
 
 interface JournalPromptProps {
   onPromptChange?: () => void;
-}
-
-interface JournalEntry {
-  id: number;
-  date: string;
-  prompt: string;
-  content: string;
-  mood: string;
 }
 
 const promptsList = [
@@ -56,12 +49,12 @@ const JournalPrompt: React.FC<JournalPromptProps> = ({ onPromptChange }) => {
       return;
     }
 
-    // Get existing journal entries or initialize an empty array
-    const existingEntries: JournalEntry[] = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    // Get existing journal entries
+    const existingEntries = getJournalEntries();
     
     // Create new entry
     const newEntry: JournalEntry = {
-      id: Date.now(), // Simple unique ID based on timestamp
+      id: Date.now(),
       date: new Date().toLocaleDateString('en-US', { 
         year: 'numeric', 
         month: 'short', 
@@ -75,8 +68,8 @@ const JournalPrompt: React.FC<JournalPromptProps> = ({ onPromptChange }) => {
     // Add new entry to existing entries
     const updatedEntries = [newEntry, ...existingEntries];
     
-    // Save to localStorage
-    localStorage.setItem('journalEntries', JSON.stringify(updatedEntries));
+    // Save to localStorage using our utility
+    saveJournalEntries(updatedEntries);
 
     toast({
       title: "Journal entry saved",

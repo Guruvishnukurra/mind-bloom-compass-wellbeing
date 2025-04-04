@@ -2,18 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Info } from 'lucide-react';
+import { getMoodEntries, getAnalyticsData } from '@/utils/storageUtils';
 
-interface MoodEntry {
-  date: string;
-  mood: number;
-  notes: string;
-}
-
-const generateInsight = (moodHistory: MoodEntry[]) => {
-  const averageMood = moodHistory.reduce((sum, entry) => sum + entry.mood, 0) / moodHistory.length;
-  const recentMoods = moodHistory.slice(-7).map(entry => entry.mood);
-  const moodTrend = recentMoods.reduce((a, b) => a + b, 0) / recentMoods.length;
-
+const generateInsight = () => {
+  const analytics = getAnalyticsData();
+  const averageMood = analytics.averageMood;
+  
   const insights = [
     {
       condition: averageMood < 2,
@@ -38,12 +32,22 @@ const generateInsight = (moodHistory: MoodEntry[]) => {
 
 const MoodInsightsWidget: React.FC = () => {
   const [insight, setInsight] = useState<string>("");
-
+  const [refreshKey, setRefreshKey] = useState(0);
+  
   useEffect(() => {
-    const moodEntries = JSON.parse(localStorage.getItem('moodEntries') || '[]');
+    const moodEntries = getMoodEntries();
     if (moodEntries.length > 0) {
-      setInsight(generateInsight(moodEntries));
+      setInsight(generateInsight());
     }
+  }, [refreshKey]);
+  
+  // Refresh insights every 60 seconds if user stays on page
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRefreshKey(prev => prev + 1);
+    }, 60000);
+    
+    return () => clearInterval(intervalId);
   }, []);
 
   if (!insight) return null;
@@ -57,4 +61,3 @@ const MoodInsightsWidget: React.FC = () => {
 };
 
 export default MoodInsightsWidget;
-

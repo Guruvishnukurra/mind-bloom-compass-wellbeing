@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,10 @@ import {
   Save
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { MoodEntry, getMoodEntries, saveMoodEntries } from "@/utils/storageUtils";
 
-interface MoodEntry {
-  date: string;
-  mood: number;
-  notes: string;
+interface MoodTrackerProps {
+  onMoodSaved?: () => void;
 }
 
 const moods = [
@@ -26,17 +26,19 @@ const moods = [
   { value: 5, icon: SmilePlus, label: "Great", color: "text-green-500" },
 ];
 
-const MoodTracker = () => {
+const MoodTracker: React.FC<MoodTrackerProps> = ({ onMoodSaved }) => {
   const [moodValue, setMoodValue] = useState<number>(3);
   const [notes, setNotes] = useState<string>("");
-  const [moodHistory, setMoodHistory] = useState<MoodEntry[]>(() => {
-    const savedMoods = localStorage.getItem('moodEntries');
-    return savedMoods ? JSON.parse(savedMoods) : [];
-  });
+  const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
   const { toast } = useToast();
+
+  useEffect(() => {
+    setMoodHistory(getMoodEntries());
+  }, []);
 
   const handleSaveMood = () => {
     const newEntry: MoodEntry = {
+      id: Date.now(),
       date: new Date().toISOString(),
       mood: moodValue,
       notes: notes
@@ -45,13 +47,18 @@ const MoodTracker = () => {
     const updatedHistory = [...moodHistory, newEntry];
     
     setMoodHistory(updatedHistory);
-    localStorage.setItem('moodEntries', JSON.stringify(updatedHistory));
+    saveMoodEntries(updatedHistory);
 
     toast({
       title: "Mood saved",
       description: "Your mood has been recorded successfully.",
     });
+    
     setNotes("");
+    
+    if (onMoodSaved) {
+      onMoodSaved();
+    }
   };
 
   const currentMood = moods.find((mood) => mood.value === moodValue);
