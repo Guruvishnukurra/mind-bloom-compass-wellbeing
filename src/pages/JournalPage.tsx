@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import JournalPrompt from "@/components/journal/JournalPrompt";
 import { Card } from "@/components/ui/card";
@@ -7,30 +7,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, List, BookmarkPlus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-// Dummy data for past entries
-const pastEntries = [
-  {
-    id: 1,
-    date: "Apr 3, 2025",
-    prompt: "What am I grateful for today?",
-    content: "Today I'm grateful for the support of my friends. Had a difficult meeting at work, but talking it through with Sarah helped me gain perspective.",
-    mood: "Good",
-  },
-  {
-    id: 2,
-    date: "Apr 1, 2025",
-    prompt: "What's one thing I did today that I'm proud of?",
-    content: "I finally started that project I've been putting off for weeks. It wasn't as overwhelming as I thought once I broke it down into smaller tasks.",
-    mood: "Great",
-  },
-  {
-    id: 3,
-    date: "Mar 30, 2025",
-    prompt: "How am I feeling right now? Why might I be feeling this way?",
-    content: "Feeling anxious about the upcoming presentation. I think it's because I haven't prepared as thoroughly as I usually do. Going to set aside time tomorrow to practice.",
-    mood: "Okay",
-  },
-];
+// Interface for journal entries
+interface JournalEntry {
+  id: number;
+  date: string;
+  prompt: string;
+  content: string;
+  mood: string;
+}
 
 // Dummy data for prompts library
 const promptsLibrary = [
@@ -61,6 +45,22 @@ const promptsLibrary = [
 ];
 
 const JournalPage = () => {
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
+  const [refreshKey, setRefreshKey] = useState<number>(0);
+
+  // Load journal entries from localStorage
+  useEffect(() => {
+    const savedEntries = localStorage.getItem('journalEntries');
+    if (savedEntries) {
+      setJournalEntries(JSON.parse(savedEntries));
+    }
+  }, [refreshKey]);
+
+  // Refresh entries when a new one is added
+  const handlePromptChange = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+  };
+
   return (
     <Layout>
       <section className="py-8 wellness-gradient">
@@ -99,7 +99,7 @@ const JournalPage = () => {
                   </p>
                 </div>
                 
-                <JournalPrompt />
+                <JournalPrompt onPromptChange={handlePromptChange} />
                 
                 <div className="mt-8 p-6 bg-muted/30 rounded-lg">
                   <h3 className="text-lg font-medium mb-4">Journaling Tips</h3>
@@ -134,21 +134,27 @@ const JournalPage = () => {
               <div className="max-w-3xl mx-auto space-y-6">
                 <div className="flex justify-between items-center">
                   <h2 className="text-xl font-semibold">Your Journal Entries</h2>
-                  <p className="text-sm text-muted-foreground">Total: {pastEntries.length} entries</p>
+                  <p className="text-sm text-muted-foreground">Total: {journalEntries.length} entries</p>
                 </div>
                 
-                {pastEntries.map((entry) => (
-                  <Card key={entry.id} className="p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <p className="text-sm text-muted-foreground">{entry.date}</p>
-                        <h3 className="font-medium mt-1">{entry.prompt}</h3>
+                {journalEntries.length > 0 ? (
+                  journalEntries.map((entry) => (
+                    <Card key={entry.id} className="p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <p className="text-sm text-muted-foreground">{entry.date}</p>
+                          <h3 className="font-medium mt-1">{entry.prompt}</h3>
+                        </div>
+                        <Badge>{entry.mood}</Badge>
                       </div>
-                      <Badge>{entry.mood}</Badge>
-                    </div>
-                    <p className="text-muted-foreground">{entry.content}</p>
-                  </Card>
-                ))}
+                      <p className="text-muted-foreground">{entry.content}</p>
+                    </Card>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <p className="text-muted-foreground">No journal entries yet. Start writing to see your entries here.</p>
+                  </div>
+                )}
               </div>
             </TabsContent>
             

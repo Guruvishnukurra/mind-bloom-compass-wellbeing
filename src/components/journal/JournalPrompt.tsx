@@ -10,6 +10,14 @@ interface JournalPromptProps {
   onPromptChange?: () => void;
 }
 
+interface JournalEntry {
+  id: number;
+  date: string;
+  prompt: string;
+  content: string;
+  mood: string;
+}
+
 const promptsList = [
   "What am I grateful for today?",
   "What's something that challenged me today and how did I handle it?",
@@ -48,8 +56,28 @@ const JournalPrompt: React.FC<JournalPromptProps> = ({ onPromptChange }) => {
       return;
     }
 
-    // Here we would normally save to a database
-    // For now, just show a success toast
+    // Get existing journal entries or initialize an empty array
+    const existingEntries: JournalEntry[] = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    
+    // Create new entry
+    const newEntry: JournalEntry = {
+      id: Date.now(), // Simple unique ID based on timestamp
+      date: new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      }),
+      prompt: currentPrompt,
+      content: journalEntry,
+      mood: "Good", // Default mood, could be enhanced later to select mood
+    };
+    
+    // Add new entry to existing entries
+    const updatedEntries = [newEntry, ...existingEntries];
+    
+    // Save to localStorage
+    localStorage.setItem('journalEntries', JSON.stringify(updatedEntries));
+
     toast({
       title: "Journal entry saved",
       description: "Your thoughts have been recorded successfully.",

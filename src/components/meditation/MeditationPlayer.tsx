@@ -16,6 +16,15 @@ interface MeditationPlayerProps {
   } | null;
 }
 
+// Meditation audio tracks
+const meditationSounds = {
+  ambient: "/sounds/ambient.mp3",
+  nature: "/sounds/nature.mp3",
+  ocean: "/sounds/ocean.mp3",
+  rainfall: "/sounds/rainfall.mp3",
+  default: "/sounds/meditation-bells.mp3"
+};
+
 const MeditationPlayer: React.FC<MeditationPlayerProps> = ({ isOpen, onClose, meditation }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -23,12 +32,41 @@ const MeditationPlayer: React.FC<MeditationPlayerProps> = ({ isOpen, onClose, me
   const [volume, setVolume] = useState(70);
   const [isMuted, setIsMuted] = useState(false);
   const intervalRef = useRef<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Create audio element when component mounts
+  useEffect(() => {
+    audioRef.current = new Audio(meditationSounds.default);
+    audioRef.current.loop = true;
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  // Handle dialog open/close
   useEffect(() => {
     if (isOpen) {
       setProgress(0);
       setCurrentTime(0);
       setIsPlaying(false);
+      
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.pause();
+      }
+    } else {
+      if (intervalRef.current) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
     }
 
     return () => {
@@ -38,13 +76,30 @@ const MeditationPlayer: React.FC<MeditationPlayerProps> = ({ isOpen, onClose, me
     };
   }, [isOpen]);
 
+  // Handle volume changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume / 100;
+    }
+  }, [volume, isMuted]);
+
   const togglePlayPause = () => {
     if (isPlaying) {
       if (intervalRef.current) {
         window.clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+      
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
     } else {
+      if (audioRef.current) {
+        audioRef.current.play().catch(error => {
+          console.error("Audio playback error:", error);
+        });
+      }
+      
       intervalRef.current = window.setInterval(() => {
         setCurrentTime((prevTime) => {
           const newTime = prevTime + 1;
@@ -57,6 +112,11 @@ const MeditationPlayer: React.FC<MeditationPlayerProps> = ({ isOpen, onClose, me
             if (intervalRef.current) {
               window.clearInterval(intervalRef.current);
             }
+            
+            if (audioRef.current) {
+              audioRef.current.pause();
+            }
+            
             setIsPlaying(false);
             return totalSeconds;
           }
@@ -94,7 +154,7 @@ const MeditationPlayer: React.FC<MeditationPlayerProps> = ({ isOpen, onClose, me
         <div className="py-6">
           <div className="flex justify-center mb-8">
             <div className="w-32 h-32 rounded-full bg-wellness-light-blue flex items-center justify-center">
-              <div className="w-24 h-24 rounded-full bg-wellness-blue breathing-circle"></div>
+              <div className={`w-24 h-24 rounded-full bg-wellness-blue ${isPlaying ? 'animate-pulse' : ''}`}></div>
             </div>
           </div>
 

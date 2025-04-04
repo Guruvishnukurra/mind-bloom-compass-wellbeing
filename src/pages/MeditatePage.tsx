@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import MeditationCard from "@/components/meditation/MeditationCard";
 import MeditationPlayer from "@/components/meditation/MeditationPlayer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 
 // Dummy data for meditation sessions
 const featuredMeditations = [
@@ -90,10 +91,16 @@ const anxietyMeditations = [
 const MeditatePage = () => {
   const [playerOpen, setPlayerOpen] = useState(false);
   const [selectedMeditation, setSelectedMeditation] = useState<any>(null);
+  const { toast } = useToast();
 
   const handleMeditationSelect = (meditation: any) => {
     setSelectedMeditation(meditation);
     setPlayerOpen(true);
+    
+    toast({
+      title: "Meditation started",
+      description: `Starting "${meditation.title}" - ${meditation.duration} minutes`,
+    });
   };
 
   return (
