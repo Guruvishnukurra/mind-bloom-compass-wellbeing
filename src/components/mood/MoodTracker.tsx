@@ -9,7 +9,7 @@ import {
   Smile, 
   Meh, 
   Frown, 
-  FrownPlus,
+  Frown as FrownPlus,  // Replace with the standard Frown icon
   Save
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
