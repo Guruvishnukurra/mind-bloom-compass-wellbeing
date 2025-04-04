@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User, Moon, Sun, MessageSquare } from "lucide-react";
+import { Menu, User, Moon, Sun, MessageSquare, Trophy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Navbar: React.FC = () => {
@@ -38,6 +38,13 @@ const Navbar: React.FC = () => {
           <Link to="/chat" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
             <MessageSquare size={16} />
             Chat
+          </Link>
+          <Link
+            to="/achievements"
+            className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-accent"
+          >
+            <Trophy className="h-5 w-5" />
+            <span>Achievements</span>
           </Link>
         </div>
 

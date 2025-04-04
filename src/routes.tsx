@@ -7,6 +7,7 @@ import { Meditation } from '@/pages/Meditation';
 import { Resources } from '@/pages/Resources';
 import Gratitude from '@/pages/Gratitude';
 import Chat from '@/pages/Chat';
+import Achievements from '@/pages/Achievements';
 
 export function AppRoutes() {
   const { user, loading } = useAuth();
@@ -48,6 +49,16 @@ export function AppRoutes() {
       <Route
         path="/chat"
         element={user ? <Chat /> : <Navigate to="/auth" />}
+      />
+      <Route
+        path="/achievements"
+        element={
+          user ? (
+            <Achievements />
+          ) : (
+            <Navigate to="/auth" replace />
+          )
+        }
       />
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/auth'} />} />
     </Routes>
