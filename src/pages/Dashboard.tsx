@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/contexts/AuthContext";
 import { useQuotes } from "@/hooks/useQuotes";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
