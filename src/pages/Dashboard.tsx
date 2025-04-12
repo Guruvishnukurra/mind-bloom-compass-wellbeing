@@ -10,7 +10,8 @@ import { MeditationList } from "@/components/meditation/MeditationList";
 import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
 import { ResourcesList } from "@/components/resources/ResourcesList";
-import MoodAnalytics from "@/components/analytics/MoodAnalytics";
+import { MoodAnalytics } from "@/components/analytics/MoodAnalytics";
+import { WellbeingScore } from "@/components/analytics/WellbeingScore";
 import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2 } from "lucide-react";
 
 export default function Dashboard() {
@@ -123,6 +124,18 @@ export default function Dashboard() {
       >
         <Card className="p-6">
           <MoodAnalytics />
+        </Card>
+      </motion.div>
+
+      {/* Wellbeing Score */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mb-8"
+      >
+        <Card className="p-6">
+          <WellbeingScore />
         </Card>
       </motion.div>
 
