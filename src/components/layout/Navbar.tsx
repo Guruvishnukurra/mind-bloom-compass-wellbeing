@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User, Moon, Sun, MessageSquare, Trophy, BookOpen } from "lucide-react";
+import { Menu, User, Moon, Sun, MessageSquare, Trophy, BookOpen, Home, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '../../hooks/useAuth';
 
 const Navbar: React.FC = () => {
   const { toast } = useToast();
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const { user, signOut } = useAuth();
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -29,24 +31,26 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Home</Link>
-          <Link to="/meditation" className="text-sm font-medium hover:text-primary transition-colors">Meditate</Link>
-          <Link to="/journal" className="text-sm font-medium hover:text-primary transition-colors">Journal</Link>
-          <Link to="/gratitude" className="text-sm font-medium hover:text-primary transition-colors">Gratitude</Link>
-          <Link to="/resources" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
-            <BookOpen size={16} />
-            Resources
+          <Link
+            to="/"
+            className="text-neutral-blue hover:text-primary-teal px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+          >
+            <Home className="h-5 w-5 inline-block mr-1" />
+            Home
           </Link>
-          <Link to="/chat" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
-            <MessageSquare size={16} />
-            Chat
+          <Link
+            to="/resources"
+            className="text-neutral-blue hover:text-primary-teal px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+          >
+            <BookOpen className="h-5 w-5 inline-block mr-1" />
+            Resources
           </Link>
           <Link
             to="/achievements"
-            className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-accent"
+            className="text-neutral-blue hover:text-primary-teal px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
           >
-            <Trophy className="h-5 w-5" />
-            <span>Achievements</span>
+            <Trophy className="h-5 w-5 inline-block mr-1" />
+            Achievements
           </Link>
         </div>
 
@@ -77,6 +81,31 @@ const Navbar: React.FC = () => {
           >
             <User size={20} />
           </Button>
+        </div>
+
+        <div className="flex items-center">
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <span className="text-neutral-blue text-sm font-medium">
+                <User className="h-5 w-5 inline-block mr-1" />
+                {user.email}
+              </span>
+              <button
+                onClick={signOut}
+                className="bg-primary-teal hover:bg-primary-teal/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                <LogOut className="h-5 w-5 inline-block mr-1" />
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-primary-teal hover:bg-primary-teal/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+            >
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
     </nav>

@@ -1,107 +1,85 @@
-import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookmarkIcon, ExternalLinkIcon } from 'lucide-react';
-import { toast } from 'sonner';
+import { Bookmark, ExternalLink } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/contexts/AuthContext';
 
 export interface Resource {
   id: string;
   title: string;
   description: string;
-  content_type: 'article' | 'video' | 'exercise' | 'tool';
-  content_url: string;
-  tags: string[];
+  category: string;
+  url: string;
+  image_url: string;
   created_at: string;
 }
 
-interface ResourceCardProps {
+export interface ResourceCardProps {
   resource: Resource;
-  isSaved?: boolean;
-  onSaveToggle?: () => void;
+  isSaved: boolean;
+  onSaveToggle: () => void;
 }
 
-export function ResourceCard({ resource, isSaved, onSaveToggle }: ResourceCardProps) {
+export const ResourceCard = ({ resource, isSaved, onSaveToggle }: ResourceCardProps) => {
   const { user } = useAuth();
-  const [saving, setSaving] = useState(false);
 
   const handleSaveToggle = async () => {
     if (!user) return;
 
-    setSaving(true);
     try {
       if (isSaved) {
-        const { error } = await supabase
+        await supabase
           .from('saved_resources')
           .delete()
-          .match({ user_id: user.id, resource_id: resource.id });
-
-        if (error) throw error;
-        toast.success('Resource removed from saved items');
+          .eq('user_id', user.id)
+          .eq('resource_id', resource.id);
       } else {
-        const { error } = await supabase
+        await supabase
           .from('saved_resources')
-          .insert([{ user_id: user.id, resource_id: resource.id }]);
-
-        if (error) throw error;
-        toast.success('Resource saved successfully');
+          .insert({
+            user_id: user.id,
+            resource_id: resource.id,
+          });
       }
-
-      onSaveToggle?.();
+      onSaveToggle();
     } catch (error) {
-      toast.error('Failed to update saved status');
-      console.error('Error:', error);
-    } finally {
-      setSaving(false);
+      console.error('Error toggling resource save:', error);
     }
   };
 
   return (
-    <Card>
+    <Card className="flex flex-col h-full">
       <CardHeader>
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-xl">{resource.title}</CardTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleSaveToggle}
-            disabled={saving}
-          >
-            <BookmarkIcon
-              className={`h-5 w-5 ${isSaved ? 'fill-current' : ''}`}
-            />
-          </Button>
-        </div>
+        <CardTitle className="text-lg">{resource.title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground mb-4">{resource.description}</p>
-        
-        <div className="flex flex-wrap gap-2 mb-4">
-          {resource.tags.map(tag => (
-            <span
-              key={tag}
-              className="px-2 py-1 bg-primary/10 rounded-full text-xs"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex justify-between items-center">
-          <span className="text-sm capitalize text-muted-foreground">
-            {resource.content_type}
+      <CardContent className="flex-grow">
+        <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
+        <div className="flex items-center gap-2">
+          <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
+            {resource.category}
           </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.open(resource.content_url, '_blank')}
-          >
-            Open Resource
-            <ExternalLinkIcon className="ml-2 h-4 w-4" />
-          </Button>
         </div>
       </CardContent>
+      <CardFooter className="flex justify-between gap-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleSaveToggle}
+          className="flex items-center gap-2"
+        >
+          <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
+          {isSaved ? 'Saved' : 'Save'}
+        </Button>
+        <Button
+          variant="default"
+          size="sm"
+          onClick={() => window.open(resource.url, '_blank')}
+          className="flex items-center gap-2"
+        >
+          <ExternalLink className="h-4 w-4" />
+          View
+        </Button>
+      </CardFooter>
     </Card>
   );
-}
+};

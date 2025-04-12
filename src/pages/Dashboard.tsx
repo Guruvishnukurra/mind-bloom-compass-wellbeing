@@ -7,22 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MeditationList } from "@/components/meditation/MeditationList";
-import { JournalList } from "@/components/journal/JournalList";
+import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
 import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { getRandomQuote } = useQuotes();
-  const [quote, setQuote] = useState(getRandomQuote());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setQuote(getRandomQuote());
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
+  const quote = useQuotes();
 
   return (
     <div className="container mx-auto p-4 space-y-6">
@@ -135,4 +127,4 @@ export default function Dashboard() {
       </motion.div>
     </div>
   );
-} 
+}

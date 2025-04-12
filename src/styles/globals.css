@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Martel+Sans:wght@200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-teal: #1A7A77;
+  --color-lavender: #ACBCF4;
+  --color-sage: #C2D6C5;
+  
+  /* Secondary Colors */
+  --color-peach: #FFBC97;
+  --color-mauve: #D4ADCF;
+  
+  /* Neutral Colors */
+  --color-white: #F8FAFC;
+  --color-gray: #E2E8F0;
+  --color-blue: #334155;
+  
+  /* Functional Colors */
+  --color-success: #4AD295;
+  --color-alert: #F9B44A;
+  --color-focus: #8B5CF6;
+}
+
+@layer base {
+  body {
+    @apply bg-neutral-white text-neutral-blue font-primary;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-accent;
+  }
+}
+
+@layer components {
+  .serenity-gradient {
+    @apply bg-gradient-to-r from-primary-teal to-primary-lavender;
+  }
+
+  .serenity-card {
+    @apply bg-white rounded-lg shadow-md p-6 transition-all duration-300;
+  }
+
+  .serenity-button {
+    @apply px-4 py-2 rounded-lg transition-all duration-300 font-medium;
+  }
+
+  .serenity-button-primary {
+    @apply serenity-button bg-primary-teal text-white hover:bg-opacity-90;
+  }
+
+  .serenity-button-secondary {
+    @apply serenity-button bg-primary-lavender text-white hover:bg-opacity-90;
+  }
+
+  .serenity-input {
+    @apply w-full px-4 py-2 rounded-lg border border-neutral-gray focus:border-primary-teal focus:ring-2 focus:ring-primary-teal focus:ring-opacity-50 transition-all duration-300;
+  }
+
+  .mood-indicator {
+    @apply w-8 h-8 rounded-full transition-all duration-300;
+  }
+
+  .mood-calm {
+    @apply bg-primary-lavender;
+  }
+
+  .mood-happy {
+    @apply bg-secondary-peach;
+  }
+
+  .mood-anxious {
+    @apply bg-secondary-mauve;
+  }
+
+  .mood-sad {
+    @apply bg-primary-teal;
+  }
+
+  .mood-angry {
+    @apply bg-functional-alert;
+  }
+}
+
+/* Custom Animations */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.animate-ripple {
+  animation: ripple 1s ease-out;
+}
+
+/* Time-based color transitions */
+@media (prefers-color-scheme: light) {
+  :root {
+    --time-morning: var(--color-peach);
+    --time-afternoon: var(--color-lavender);
+    --time-evening: var(--color-mauve);
+  }
+}
+
+/* Paper-like texture */
+.paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+} 
