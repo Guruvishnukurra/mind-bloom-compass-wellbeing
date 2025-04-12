@@ -65,6 +65,8 @@ const config: Config = {
 				'wellness-light-sage': 'hsl(142, 30%, 65%)',
 				'wellness-teal': 'hsl(174, 40%, 45%)',
 				'wellness-light-teal': 'hsl(174, 40%, 65%)',
+				'wellness-light-blue': 'hsl(210, 100%, 75%)', // Add this line
+				'wellness-blue': 'hsl(210, 100%, 50%)',
 				'wellness-warm-sand': 'hsl(28, 60%, 80%)',
 				'wellness-pale-yellow': 'hsl(38, 80%, 85%)',
 				'wellness-soft-coral': 'hsl(0, 80%, 75%)',
