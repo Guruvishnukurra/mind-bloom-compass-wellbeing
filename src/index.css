@@ -1,5 +1,5 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,16 +16,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 212 96% 78%;
+    --primary: 212 30% 45%; /* Tranquil Blue #5B85AA */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 150 65% 78%;
+    --secondary: 150 30% 45%; /* Sage Green #8CB369 */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 262 59% 87%;
+    --accent: 262 59% 87%; /* Soft Lavender #CABDFF */
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -39,7 +39,7 @@
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 212 96% 78%;
+    --sidebar-primary: 212 30% 45%; /* Tranquil Blue #5B85AA */
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
@@ -57,16 +57,16 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 212 30% 45%; /* Tranquil Blue #5B85AA */
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 150 65% 68%;
+    --secondary: 150 30% 45%; /* Sage Green #8CB369 */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 262 59% 77%;
+    --accent: 262 59% 77%; /* Soft Lavender #CABDFF */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -78,7 +78,7 @@
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 212 30% 45%; /* Tranquil Blue #5B85AA */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
@@ -111,4 +111,41 @@
 
 .wellness-button {
   @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+}
+
+/* Tranquil Mind specific styles */
+.tranquil-card {
+  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-gray;
+}
+
+.tranquil-gradient {
+  @apply bg-gradient-to-r from-wellness-blue to-wellness-green;
+}
+
+.tranquil-button {
+  @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+}
+
+.tranquil-button-primary {
+  @apply bg-wellness-blue text-white hover:bg-wellness-blue/90;
+}
+
+.tranquil-button-secondary {
+  @apply bg-wellness-green text-white hover:bg-wellness-green/90;
+}
+
+.tranquil-button-accent {
+  @apply bg-wellness-lavender text-wellness-dark-gray hover:bg-wellness-lavender/90;
+}
+
+.tranquil-heading {
+  @apply font-semibold text-wellness-dark-gray;
+}
+
+.tranquil-subheading {
+  @apply text-wellness-dark-gray/80;
+}
+
+.tranquil-text {
+  @apply text-wellness-dark-gray/70;
 }

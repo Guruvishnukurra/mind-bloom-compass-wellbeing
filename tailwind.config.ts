@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -64,14 +63,19 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				wellness: {
-					blue: "#86B7FE",
-					"light-blue": "#D3E4FD",
-					green: "#A8E6CF",
-					"light-green": "#E8F7F0",
-					purple: "#CABDFF",
-					"light-purple": "#F0EBFF",
-					gray: "#F9FAFB",
-					"dark-gray": "#6B7280"
+					blue: "#5B85AA",
+					"light-blue": "#86B7FE",
+					green: "#8CB369",
+					"light-green": "#A8E6CF",
+					sand: "#F4E285",
+					"light-sand": "#F9E5B8",
+					lavender: "#CABDFF",
+					"light-lavender": "#E8E2FF",
+					coral: "#F98375",
+					"light-coral": "#FFB5AE",
+					white: "#F7F9FB",
+					gray: "#E6EBF0",
+					"dark-gray": "#424B54",
 				},
 			},
 			borderRadius: {
@@ -113,7 +117,7 @@ export default {
 				'breathing': 'breathing 5s ease-in-out infinite'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif']
+				sans: ['Montserrat', 'sans-serif']
 			}
 		}
 	},
