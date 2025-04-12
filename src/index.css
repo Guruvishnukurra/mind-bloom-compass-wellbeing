@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,16 +17,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 142 30% 45%; /* Sage green */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 38 60% 80%; /* Warm sand */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent: 174 40% 45%; /* Soft teal */
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,18 +34,18 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 142 30% 45%; /* Sage green */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly more rounded */
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 212 30% 45%; /* Tranquil Blue #5B85AA */
+    --sidebar-primary: 142 30% 45%; /* Sage green */
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 142 30% 45%; /* Sage green */
 
     /* Custom wellness colors */
     --wellness-blue: 210 100% 50%;
@@ -52,6 +53,15 @@
     --wellness-lavender: 270 67% 75%;
     --wellness-amber: 38 92% 50%;
     --wellness-teal: 174 84% 32%;
+    
+    /* Nature-inspired theme colors */
+    --wellness-sage: 142 30% 45%;
+    --wellness-light-sage: 142 30% 65%;
+    --wellness-teal: 174 40% 45%;
+    --wellness-light-teal: 174 40% 65%;
+    --wellness-warm-sand: 28 60% 80%;
+    --wellness-pale-yellow: 38 80% 85%;
+    --wellness-soft-coral: 0 80% 75%;
   }
 
   .dark {
@@ -64,16 +74,16 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 142 30% 40%; /* Darker sage green */
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 38 60% 70%; /* Darker warm sand */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 174 40% 40%; /* Darker soft teal */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -81,16 +91,16 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 142 30% 40%; /* Darker sage green */
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 212 30% 45%; /* Tranquil Blue #5B85AA */
+    --sidebar-primary: 142 30% 40%; /* Darker sage green */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 142 30% 40%; /* Darker sage green */
 
     /* Custom wellness colors - darker variants */
     --wellness-blue: 210 100% 40%;
@@ -98,6 +108,15 @@
     --wellness-lavender: 270 67% 65%;
     --wellness-amber: 38 92% 45%;
     --wellness-teal: 174 84% 25%;
+    
+    /* Nature-inspired theme colors - darker variants */
+    --wellness-sage: 142 30% 35%;
+    --wellness-light-sage: 142 30% 55%;
+    --wellness-teal: 174 40% 35%;
+    --wellness-light-teal: 174 40% 55%;
+    --wellness-warm-sand: 28 60% 70%;
+    --wellness-pale-yellow: 38 80% 75%;
+    --wellness-soft-coral: 0 80% 65%;
   }
 }
 
@@ -128,6 +147,72 @@
   @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
 }
 
+/* Nature-inspired theme styles */
+.nature-card {
+  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white/80 backdrop-blur-sm border border-wellness-gray/30;
+}
+
+.nature-gradient {
+  @apply bg-gradient-to-r from-wellness-sage to-wellness-teal;
+}
+
+.nature-button {
+  @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+}
+
+.nature-button-primary {
+  @apply bg-wellness-sage text-white hover:bg-wellness-sage/90 hover:animate-pulse-glow;
+}
+
+.nature-button-secondary {
+  @apply bg-wellness-teal text-white hover:bg-wellness-teal/90 hover:animate-pulse-glow;
+}
+
+.nature-button-accent {
+  @apply bg-wellness-soft-coral text-white hover:bg-wellness-soft-coral/90 hover:animate-pulse-glow;
+}
+
+.nature-heading {
+  @apply text-3xl font-bold text-wellness-sage;
+}
+
+.nature-subheading {
+  @apply text-xl font-semibold text-wellness-teal;
+}
+
+.nature-text {
+  @apply text-base text-wellness-dark-gray;
+}
+
+/* Glassmorphism effect */
+.glass-effect {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+}
+
+.dark .glass-effect {
+  @apply bg-gray-900/70 border-gray-800/20;
+}
+
+/* Wave background */
+.wave-bg {
+  @apply relative overflow-hidden;
+}
+
+.wave-bg::before {
+  content: "";
+  @apply absolute inset-0 bg-wave-pattern opacity-10 animate-wave;
+}
+
+/* Leaf pattern background */
+.leaf-bg {
+  @apply relative overflow-hidden;
+}
+
+.leaf-bg::before {
+  content: "";
+  @apply absolute inset-0 bg-leaf-pattern opacity-5;
+}
+
 /* Tranquil Mind specific styles */
 .tranquil-card {
   @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-gray;
@@ -150,22 +235,21 @@
 }
 
 .tranquil-button-accent {
-  @apply bg-wellness-lavender text-wellness-dark-gray hover:bg-wellness-lavender/90;
+  @apply bg-wellness-lavender text-white hover:bg-wellness-lavender/90;
 }
 
 .tranquil-heading {
-  @apply font-semibold text-wellness-dark-gray;
+  @apply text-3xl font-bold text-wellness-blue;
 }
 
 .tranquil-subheading {
-  @apply text-wellness-dark-gray/80;
+  @apply text-xl font-semibold text-wellness-green;
 }
 
 .tranquil-text {
-  @apply text-wellness-dark-gray/70;
+  @apply text-base text-wellness-dark-gray;
 }
 
-/* Custom animations */
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -201,7 +285,7 @@
 
 @keyframes slideInRight {
   from {
-    transform: translateX(20px);
+    transform: translateX(100%);
     opacity: 0;
   }
   to {
@@ -221,105 +305,126 @@
   }
 }
 
-/* Custom utility classes */
-@layer utilities {
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .animate-pulse-slow {
-    animation: pulse 3s ease-in-out infinite;
-  }
-  
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
-  }
-  
-  .animate-slide-in-right {
-    animation: slideInRight 0.5s ease-out forwards;
-  }
-  
-  .animate-slide-in-up {
-    animation: slideInUp 0.5s ease-out forwards;
-  }
-  
-  .text-wellness-blue {
-    color: hsl(var(--wellness-blue));
-  }
-  
-  .text-wellness-green {
-    color: hsl(var(--wellness-green));
-  }
-  
-  .text-wellness-lavender {
-    color: hsl(var(--wellness-lavender));
-  }
-  
-  .text-wellness-amber {
-    color: hsl(var(--wellness-amber));
-  }
-  
-  .text-wellness-teal {
-    color: hsl(var(--wellness-teal));
-  }
-  
-  .bg-wellness-blue {
-    background-color: hsl(var(--wellness-blue));
-  }
-  
-  .bg-wellness-green {
-    background-color: hsl(var(--wellness-green));
-  }
-  
-  .bg-wellness-lavender {
-    background-color: hsl(var(--wellness-lavender));
-  }
-  
-  .bg-wellness-amber {
-    background-color: hsl(var(--wellness-amber));
-  }
-  
-  .bg-wellness-teal {
-    background-color: hsl(var(--wellness-teal));
-  }
-  
-  .border-wellness-blue {
-    border-color: hsl(var(--wellness-blue));
-  }
-  
-  .border-wellness-green {
-    border-color: hsl(var(--wellness-green));
-  }
-  
-  .border-wellness-lavender {
-    border-color: hsl(var(--wellness-lavender));
-  }
-  
-  .border-wellness-amber {
-    border-color: hsl(var(--wellness-amber));
-  }
-  
-  .border-wellness-teal {
-    border-color: hsl(var(--wellness-teal));
-  }
-  
-  .tranquil-heading {
-    @apply font-medium text-foreground;
-  }
-  
-  .tranquil-text {
-    @apply text-muted-foreground;
-  }
-  
-  .tranquil-card {
-    @apply rounded-lg border bg-card text-card-foreground shadow-sm transition-all duration-300;
-  }
-  
-  .glass-effect {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
-  }
-  
-  .dark .glass-effect {
-    @apply bg-black/20 border-white/10;
-  }
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.text-wellness-blue {
+  @apply text-wellness-blue;
+}
+
+.text-wellness-green {
+  @apply text-wellness-green;
+}
+
+.text-wellness-lavender {
+  @apply text-wellness-lavender;
+}
+
+.text-wellness-amber {
+  @apply text-wellness-amber;
+}
+
+.text-wellness-teal {
+  @apply text-wellness-teal;
+}
+
+.text-wellness-sage {
+  @apply text-wellness-sage;
+}
+
+.text-wellness-soft-coral {
+  @apply text-wellness-soft-coral;
+}
+
+.bg-wellness-blue {
+  @apply bg-wellness-blue;
+}
+
+.bg-wellness-green {
+  @apply bg-wellness-green;
+}
+
+.bg-wellness-lavender {
+  @apply bg-wellness-lavender;
+}
+
+.bg-wellness-amber {
+  @apply bg-wellness-amber;
+}
+
+.bg-wellness-teal {
+  @apply bg-wellness-teal;
+}
+
+.bg-wellness-sage {
+  @apply bg-wellness-sage;
+}
+
+.bg-wellness-soft-coral {
+  @apply bg-wellness-soft-coral;
+}
+
+.border-wellness-blue {
+  @apply border-wellness-blue;
+}
+
+.border-wellness-green {
+  @apply border-wellness-green;
+}
+
+.border-wellness-lavender {
+  @apply border-wellness-lavender;
+}
+
+.border-wellness-amber {
+  @apply border-wellness-amber;
+}
+
+.border-wellness-teal {
+  @apply border-wellness-teal;
+}
+
+.border-wellness-sage {
+  @apply border-wellness-sage;
+}
+
+.border-wellness-soft-coral {
+  @apply border-wellness-soft-coral;
+}
+
+.tranquil-heading {
+  @apply text-3xl font-bold text-wellness-blue;
+}
+
+.tranquil-text {
+  @apply text-base text-wellness-dark-gray;
+}
+
+.tranquil-card {
+  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-gray;
+}
+
+.glass-effect {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+}
+
+.dark .glass-effect {
+  @apply bg-gray-900/70 border-gray-800/20;
 }
