@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        border: "hsl(var(--border))",
         primary: {
           teal: '#1A7A77',
           lavender: '#ACBCF4',
