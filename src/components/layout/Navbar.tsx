@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User, Moon, Sun, MessageSquare, Trophy } from "lucide-react";
+import { Menu, User, Moon, Sun, MessageSquare, Trophy, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Navbar: React.FC = () => {
@@ -28,13 +28,15 @@ const Navbar: React.FC = () => {
           </Link>
         </div>
 
-        <div className="hidden md:flex md:items-center md:gap-6">
+        <div className="hidden md:flex items-center space-x-4">
           <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Home</Link>
-          <Link to="/mood" className="text-sm font-medium hover:text-primary transition-colors">Mood</Link>
-          <Link to="/meditate" className="text-sm font-medium hover:text-primary transition-colors">Meditate</Link>
+          <Link to="/meditation" className="text-sm font-medium hover:text-primary transition-colors">Meditate</Link>
           <Link to="/journal" className="text-sm font-medium hover:text-primary transition-colors">Journal</Link>
           <Link to="/gratitude" className="text-sm font-medium hover:text-primary transition-colors">Gratitude</Link>
-          <Link to="/resources" className="text-sm font-medium hover:text-primary transition-colors">Resources</Link>
+          <Link to="/resources" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
+            <BookOpen size={16} />
+            Resources
+          </Link>
           <Link to="/chat" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1">
             <MessageSquare size={16} />
             Chat
