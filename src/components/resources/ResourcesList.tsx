@@ -6,11 +6,12 @@ import { Card } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
 
 interface ResourcesListProps {
-  searchQuery: string;
-  category: string | null;
+  searchQuery?: string;
+  category?: string | null;
+  limit?: number;
 }
 
-export const ResourcesList = ({ searchQuery, category }: ResourcesListProps) => {
+export const ResourcesList = ({ searchQuery = '', category = null, limit }: ResourcesListProps) => {
   const { user } = useAuth();
   const [resources, setResources] = useState<Resource[]>([]);
   const [savedResources, setSavedResources] = useState<string[]>([]);
@@ -32,6 +33,10 @@ export const ResourcesList = ({ searchQuery, category }: ResourcesListProps) => 
 
         if (searchQuery) {
           query = query.ilike('title', `%${searchQuery}%`);
+        }
+
+        if (limit) {
+          query = query.limit(limit);
         }
 
         const { data, error } = await query;
@@ -64,7 +69,7 @@ export const ResourcesList = ({ searchQuery, category }: ResourcesListProps) => 
 
     fetchResources();
     fetchSavedResources();
-  }, [searchQuery, category, user]);
+  }, [searchQuery, category, user, limit]);
 
   const handleSaveToggle = async (resourceId: string) => {
     if (!user) return;

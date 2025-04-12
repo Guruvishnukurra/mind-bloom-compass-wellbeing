@@ -10,7 +10,11 @@ interface UserAchievement {
   earned_at: string;
 }
 
-export function AchievementsList() {
+interface AchievementsListProps {
+  limit?: number;
+}
+
+export function AchievementsList({ limit }: AchievementsListProps) {
   const [userAchievements, setUserAchievements] = useState<UserAchievement[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -61,41 +65,43 @@ export function AchievementsList() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {categoryAchievements.map((achievement) => {
-                const isEarned = earnedAchievementIds.has(achievement.id);
-                const progress = getAchievementProgress(
-                  achievement.category,
-                  userAchievements.filter(a => a.achievement_id.startsWith(achievement.category)).length
-                );
+              {categoryAchievements
+                .slice(0, limit)
+                .map((achievement) => {
+                  const isEarned = earnedAchievementIds.has(achievement.id);
+                  const progress = getAchievementProgress(
+                    achievement.category,
+                    userAchievements.filter(a => a.achievement_id.startsWith(achievement.category)).length
+                  );
 
-                return (
-                  <div key={achievement.id} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-2xl">{achievement.icon}</span>
-                        <div>
-                          <h3 className="font-medium">{achievement.title}</h3>
-                          <p className="text-sm text-muted-foreground">{achievement.description}</p>
+                  return (
+                    <div key={achievement.id} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-2xl">{achievement.icon}</span>
+                          <div>
+                            <h3 className="font-medium">{achievement.title}</h3>
+                            <p className="text-sm text-muted-foreground">{achievement.description}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="font-medium">{achievement.points} pts</span>
+                          {isEarned && (
+                            <span className="ml-2 text-green-500">✓</span>
+                          )}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <span className="font-medium">{achievement.points} pts</span>
-                        {isEarned && (
-                          <span className="ml-2 text-green-500">✓</span>
-                        )}
-                      </div>
+                      {!isEarned && progress.nextAchievement && (
+                        <div className="space-y-1">
+                          <Progress value={progress.progress} />
+                          <p className="text-xs text-muted-foreground">
+                            Progress: {Math.round(progress.progress)}%
+                          </p>
+                        </div>
+                      )}
                     </div>
-                    {!isEarned && progress.nextAchievement && (
-                      <div className="space-y-1">
-                        <Progress value={progress.progress} />
-                        <p className="text-xs text-muted-foreground">
-                          Progress: {Math.round(progress.progress)}%
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </CardContent>
         </Card>

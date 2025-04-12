@@ -9,7 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MeditationList } from "@/components/meditation/MeditationList";
 import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
-import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight } from "lucide-react";
+import { ResourcesList } from "@/components/resources/ResourcesList";
+import MoodAnalytics from "@/components/analytics/MoodAnalytics";
+import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2 } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -90,6 +92,18 @@ export default function Dashboard() {
         </Button>
       </motion.div>
 
+      {/* Analytics Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="mb-8"
+      >
+        <Card className="p-6">
+          <MoodAnalytics />
+        </Card>
+      </motion.div>
+
       {/* Main Content */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -97,7 +111,7 @@ export default function Dashboard() {
         transition={{ delay: 0.5 }}
       >
         <Tabs defaultValue="meditation" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="meditation" className="data-[state=active]:bg-wellness-blue/10 data-[state=active]:text-wellness-blue">
               Meditation
             </TabsTrigger>
@@ -107,20 +121,52 @@ export default function Dashboard() {
             <TabsTrigger value="achievements" className="data-[state=active]:bg-wellness-amber/10 data-[state=active]:text-wellness-amber">
               Achievements
             </TabsTrigger>
+            <TabsTrigger value="resources" className="data-[state=active]:bg-wellness-purple/10 data-[state=active]:text-wellness-purple">
+              Resources
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="meditation" className="space-y-4">
             <Card className="p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Recent Meditations</h3>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/meditation")} className="text-wellness-blue">
+                  View All <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
               <MeditationList limit={3} />
             </Card>
           </TabsContent>
           <TabsContent value="journal" className="space-y-4">
             <Card className="p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Recent Journal Entries</h3>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/journal")} className="text-wellness-green">
+                  View All <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
               <JournalList limit={3} />
             </Card>
           </TabsContent>
           <TabsContent value="achievements" className="space-y-4">
             <Card className="p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Recent Achievements</h3>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/achievements")} className="text-wellness-amber">
+                  View All <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
               <AchievementsList />
+            </Card>
+          </TabsContent>
+          <TabsContent value="resources" className="space-y-4">
+            <Card className="p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Featured Resources</h3>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/resources")} className="text-wellness-purple">
+                  View All <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
+              <ResourcesList limit={3} />
             </Card>
           </TabsContent>
         </Tabs>
