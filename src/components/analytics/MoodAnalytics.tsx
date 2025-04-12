@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { 
@@ -11,24 +10,50 @@ import {
   LineChart,
   Line
 } from 'recharts';
-import { ArrowUp, ArrowRight, ArrowDown, Calendar, Save } from 'lucide-react';
+import { ArrowUp, ArrowRight, ArrowDown, Calendar, Save, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MoodEntry, getMoodEntries, getAnalyticsData } from '@/utils/storageUtils';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
 
-const MoodAnalytics = () => {
+export default function MoodAnalytics() {
   const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
   const [analytics, setAnalytics] = useState<ReturnType<typeof getAnalyticsData>>(getAnalyticsData());
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   useEffect(() => {
     loadData();
   }, []);
   
-  const loadData = () => {
-    const entries = getMoodEntries();
-    setMoodEntries(entries);
-    setAnalytics(getAnalyticsData());
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setError('Please sign in to view analytics');
+        return;
+      }
+
+      const { data: entries, error: entriesError } = await supabase
+        .from('mood_entries')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (entriesError) throw entriesError;
+      
+      setMoodEntries(entries || []);
+      setAnalytics(getAnalyticsData());
+    } catch (err) {
+      console.error('Error loading mood data:', err);
+      setError('Failed to load mood data');
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   const exportData = () => {
@@ -99,6 +124,22 @@ const MoodAnalytics = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center p-8 text-red-500">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -114,10 +155,15 @@ const MoodAnalytics = () => {
       </div>
       
       {moodEntries.length === 0 ? (
-        <Card className="p-6 text-center">
-          <p className="text-muted-foreground">
-            Start tracking your mood to see analytics here.
-          </p>
+        <Card className="p-6">
+          <div className="text-center space-y-4">
+            <p className="text-muted-foreground">
+              Start tracking your mood to see analytics here.
+            </p>
+            <Button onClick={() => navigate('/mood')} variant="outline">
+              Track Your Mood
+            </Button>
+          </div>
         </Card>
       ) : (
         <>
@@ -192,6 +238,4 @@ const MoodAnalytics = () => {
       )}
     </div>
   );
-};
-
-export default MoodAnalytics;
+}

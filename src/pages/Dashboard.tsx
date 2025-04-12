@@ -11,12 +11,30 @@ import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
 import { ResourcesList } from "@/components/resources/ResourcesList";
 import MoodAnalytics from "@/components/analytics/MoodAnalytics";
-import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2 } from "lucide-react";
+import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2 } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const quote = useQuotes();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for components to initialize
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4 space-y-6">
@@ -34,19 +52,21 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Featured Quote Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-wellness-blue/20 to-wellness-lavender/20" />
-        <div className="relative z-10">
-          <Quote className="w-8 h-8 text-wellness-lavender mb-4" />
-          <p className="text-xl font-medium mb-2">{quote.text}</p>
-          <p className="text-muted-foreground">- {quote.author}</p>
-        </div>
-      </motion.div>
+      {quote && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-wellness-blue/20 to-wellness-lavender/20" />
+          <div className="relative z-10">
+            <Quote className="w-8 h-8 text-wellness-lavender mb-4" />
+            <p className="text-xl font-medium mb-2">{quote.text}</p>
+            <p className="text-muted-foreground">- {quote.author}</p>
+          </div>
+        </motion.div>
+      )}
 
       {/* Welcome Section */}
       <motion.div
@@ -55,7 +75,9 @@ export default function Dashboard() {
         transition={{ delay: 0.3 }}
         className="tranquil-card p-6"
       >
-        <h2 className="text-2xl font-semibold mb-2">Welcome back, {user?.email?.split("@")[0]}</h2>
+        <h2 className="text-2xl font-semibold mb-2">
+          Welcome back, {user?.email ? user.email.split("@")[0] : 'Guest'}
+        </h2>
         <p className="text-muted-foreground">Continue your wellness journey today</p>
       </motion.div>
 
@@ -155,7 +177,7 @@ export default function Dashboard() {
                   View All <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </div>
-              <AchievementsList />
+              <AchievementsList limit={3} />
             </Card>
           </TabsContent>
           <TabsContent value="resources" className="space-y-4">
