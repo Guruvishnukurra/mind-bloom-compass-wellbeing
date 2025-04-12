@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { JournalEditor } from '@/components/journal/JournalEditor';
-import { JournalList } from '@/components/journal/JournalList';
+import JournalList from '@/components/journal/JournalList';
 import { Button } from '@/components/ui/button';
 
 export function Journal() {
