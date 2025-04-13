@@ -325,16 +325,17 @@
   animation: slideInUp 0.5s ease-out;
 }
 
+/* Remove or modify these utility classes that are causing circular dependencies */
 .text-wellness-blue {
-  @apply text-wellness-blue;
+  color: hsl(var(--wellness-blue));
 }
 
 .text-wellness-green {
-  @apply text-wellness-green;
+  color: hsl(var(--wellness-green));
 }
 
 .text-wellness-lavender {
-  @apply text-wellness-lavender;
+  color: hsl(var(--wellness-lavender));
 }
 
 .text-wellness-amber {
