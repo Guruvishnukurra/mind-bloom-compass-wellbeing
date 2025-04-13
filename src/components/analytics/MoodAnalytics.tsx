@@ -12,12 +12,12 @@ import {
 } from 'recharts';
 import { ArrowUp, ArrowRight, ArrowDown, Calendar, Save, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { MoodEntry } from '@/types/mood';
 import { MoodEntry, getMoodEntries, getAnalyticsData } from '@/utils/storageUtils';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
-
-export default function MoodAnalytics() {
+export function MoodAnalytics() {
   const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
   const [analytics, setAnalytics] = useState<ReturnType<typeof getAnalyticsData>>(getAnalyticsData());
   const [isLoading, setIsLoading] = useState(true);

@@ -72,6 +72,7 @@ const config: Config = {
 				'wellness-soft-coral': 'hsl(0, 80%, 75%)',
 				'wellness-green': 'hsl(142, 76%, 36%)',  // Remove extra line break
 				'wellness-lavender': 'hsl(270, 67%, 75%)',
+				'wellness-purple': 'hsl(270, 70%, 60%)',
 				'wellness-amber': 'hsl(38, 92%, 50%)',
 				'wellness-dark-gray': 'hsl(220, 10%, 30%)',
 				'wellness-gray': 'hsl(220, 10%, 80%)',
