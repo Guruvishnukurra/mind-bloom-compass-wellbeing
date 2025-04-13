@@ -12,7 +12,6 @@ import {
 } from 'recharts';
 import { ArrowUp, ArrowRight, ArrowDown, Calendar, Save, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { MoodEntry } from '@/types/mood';
 import { MoodEntry, getMoodEntries, getAnalyticsData } from '@/utils/storageUtils';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
@@ -47,8 +46,8 @@ export function MoodAnalytics() {
       if (entriesError) throw entriesError;
       
       setMoodEntries(entries || []);
-      setAnalytics(getAnalyticsData());
-    } catch (err) {
+      setAnalytics(getAnalyticsData());  // Remove the parameter
+    } catch (err: unknown) {
       console.error('Error loading mood data:', err);
       setError('Failed to load mood data');
     } finally {
