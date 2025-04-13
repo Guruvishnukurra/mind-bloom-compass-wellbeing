@@ -65,16 +65,12 @@ const config: Config = {
 				'wellness-light-sage': 'hsl(142, 30%, 65%)',
 				'wellness-teal': 'hsl(174, 40%, 45%)',
 				'wellness-light-teal': 'hsl(174, 40%, 65%)',
-<<<<<<< HEAD
-				'wellness-light-blue': 'hsl(210, 100%, 75%)', // Add this line
+				'wellness-light-blue': 'hsl(210, 100%, 75%)',
 				'wellness-blue': 'hsl(210, 100%, 50%)',
-=======
->>>>>>> f0956a5b9d0e995c6352faebf1cb0def0cf15f15
 				'wellness-warm-sand': 'hsl(28, 60%, 80%)',
 				'wellness-pale-yellow': 'hsl(38, 80%, 85%)',
 				'wellness-soft-coral': 'hsl(0, 80%, 75%)',
-				'wellness-blue': 'hsl(210, 100%, 50%)',
-				'wellness-green': 'hsl(142, 76%, 36%)',
+				'wellness-green': 'hsl(142, 76%, 36%)',  // Remove extra line break
 				'wellness-lavender': 'hsl(270, 67%, 75%)',
 				'wellness-amber': 'hsl(38, 92%, 50%)',
 				'wellness-dark-gray': 'hsl(220, 10%, 30%)',
