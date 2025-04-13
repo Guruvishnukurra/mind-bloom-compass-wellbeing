@@ -10,12 +10,44 @@ import Chat from '@/pages/Chat';
 import Achievements from '@/pages/Achievements';
 
 export function AppRoutes() {
-  const { user, loading } = useAuth();
+  const { user, loading, error } = useAuth();
+
+  // Check if Supabase credentials are configured
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  const isSupabaseConfigured = 
+    supabaseUrl && 
+    supabaseKey && 
+    supabaseUrl !== 'your_supabase_url_here' && 
+    supabaseKey !== 'your_supabase_anon_key_here';
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  // Show configuration warning if Supabase is not configured
+  if (!isSupabaseConfigured) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
+        <div className="max-w-md p-6 bg-white rounded-lg shadow-lg">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Configuration Required</h1>
+          <p className="mb-4">
+            Supabase credentials are not properly configured. Please update your .env file with valid Supabase URL and anonymous key.
+          </p>
+          <div className="bg-gray-100 p-4 rounded text-left mb-4 overflow-x-auto">
+            <pre className="text-sm">
+              VITE_SUPABASE_URL=your_actual_supabase_url<br/>
+              VITE_SUPABASE_ANON_KEY=your_actual_supabase_anon_key
+            </pre>
+          </div>
+          <p className="text-sm text-gray-600">
+            After updating the .env file, restart your development server.
+          </p>
+        </div>
       </div>
     );
   }
@@ -63,4 +95,4 @@ export function AppRoutes() {
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/auth'} />} />
     </Routes>
   );
-} 
+}
