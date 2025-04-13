@@ -325,89 +325,77 @@
   animation: slideInUp 0.5s ease-out;
 }
 
-/* Remove or modify these utility classes that are causing circular dependencies */
-.text-wellness-blue {
-  color: hsl(var(--wellness-blue));
-}
-
-.text-wellness-green {
-  color: hsl(var(--wellness-green));
-}
-
-.text-wellness-lavender {
-  color: hsl(var(--wellness-lavender));
-}
-
+/* Utility classes for wellness colors */
 .text-wellness-amber {
-  @apply text-wellness-amber;
+  color: hsl(var(--wellness-amber));
 }
 
 .text-wellness-teal {
-  @apply text-wellness-teal;
+  color: hsl(var(--wellness-teal));
 }
 
 .text-wellness-sage {
-  @apply text-wellness-sage;
+  color: hsl(var(--wellness-sage));
 }
 
 .text-wellness-soft-coral {
-  @apply text-wellness-soft-coral;
+  color: hsl(var(--wellness-soft-coral));
 }
 
 .bg-wellness-blue {
-  @apply bg-wellness-blue;
+  background-color: hsl(var(--wellness-blue));
 }
 
 .bg-wellness-green {
-  @apply bg-wellness-green;
+  background-color: hsl(var(--wellness-green));
 }
 
 .bg-wellness-lavender {
-  @apply bg-wellness-lavender;
+  background-color: hsl(var(--wellness-lavender));
 }
 
 .bg-wellness-amber {
-  @apply bg-wellness-amber;
+  background-color: hsl(var(--wellness-amber));
 }
 
 .bg-wellness-teal {
-  @apply bg-wellness-teal;
+  background-color: hsl(var(--wellness-teal));
 }
 
 .bg-wellness-sage {
-  @apply bg-wellness-sage;
+  background-color: hsl(var(--wellness-sage));
 }
 
 .bg-wellness-soft-coral {
-  @apply bg-wellness-soft-coral;
+  background-color: hsl(var(--wellness-soft-coral));
 }
 
 .border-wellness-blue {
-  @apply border-wellness-blue;
+  border-color: hsl(var(--wellness-blue));
 }
 
 .border-wellness-green {
-  @apply border-wellness-green;
+  border-color: hsl(var(--wellness-green));
 }
 
 .border-wellness-lavender {
-  @apply border-wellness-lavender;
+  border-color: hsl(var(--wellness-lavender));
 }
 
 .border-wellness-amber {
-  @apply border-wellness-amber;
+  border-color: hsl(var(--wellness-amber));
 }
 
 .border-wellness-teal {
-  @apply border-wellness-teal;
+  border-color: hsl(var(--wellness-teal));
 }
 
 .border-wellness-sage {
-  @apply border-wellness-sage;
+  border-color: hsl(var(--wellness-sage));
 }
 
 .border-wellness-soft-coral {
-  @apply border-wellness-soft-coral;
+  border-color: hsl(var(--wellness-soft-coral));
 }
 
 .tranquil-heading {
