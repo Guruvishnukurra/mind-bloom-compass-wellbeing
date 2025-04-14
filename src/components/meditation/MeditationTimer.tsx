@@ -224,7 +224,7 @@ export function MeditationTimer() {
             duration: customDuration,
             meditation_type: selectedType.id,
             completed: true,
-            guided: useGuided,
+            notes: useGuided ? 'Guided meditation' : 'Silent meditation',
           }
         ]);
 
@@ -708,6 +708,16 @@ export function MeditationTimer() {
                       disabled={isMuted}
                     />
                   </div>
+                  
+                  {/* Prominent Start Button */}
+                  <Button
+                    onClick={toggleTimer}
+                    size="lg"
+                    className="w-full py-8 mt-6 text-lg font-medium bg-wellness-blue hover:bg-wellness-blue/90 text-white"
+                  >
+                    <Play className="mr-2 h-6 w-6" />
+                    Start Meditation
+                  </Button>
                 </div>
               )}
 

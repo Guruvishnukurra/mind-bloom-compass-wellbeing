@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "./",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,6 +14,7 @@
     "download-sounds-fallback": "node scripts/download-sounds-fallback.js",
     "create-sound-placeholders": "node scripts/create-sound-placeholders.js",
     "generate-sound-placeholders": "node scripts/generate-sound-placeholders.js",
+    "create-better-placeholders": "node scripts/create-better-placeholders.js",
     "check-sounds": "node scripts/check-sounds.js"
   },
   "dependencies": {

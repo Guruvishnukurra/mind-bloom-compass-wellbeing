@@ -33,8 +33,8 @@ function checkSoundFiles() {
     
     if (fs.existsSync(filePath)) {
       const stats = fs.statSync(filePath);
-      const fileSizeKB = Math.round(stats.size / 1024);
-      console.log(`✅ ${soundFile} (${fileSizeKB} KB)`);
+      const fileSizeKB = stats.size / 1024;
+      console.log(`✅ ${soundFile} (${fileSizeKB.toFixed(2)} KB)`);
     } else {
       console.log(`❌ ${soundFile} (missing)`);
       allFilesExist = false;

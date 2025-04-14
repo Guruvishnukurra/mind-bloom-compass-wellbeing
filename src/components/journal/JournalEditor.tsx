@@ -272,10 +272,9 @@ export function JournalEditor() {
             title: title.trim(),
             content,
             tags,
-            mood: selectedMood,
-            word_count: wordCount,
+            sentiment_score: null, // This is in the schema but we're not using it yet
             created_at: currentDate,
-            date: currentDate
+            updated_at: currentDate
           }
         ]);
 

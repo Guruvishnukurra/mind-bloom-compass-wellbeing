@@ -6,8 +6,11 @@ import { format } from 'date-fns';
 
 interface MeditationSession {
   id: string;
+  user_id: string;
   meditation_type: string;
   duration: number;
+  completed: boolean;
+  notes: string | null;
   created_at: string;
 }
 

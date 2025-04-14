@@ -98,10 +98,16 @@ These scripts will download free, royalty-free sound files from public sources a
 If both scripts fail, you can create placeholder MP3 files:
 
 ```sh
-npm run generate-sound-placeholders
+npm run create-better-placeholders
 ```
 
-This will create minimal valid MP3 files that can be used by the application, although they will be silent.
+This will create valid MP3 files that can be used by the application, although they will be silent. This script attempts to use ffmpeg if available, or falls back to a built-in method.
+
+Alternatively, you can use the simpler placeholder generator:
+
+```sh
+npm run generate-sound-placeholders
+```
 
 You can check if all required sound files are present with:
 

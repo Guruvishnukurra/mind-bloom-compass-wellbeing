@@ -6,9 +6,11 @@ import { BookOpen, Calendar } from "lucide-react";
 interface JournalEntry {
   id: string;
   created_at: string;
+  updated_at: string;
   title: string;
   content: string;
-  mood?: string;
+  tags: string[] | null;
+  sentiment_score: number | null;
 }
 
 interface JournalEntriesProps {
@@ -74,14 +76,19 @@ export function JournalEntries({ limit = 5 }: JournalEntriesProps) {
                 </span>
               </div>
             </div>
-            <p className="tranquil-text text-sm mt-2 line-clamp-2">{entry.content}</p>
-            {entry.mood && (
-              <div className="mt-2">
+            <div className="tranquil-text text-sm mt-2 line-clamp-2" dangerouslySetInnerHTML={{ __html: entry.content.substring(0, 150) + (entry.content.length > 150 ? '...' : '') }} />
+            <div className="mt-2 flex flex-wrap gap-2">
+              {entry.sentiment_score !== null && (
                 <span className="text-xs bg-wellness-blue/10 text-wellness-blue px-2 py-1 rounded-full">
-                  {entry.mood}
+                  Sentiment: {entry.sentiment_score.toFixed(1)}
                 </span>
-              </div>
-            )}
+              )}
+              {entry.tags && entry.tags.map(tag => (
+                <span key={tag} className="text-xs bg-wellness-lavender/10 text-wellness-lavender px-2 py-1 rounded-full">
+                  #{tag}
+                </span>
+              ))}
+            </div>
           </div>
         </Card>
       ))}

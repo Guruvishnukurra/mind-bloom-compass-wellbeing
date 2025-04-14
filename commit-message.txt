@@ -1,16 +1,23 @@
 UI and functionality improvements:
 
 1. Added daily quote at the top of the Dashboard
-2. Added prominent meditation start button
-3. Moved mental health helpline to the bottom of the Dashboard
-4. Fixed sound file paths in components
-5. Added sound file generation script for placeholder MP3 files
-6. Added sound file checking script
+2. Added prominent meditation start button on Dashboard
+3. Added prominent meditation start button in Meditation Timer
+4. Moved mental health helpline to the bottom of the Dashboard
+5. Fixed sound file paths in components
+6. Added sound file generation script for placeholder MP3 files
+7. Added sound file checking script
+8. Fixed database schema mismatches in Journal and Meditation components
+9. Updated interfaces to match database schema
+10. Fixed journal entry saving functionality
+11. Added improved sound placeholder generator that creates valid MP3 files
+12. Fixed routing issues when refreshing the page
+13. Added configuration for various hosting platforms
 
 These changes improve the overall user experience and fix several critical bugs in the application.
 
 NOTE: To generate placeholder sound files:
-npm run generate-sound-placeholders
+npm run create-better-placeholders
 
 To check if all sound files are present:
 npm run check-sounds

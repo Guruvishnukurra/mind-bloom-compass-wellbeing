@@ -8,8 +8,10 @@ interface JournalEntry {
   id: string;
   title: string;
   content: string;
-  mood: number;
+  tags: string[] | null;
+  sentiment_score: number | null;
   created_at: string;
+  updated_at: string;
   user_id: string;
 }
 
@@ -85,9 +87,21 @@ export default function JournalList({ limit }: JournalListProps) {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="line-clamp-3">{entry.content}</p>
-            <div className="mt-2 text-sm text-gray-500">
-              Mood: {entry.mood}/10
+            <div dangerouslySetInnerHTML={{ __html: entry.content.substring(0, 200) + (entry.content.length > 200 ? '...' : '') }} className="line-clamp-3" />
+            <div className="mt-4 flex flex-wrap gap-2 items-center">
+              {entry.sentiment_score !== null && (
+                <div className="px-2 py-1 bg-wellness-teal/10 text-wellness-teal rounded-full text-xs">
+                  Sentiment: {entry.sentiment_score.toFixed(1)}
+                </div>
+              )}
+              {entry.tags && entry.tags.map(tag => (
+                <div key={tag} className="px-2 py-1 bg-wellness-lavender/10 text-wellness-lavender rounded-full text-xs">
+                  #{tag}
+                </div>
+              ))}
+              <div className="px-2 py-1 bg-wellness-blue/10 text-wellness-blue rounded-full text-xs">
+                {new Date(entry.updated_at).toLocaleDateString() !== new Date(entry.created_at).toLocaleDateString() ? 'Updated' : 'Created'}: {format(new Date(entry.updated_at), 'PPp')}
+              </div>
             </div>
           </CardContent>
         </Card>

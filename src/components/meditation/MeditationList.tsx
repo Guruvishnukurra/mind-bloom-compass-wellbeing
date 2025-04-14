@@ -5,10 +5,12 @@ import { Brain, Clock } from "lucide-react";
 
 interface MeditationSession {
   id: string;
-  created_at: string;
+  user_id: string;
   duration: number;
-  type: string;
-  notes?: string;
+  meditation_type: string;
+  completed: boolean;
+  notes: string | null;
+  created_at: string;
 }
 
 interface MeditationListProps {
@@ -65,11 +67,11 @@ export function MeditationList({ limit = 5 }: MeditationListProps) {
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
                 <Brain className="w-5 h-5 text-wellness-blue" />
-                <h3 className="tranquil-heading">{session.type}</h3>
+                <h3 className="tranquil-heading">{session.meditation_type}</h3>
               </div>
               <div className="flex items-center space-x-2 text-wellness-blue/70">
                 <Clock className="w-4 h-4" />
-                <span className="tranquil-text">{session.duration} minutes</span>
+                <span className="tranquil-text">{Math.floor(session.duration / 60)} minutes</span>
               </div>
             </div>
             {session.notes && (
