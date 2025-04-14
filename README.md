@@ -78,36 +78,12 @@ You can copy the `.env.example` file to `.env` and update it with your Supabase 
 
 ## Sound Files
 
-This project uses various sound files for meditation and ambient sounds. To download the sound files, run:
-
-```sh
-npm run download-sounds
-```
-
-If that doesn't work due to download restrictions, try the fallback method:
-
-```sh
-npm run download-sounds-fallback
-```
-
-These scripts will download free, royalty-free sound files from public sources and place them in the `public/sounds` directory. The scripts download:
+This project includes all necessary sound files for meditation and ambient sounds in the `public/sounds` directory:
 
 - Ambient sounds: rain.mp3, birds.mp3, night.mp3, ocean-waves.mp3, forest.mp3, stream.mp3, chimes.mp3, bells.mp3
 - Meditation bell: meditation-bell.mp3
 
-If both scripts fail, you can create placeholder MP3 files:
-
-```sh
-npm run create-better-placeholders
-```
-
-This will create valid MP3 files that can be used by the application, although they will be silent. This script attempts to use ffmpeg if available, or falls back to a built-in method.
-
-Alternatively, you can use the simpler placeholder generator:
-
-```sh
-npm run generate-sound-placeholders
-```
+These files are included in the repository, so users don't need to download them separately.
 
 You can check if all required sound files are present with:
 
