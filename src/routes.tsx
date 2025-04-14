@@ -31,20 +31,21 @@ export function AppRoutes() {
 
   // Show configuration warning if Supabase is not configured
   if (!isSupabaseConfigured) {
+    console.error("Supabase configuration missing or invalid. Check your .env file.");
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
-        <div className="max-w-md p-6 bg-white rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Configuration Required</h1>
-          <p className="mb-4">
+        <div className="max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <h1 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-4">Configuration Required</h1>
+          <p className="mb-4 dark:text-white">
             Supabase credentials are not properly configured. Please update your .env file with valid Supabase URL and anonymous key.
           </p>
-          <div className="bg-gray-100 p-4 rounded text-left mb-4 overflow-x-auto">
-            <pre className="text-sm">
+          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded text-left mb-4 overflow-x-auto">
+            <pre className="text-sm dark:text-white">
               VITE_SUPABASE_URL=your_actual_supabase_url<br/>
               VITE_SUPABASE_ANON_KEY=your_actual_supabase_anon_key
             </pre>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             After updating the .env file, restart your development server.
           </p>
         </div>
