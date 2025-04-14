@@ -78,12 +78,12 @@ You can copy the `.env.example` file to `.env` and update it with your Supabase 
 
 ## Sound Files
 
-This project includes all necessary sound files for meditation and ambient sounds in the `public/sounds` directory:
+This project automatically downloads all necessary sound files for meditation and ambient sounds during the build process:
 
 - Ambient sounds: rain.mp3, birds.mp3, night.mp3, ocean-waves.mp3, forest.mp3, stream.mp3, chimes.mp3, bells.mp3
 - Meditation bell: meditation-bell.mp3
 
-These files are included in the repository, so users don't need to download them separately.
+The sound files are downloaded when you run `npm run dev` or `npm run build`, so users don't need to download them separately. If the download fails, fallback sound files are created automatically.
 
 You can check if all required sound files are present with:
 
