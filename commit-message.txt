@@ -1,0 +1,17 @@
+UI and functionality improvements:
+
+1. Removed mood graph and distribution from Dashboard
+2. Added Indian mental health helpline numbers
+3. Fixed journal entry saving functionality
+4. Fixed meditation timer start functionality
+5. Updated color scheme to more calming colors
+6. Added calming sounds component with playable audio
+7. Added achievements display on Dashboard
+8. Fixed confetti animation for mood tracking
+9. Added motion animations for better user experience
+10. Added README for sound files with instructions for downloading
+
+These changes improve the overall user experience and fix several critical bugs in the application.
+
+NOTE: Sound files need to be downloaded separately and placed in the public/sounds directory.
+See public/sounds/README.md for details on required files and where to get them.

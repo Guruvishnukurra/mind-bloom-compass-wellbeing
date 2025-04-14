@@ -5,14 +5,14 @@
 @tailwind utilities;
 
 :root {
-  /* Primary Colors */
-  --color-teal: #1A7A77;
-  --color-lavender: #ACBCF4;
-  --color-sage: #C2D6C5;
+  /* Primary Colors - Calming Blues and Greens */
+  --color-teal: #3AAFA9;
+  --color-lavender: #7B68EE;
+  --color-sage: #A8D8B9;
   
-  /* Secondary Colors */
-  --color-peach: #FFBC97;
-  --color-mauve: #D4ADCF;
+  /* Secondary Colors - Soft and Soothing */
+  --color-peach: #FFCBA4;
+  --color-mauve: #D8BFD8;
   
   /* Neutral Colors */
   --color-white: #F8FAFC;
@@ -22,17 +22,17 @@
   /* Functional Colors */
   --color-success: #4AD295;
   --color-alert: #F9B44A;
-  --color-focus: #8B5CF6;
+  --color-focus: #9370DB;
   
-  /* Wellness Theme Colors */
-  --wellness-teal: #1A7A77;
-  --wellness-lavender: #ACBCF4;
-  --wellness-sage: #C2D6C5;
-  --wellness-soft-coral: #FFBC97;
-  --wellness-amber: #F9B44A;
-  --wellness-blue: #7D98A1;
-  --wellness-purple: #8B5CF6;
-  --wellness-pale-yellow: #F9D56E;
+  /* Wellness Theme Colors - Calming Palette */
+  --wellness-teal: #3AAFA9;
+  --wellness-lavender: #7B68EE;
+  --wellness-sage: #A8D8B9;
+  --wellness-soft-coral: #FFCBA4;
+  --wellness-amber: #FFD700;
+  --wellness-blue: #6495ED;
+  --wellness-purple: #9370DB;
+  --wellness-pale-yellow: #FFFACD;
   --wellness-dark-gray: #334155;
 }
 

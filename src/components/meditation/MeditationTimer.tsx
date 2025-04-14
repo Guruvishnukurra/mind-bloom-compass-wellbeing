@@ -479,6 +479,48 @@ export function MeditationTimer() {
       // If timer is completed, reset it first
       resetTimer();
     }
+    
+    // Start the timer and audio
+    if (!isActive) {
+      // Play the bell sound to indicate start
+      if (bellRef.current) {
+        bellRef.current.volume = isMuted ? 0 : volume / 100;
+        bellRef.current.play().catch(e => {
+          console.error('Error playing bell:', e);
+          if (e.name === 'NotSupportedError' || e.name === 'NotFoundError') {
+            toast.error('Meditation bell sound file not found', {
+              description: 'Please download sound files as described in the documentation.',
+            });
+          }
+        });
+      }
+      
+      // Start ambient sound
+      if (ambienceRef.current) {
+        const ambienceForType = AMBIENT_SOUNDS.find(sound => sound.id === selectedType.ambience) || AMBIENT_SOUNDS[0];
+        ambienceRef.current.src = ambienceForType.url;
+        ambienceRef.current.loop = true;
+        ambienceRef.current.volume = isMuted ? 0 : (volume / 100) * 0.5;
+        ambienceRef.current.play().catch(e => {
+          console.error('Error playing ambience:', e);
+          if (e.name === 'NotSupportedError' || e.name === 'NotFoundError') {
+            toast.error(`Ambient sound file not found: ${ambienceForType.name}`, {
+              description: 'Please download sound files as described in the documentation.',
+            });
+          }
+        });
+      }
+    } else {
+      // Pause audio when meditation is paused
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      
+      if (ambienceRef.current) {
+        ambienceRef.current.pause();
+      }
+    }
+    
     setIsActive(!isActive);
   };
 

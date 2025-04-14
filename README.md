@@ -76,6 +76,17 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 You can copy the `.env.example` file to `.env` and update it with your Supabase credentials. You can find these credentials in your Supabase project dashboard under Settings > API.
 
+## Sound Files
+
+This project uses various sound files for meditation and ambient sounds. You need to download these files separately and place them in the `public/sounds` directory.
+
+Required sound files:
+- Ambient sounds: ocean-waves.mp3, forest.mp3, rain.mp3, chimes.mp3, birds.mp3, night.mp3, stream.mp3, bells.mp3
+- Meditation bell: meditation-bell.mp3
+- Guided meditations: guided-breathing.mp3, guided-mindfulness.mp3, guided-body-scan.mp3, etc.
+
+See `public/sounds/README.md` for detailed instructions on downloading and setting up the sound files.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/3e543e6a-4f74-455b-8475-4937b91b77b7) and click on Share -> Publish.

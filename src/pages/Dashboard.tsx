@@ -10,9 +10,8 @@ import { MeditationList } from "@/components/meditation/MeditationList";
 import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
 import { ResourcesList } from "@/components/resources/ResourcesList";
-import { MoodAnalytics } from "@/components/analytics/MoodAnalytics";
-import { WellbeingScore } from "@/components/analytics/WellbeingScore";
-import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2 } from "lucide-react";
+import { CalmingSounds } from "@/components/sounds/CalmingSounds";
+import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2, Heart } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -52,22 +51,35 @@ export default function Dashboard() {
         <p className="text-muted-foreground mt-2">Your journey to mental wellness</p>
       </motion.div>
 
-      {/* Featured Quote Section */}
-      {quote && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-wellness-blue/20 to-wellness-lavender/20" />
-          <div className="relative z-10">
-            <Quote className="w-8 h-8 text-wellness-lavender mb-4" />
-            <p className="text-xl font-medium mb-2">{quote.text}</p>
-            <p className="text-muted-foreground">- {quote.author}</p>
+      {/* Mental Health Helpline Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-wellness-purple/20 to-wellness-teal/20" />
+        <div className="relative z-10">
+          <h3 className="text-xl font-medium mb-4 flex items-center gap-2">
+            <Heart className="w-6 h-6 text-wellness-teal" />
+            Indian Mental Health Helplines
+          </h3>
+          <div className="space-y-2">
+            <p className="flex items-center gap-2">
+              <span className="font-medium">NIMHANS:</span> 080-46110007
+            </p>
+            <p className="flex items-center gap-2">
+              <span className="font-medium">Vandrevala Foundation:</span> 9999-666-555
+            </p>
+            <p className="flex items-center gap-2">
+              <span className="font-medium">iCall:</span> 022-25521111
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              These helplines provide free counseling and support 24/7
+            </p>
           </div>
-        </motion.div>
-      )}
+        </div>
+      </motion.div>
 
       {/* Welcome Section */}
       <motion.div
@@ -115,7 +127,7 @@ export default function Dashboard() {
         </Button>
       </motion.div>
 
-      {/* Analytics Section */}
+      {/* Achievements Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -123,20 +135,32 @@ export default function Dashboard() {
         className="mb-8"
       >
         <Card className="p-6">
-          <MoodAnalytics />
+          <h2 className="text-xl font-bold mb-4">Your Achievements</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-wellness-teal/10 rounded-lg p-4 text-center">
+              <div className="text-3xl font-bold text-wellness-teal mb-2">250</div>
+              <div className="text-sm text-muted-foreground">Wellness Points</div>
+            </div>
+            <div className="bg-wellness-lavender/10 rounded-lg p-4 text-center">
+              <div className="text-3xl font-bold text-wellness-lavender mb-2">5</div>
+              <div className="text-sm text-muted-foreground">Day Streak</div>
+            </div>
+            <div className="bg-wellness-amber/10 rounded-lg p-4 text-center">
+              <div className="text-3xl font-bold text-wellness-amber mb-2">8</div>
+              <div className="text-sm text-muted-foreground">Badges Earned</div>
+            </div>
+          </div>
         </Card>
       </motion.div>
 
-      {/* Wellbeing Score */}
+      {/* Calming Sounds Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
         className="mb-8"
       >
-        <Card className="p-6">
-          <WellbeingScore />
-        </Card>
+        <CalmingSounds />
       </motion.div>
 
       {/* Main Content */}

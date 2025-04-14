@@ -262,6 +262,8 @@ export function JournalEditor() {
 
     try {
       const content = editor.getHTML();
+      const currentDate = new Date().toISOString();
+      
       const { error } = await supabase
         .from('journal_entries')
         .insert([
@@ -272,6 +274,8 @@ export function JournalEditor() {
             tags,
             mood: selectedMood,
             word_count: wordCount,
+            created_at: currentDate,
+            date: currentDate
           }
         ]);
 
