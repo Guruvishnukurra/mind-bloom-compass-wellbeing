@@ -78,14 +78,36 @@ You can copy the `.env.example` file to `.env` and update it with your Supabase 
 
 ## Sound Files
 
-This project uses various sound files for meditation and ambient sounds. You need to download these files separately and place them in the `public/sounds` directory.
+This project uses various sound files for meditation and ambient sounds. To download the sound files, run:
 
-Required sound files:
-- Ambient sounds: ocean-waves.mp3, forest.mp3, rain.mp3, chimes.mp3, birds.mp3, night.mp3, stream.mp3, bells.mp3
+```sh
+npm run download-sounds
+```
+
+If that doesn't work due to download restrictions, try the fallback method:
+
+```sh
+npm run download-sounds-fallback
+```
+
+These scripts will download free, royalty-free sound files from public sources and place them in the `public/sounds` directory. The scripts download:
+
+- Ambient sounds: rain.mp3, birds.mp3, night.mp3, ocean-waves.mp3, forest.mp3, stream.mp3, chimes.mp3, bells.mp3
 - Meditation bell: meditation-bell.mp3
-- Guided meditations: guided-breathing.mp3, guided-mindfulness.mp3, guided-body-scan.mp3, etc.
 
-See `public/sounds/README.md` for detailed instructions on downloading and setting up the sound files.
+If both scripts fail, you can create placeholder files with instructions on how to manually download suitable sound files:
+
+```sh
+npm run create-sound-placeholders
+```
+
+You can check if all required sound files are present with:
+
+```sh
+npm run check-sounds
+```
+
+You can also use your own sound files by placing MP3 files with the same names in the `public/sounds` directory.
 
 ## How can I deploy this project?
 

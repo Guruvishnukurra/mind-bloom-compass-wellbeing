@@ -1,3 +1,9 @@
 This is a placeholder file to ensure the sounds directory is included in version control.
 
-Please download the actual sound files as described in README.md in this directory.
+To download the sound files, run:
+
+```
+npm run download-sounds
+```
+
+This will download all the necessary sound files for the application.

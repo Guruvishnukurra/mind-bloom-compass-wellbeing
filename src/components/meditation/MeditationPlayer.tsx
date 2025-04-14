@@ -18,11 +18,11 @@ interface MeditationPlayerProps {
 
 // Meditation audio tracks
 const meditationSounds = {
-  ambient: "/sounds/ambient.mp3",
-  nature: "/sounds/nature.mp3",
-  ocean: "/sounds/ocean.mp3",
-  rainfall: "/sounds/rainfall.mp3",
-  default: "/sounds/meditation-bells.mp3"
+  ambient: "/sounds/bells.mp3",
+  nature: "/sounds/forest.mp3",
+  ocean: "/sounds/ocean-waves.mp3",
+  rainfall: "/sounds/rain.mp3",
+  default: "/sounds/meditation-bell.mp3"
 };
 
 const MeditationPlayer: React.FC<MeditationPlayerProps> = ({ isOpen, onClose, meditation }) => {

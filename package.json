@@ -8,7 +8,11 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "download-sounds": "node scripts/download-sounds.js",
+    "download-sounds-fallback": "node scripts/download-sounds-fallback.js",
+    "create-sound-placeholders": "node scripts/create-sound-placeholders.js",
+    "check-sounds": "node scripts/check-sounds.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

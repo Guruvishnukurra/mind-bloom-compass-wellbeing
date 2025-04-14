@@ -1,8 +1,22 @@
 # Sound Files for Mind Bloom Compass Wellbeing
 
-This directory should contain the following sound files for the application:
+This directory contains sound files used by the application.
 
-## Ambient Sounds
+## Automatic Download
+
+To download all required sound files automatically, run:
+
+```
+npm run download-sounds
+```
+
+This script will download free, royalty-free sound files from Pixabay and place them in this directory.
+
+## Sound Files Downloaded
+
+The script downloads the following files:
+
+### Ambient Sounds
 - `ocean-waves.mp3` - Ocean waves sound
 - `forest.mp3` - Forest ambience sound
 - `rain.mp3` - Gentle rain sound
@@ -11,27 +25,14 @@ This directory should contain the following sound files for the application:
 - `night.mp3` - Night sounds
 - `stream.mp3` - Flowing stream sound
 - `bells.mp3` - Tibetan bells sound
+
+### Meditation Sounds
 - `meditation-bell.mp3` - Bell sound for meditation start/end
 
-## Guided Meditation Audio
-- `guided-breathing.mp3` - Guided breathing exercise
-- `guided-mindfulness.mp3` - Guided mindfulness meditation
-- `guided-body-scan.mp3` - Guided body scan meditation
-- `guided-loving-kindness.mp3` - Guided loving-kindness meditation
-- `guided-gratitude.mp3` - Guided gratitude meditation
-- `guided-sleep.mp3` - Guided sleep meditation
-- `guided-anxiety.mp3` - Guided anxiety relief meditation
-- `guided-focus.mp3` - Guided focus and concentration meditation
+## Using Custom Sounds
 
-## How to Add Sound Files
+If you want to use different sounds, you can replace these files with your own audio files in MP3 format. Make sure to keep the same filenames for the application to find them correctly.
 
-1. Download royalty-free sound files from sources like:
-   - [Freesound](https://freesound.org/)
-   - [Pixabay](https://pixabay.com/sound-effects/)
-   - [Zapsplat](https://www.zapsplat.com/)
+## Sound Credits
 
-2. Ensure files are in MP3 format and have appropriate file sizes (ideally under 2MB each)
-
-3. Name the files exactly as listed above and place them in this directory
-
-4. Test the application to ensure sounds play correctly
+All sounds are downloaded from SoundJay.com and are free to use as per their [terms of use](https://www.soundjay.com/tos.html).
