@@ -10,7 +10,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check-sounds": "node scripts/check-sounds.js"
+    "check-sounds": "node scripts/check-sounds.js",
+    "create-robust-mp3s": "node scripts/create-robust-mp3s.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
