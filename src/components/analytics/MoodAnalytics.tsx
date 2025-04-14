@@ -92,13 +92,17 @@ export function MoodAnalytics() {
     
     // Get last 7 days of data
     const sortedEntries = [...moodEntries]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
       .slice(0, 7)
       .reverse();
       
-    return sortedEntries.map(entry => ({
-      date: new Date(entry.date).toLocaleDateString('en-US', { weekday: 'short' }),
-      mood: entry.mood
+    // Return only mood values without dates
+    return sortedEntries.map((entry, index) => ({
+      index: index + 1,
+      mood: entry.mood_score, // Fix property name to match database schema
+      energy: entry.energy_level || 0,
+      // Store the date in a separate property for tooltip display
+      tooltipDate: new Date(entry.created_at || entry.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
     }));
   };
   
@@ -197,39 +201,144 @@ export function MoodAnalytics() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-4">
-              <h3 className="text-lg font-medium mb-4">Weekly Mood</h3>
+            <Card className="p-4 overflow-hidden">
+              <h3 className="text-lg font-medium mb-4">Your Mood Journey</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={weeklyData()}>
-                    <XAxis dataKey="date" />
-                    <YAxis domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} />
-                    <RechartsTooltip />
+                  <LineChart data={weeklyData()} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="var(--wellness-teal)" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="var(--wellness-teal)" stopOpacity={0.2}/>
+                      </linearGradient>
+                      <linearGradient id="energyGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="var(--wellness-lavender)" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="var(--wellness-lavender)" stopOpacity={0.2}/>
+                      </linearGradient>
+                    </defs>
+                    <XAxis 
+                      dataKey="index" 
+                      axisLine={false} 
+                      tickLine={false}
+                      tick={{ fill: 'var(--wellness-dark-gray)' }}
+                      label={{ value: 'Recent Entries', position: 'insideBottom', offset: -5 }}
+                    />
+                    <YAxis 
+                      domain={[1, 10]} 
+                      ticks={[1, 3, 5, 7, 10]} 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: 'var(--wellness-dark-gray)' }}
+                    />
+                    <RechartsTooltip 
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-white p-3 rounded-lg shadow-md border border-gray-100">
+                              <p className="text-sm font-medium">{payload[0].payload.tooltipDate}</p>
+                              <p className="text-sm text-wellness-teal">
+                                Mood: <span className="font-semibold">{payload[0].value}</span>
+                              </p>
+                              {payload[1] && (
+                                <p className="text-sm text-wellness-lavender">
+                                  Energy: <span className="font-semibold">{payload[1].value}</span>
+                                </p>
+                              )}
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
                     <Line 
                       type="monotone" 
                       dataKey="mood" 
-                      stroke="#8884d8" 
-                      strokeWidth={2} 
-                      dot={{ r: 4 }} 
+                      stroke="var(--wellness-teal)" 
+                      strokeWidth={3} 
+                      dot={{ r: 6, fill: 'var(--wellness-teal)', strokeWidth: 2, stroke: 'white' }}
+                      activeDot={{ r: 8, fill: 'var(--wellness-teal)', strokeWidth: 2, stroke: 'white' }}
+                      name="Mood"
+                      animationDuration={1500}
+                      isAnimationActive={true}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="energy" 
+                      stroke="var(--wellness-lavender)" 
+                      strokeWidth={3} 
+                      dot={{ r: 6, fill: 'var(--wellness-lavender)', strokeWidth: 2, stroke: 'white' }}
+                      activeDot={{ r: 8, fill: 'var(--wellness-lavender)', strokeWidth: 2, stroke: 'white' }}
+                      name="Energy"
+                      animationDuration={1500}
+                      animationBegin={300}
+                      isAnimationActive={true}
                     />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
+              <div className="flex justify-center gap-6 mt-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-wellness-teal"></div>
+                  <span className="text-sm">Mood</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-wellness-lavender"></div>
+                  <span className="text-sm">Energy</span>
+                </div>
+              </div>
             </Card>
             
-            <Card className="p-4">
+            <Card className="p-4 overflow-hidden">
               <h3 className="text-lg font-medium mb-4">Mood Distribution</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={moodDistribution}>
-                    <XAxis dataKey="mood" />
-                    <YAxis />
-                    <RechartsTooltip 
-                      formatter={(value: number, name: string) => [`${value} entries`, 'Count']}
+                  <BarChart data={moodDistribution} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="var(--wellness-soft-coral)" stopOpacity={0.8}/>
+                        <stop offset="100%" stopColor="var(--wellness-pale-yellow)" stopOpacity={0.8}/>
+                      </linearGradient>
+                    </defs>
+                    <XAxis 
+                      dataKey="mood" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: 'var(--wellness-dark-gray)' }}
+                      label={{ value: 'Mood Level', position: 'insideBottom', offset: -5 }}
                     />
-                    <Bar dataKey="count" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+                    <YAxis 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: 'var(--wellness-dark-gray)' }}
+                      label={{ value: 'Number of Entries', angle: -90, position: 'insideLeft' }}
+                    />
+                    <RechartsTooltip 
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-white p-3 rounded-lg shadow-md border border-gray-100">
+                              <p className="text-sm font-medium">Mood Level: {payload[0].payload.mood}</p>
+                              <p className="text-sm">
+                                <span className="font-semibold">{payload[0].value}</span> entries
+                              </p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar 
+                      dataKey="count" 
+                      fill="url(#colorGradient)" 
+                      radius={[8, 8, 0, 0]}
+                      animationDuration={1500}
+                      isAnimationActive={true}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
+              </div>
+              <div className="mt-4 text-sm text-center text-muted-foreground">
+                See which mood levels you experience most frequently
               </div>
             </Card>
           </div>

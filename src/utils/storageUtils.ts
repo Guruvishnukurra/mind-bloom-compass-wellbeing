@@ -6,13 +6,19 @@
 export interface MoodEntry {
   id: number;
   date: string;
-  mood: number;
+  created_at?: string;
+  user_id?: string;
+  mood_score: number;
+  energy_level?: number;
+  activities?: string[];
   notes: string;
 }
 
 export interface JournalEntry {
   id: number;
   date: string;
+  created_at?: string;
+  user_id?: string;
   prompt: string;
   content: string;
   mood: string;
@@ -63,13 +69,13 @@ export const getAnalyticsData = (): {
   }
 
   // Calculate average mood
-  const totalMood = moodEntries.reduce((sum, entry) => sum + entry.mood, 0);
+  const totalMood = moodEntries.reduce((sum, entry) => sum + entry.mood_score, 0);
   const averageMood = Number((totalMood / moodEntries.length).toFixed(1));
   
   // Count occurrences of each mood
   const moodCounts: Record<number, number> = {};
   moodEntries.forEach(entry => {
-    moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
+    moodCounts[entry.mood_score] = (moodCounts[entry.mood_score] || 0) + 1;
   });
   
   // Find most frequent mood
@@ -81,14 +87,14 @@ export const getAnalyticsData = (): {
   
   if (moodEntries.length >= 3) {
     const recentEntries = [...moodEntries].sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
+      new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime()
     ).slice(0, 7);
     
     const firstHalf = recentEntries.slice(0, Math.ceil(recentEntries.length / 2));
     const secondHalf = recentEntries.slice(Math.ceil(recentEntries.length / 2));
     
-    const firstHalfAvg = firstHalf.reduce((sum, entry) => sum + entry.mood, 0) / firstHalf.length;
-    const secondHalfAvg = secondHalf.reduce((sum, entry) => sum + entry.mood, 0) / secondHalf.length;
+    const firstHalfAvg = firstHalf.reduce((sum, entry) => sum + entry.mood_score, 0) / firstHalf.length;
+    const secondHalfAvg = secondHalf.reduce((sum, entry) => sum + entry.mood_score, 0) / secondHalf.length;
     
     const difference = firstHalfAvg - secondHalfAvg;
     

@@ -23,6 +23,17 @@
   --color-success: #4AD295;
   --color-alert: #F9B44A;
   --color-focus: #8B5CF6;
+  
+  /* Wellness Theme Colors */
+  --wellness-teal: #1A7A77;
+  --wellness-lavender: #ACBCF4;
+  --wellness-sage: #C2D6C5;
+  --wellness-soft-coral: #FFBC97;
+  --wellness-amber: #F9B44A;
+  --wellness-blue: #7D98A1;
+  --wellness-purple: #8B5CF6;
+  --wellness-pale-yellow: #F9D56E;
+  --wellness-dark-gray: #334155;
 }
 
 @layer base {

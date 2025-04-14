@@ -1,0 +1,2 @@
+#!/bin/bash
+npm install canvas-confetti @tiptap/extension-color @tiptap/extension-highlight @tiptap/extension-image @tiptap/extension-text-align @tiptap/extension-text-style @tiptap/extension-underline
