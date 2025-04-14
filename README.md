@@ -95,11 +95,13 @@ These scripts will download free, royalty-free sound files from public sources a
 - Ambient sounds: rain.mp3, birds.mp3, night.mp3, ocean-waves.mp3, forest.mp3, stream.mp3, chimes.mp3, bells.mp3
 - Meditation bell: meditation-bell.mp3
 
-If both scripts fail, you can create placeholder files with instructions on how to manually download suitable sound files:
+If both scripts fail, you can create placeholder MP3 files:
 
 ```sh
-npm run create-sound-placeholders
+npm run generate-sound-placeholders
 ```
+
+This will create minimal valid MP3 files that can be used by the application, although they will be silent.
 
 You can check if all required sound files are present with:
 

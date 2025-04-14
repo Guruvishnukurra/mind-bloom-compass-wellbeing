@@ -16,39 +16,39 @@ if (!fs.existsSync(soundsDir)) {
 const soundFiles = [
   {
     name: 'rain.mp3',
-    url: 'https://www.soundjay.com/nature/sounds/rain-01.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-light-rain-loop-2393.mp3'
   },
   {
     name: 'birds.mp3',
-    url: 'https://www.soundjay.com/nature/sounds/bird-singing-01.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-morning-birds-singing-2472.mp3'
   },
   {
     name: 'night.mp3',
-    url: 'https://www.soundjay.com/nature/sounds/cricket-2.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-night-crickets-loop-1773.mp3'
   },
   {
     name: 'ocean-waves.mp3',
-    url: 'https://www.soundjay.com/nature/sounds/ocean-wave-1.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-sea-waves-loop-1196.mp3'
   },
   {
     name: 'forest.mp3',
-    url: 'https://www.soundjay.com/nature/sounds/forest-1.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-forest-birds-ambience-1210.mp3'
   },
   {
     name: 'stream.mp3',
-    url: 'https://www.soundjay.com/nature/sounds/river-6.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-flowing-river-water-loop-1181.mp3'
   },
   {
     name: 'chimes.mp3',
-    url: 'https://www.soundjay.com/ambient/sounds/wind-chimes-1.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-wind-chimes-2014.mp3'
   },
   {
     name: 'bells.mp3',
-    url: 'https://www.soundjay.com/ambient/sounds/bell-meditation-01.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-tibetan-bell-gong-hit-2293.mp3'
   },
   {
     name: 'meditation-bell.mp3',
-    url: 'https://www.soundjay.com/ambient/sounds/bell-meditation-02.mp3'
+    url: 'https://assets.mixkit.co/sfx/preview/mixkit-meditation-bell-595.mp3'
   }
 ];
 

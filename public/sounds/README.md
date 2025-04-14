@@ -35,4 +35,4 @@ If you want to use different sounds, you can replace these files with your own a
 
 ## Sound Credits
 
-All sounds are downloaded from SoundJay.com and are free to use as per their [terms of use](https://www.soundjay.com/tos.html).
+All sounds are downloaded from Mixkit.co and are free to use as per their [license](https://mixkit.co/license/).

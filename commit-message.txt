@@ -1,24 +1,16 @@
 UI and functionality improvements:
 
-1. Removed mood graph and distribution from Dashboard
-2. Added Indian mental health helpline numbers
-3. Fixed journal entry saving functionality
-4. Fixed meditation timer start functionality
-5. Updated color scheme to more calming colors
-6. Added calming sounds component with playable audio
-7. Added achievements display on Dashboard
-8. Fixed confetti animation for mood tracking
-9. Added motion animations for better user experience
-10. Added multiple sound file download scripts with fallback options
-11. Fixed sound file paths in components
-12. Added sound file checking script
+1. Added daily quote at the top of the Dashboard
+2. Added prominent meditation start button
+3. Moved mental health helpline to the bottom of the Dashboard
+4. Fixed sound file paths in components
+5. Added sound file generation script for placeholder MP3 files
+6. Added sound file checking script
 
 These changes improve the overall user experience and fix several critical bugs in the application.
 
-NOTE: To download sound files, try these commands in order:
-1. npm run download-sounds
-2. npm run download-sounds-fallback
-3. npm run create-sound-placeholders
+NOTE: To generate placeholder sound files:
+npm run generate-sound-placeholders
 
 To check if all sound files are present:
 npm run check-sounds

@@ -12,6 +12,7 @@
     "download-sounds": "node scripts/download-sounds.js",
     "download-sounds-fallback": "node scripts/download-sounds-fallback.js",
     "create-sound-placeholders": "node scripts/create-sound-placeholders.js",
+    "generate-sound-placeholders": "node scripts/generate-sound-placeholders.js",
     "check-sounds": "node scripts/check-sounds.js"
   },
   "dependencies": {

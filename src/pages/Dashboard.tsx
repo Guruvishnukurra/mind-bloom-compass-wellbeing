@@ -50,36 +50,26 @@ export default function Dashboard() {
         </h1>
         <p className="text-muted-foreground mt-2">Your journey to mental wellness</p>
       </motion.div>
-
-      {/* Mental Health Helpline Section */}
+      
+      {/* Daily Quote Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
         className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-wellness-purple/20 to-wellness-teal/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-wellness-lavender/20 to-wellness-blue/20" />
         <div className="relative z-10">
-          <h3 className="text-xl font-medium mb-4 flex items-center gap-2">
-            <Heart className="w-6 h-6 text-wellness-teal" />
-            Indian Mental Health Helplines
+          <h3 className="text-xl font-medium mb-2 flex items-center gap-2">
+            <Quote className="w-5 h-5 text-wellness-blue" />
+            Daily Inspiration
           </h3>
-          <div className="space-y-2">
-            <p className="flex items-center gap-2">
-              <span className="font-medium">NIMHANS:</span> 080-46110007
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-medium">Vandrevala Foundation:</span> 9999-666-555
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-medium">iCall:</span> 022-25521111
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              These helplines provide free counseling and support 24/7
-            </p>
-          </div>
+          <p className="italic text-lg">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
+          <p className="text-sm text-muted-foreground mt-2">— {quote?.author || "Lao Tzu"}</p>
         </div>
       </motion.div>
+
+
 
       {/* Welcome Section */}
       <motion.div
@@ -92,6 +82,24 @@ export default function Dashboard() {
           Welcome back, {user?.email ? user.email.split("@")[0] : 'Guest'}
         </h2>
         <p className="text-muted-foreground">Continue your wellness journey today</p>
+      </motion.div>
+
+      {/* Meditation Start Button */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4 }}
+        className="mb-6"
+      >
+        <Button
+          variant="default"
+          size="lg"
+          className="w-full py-8 bg-wellness-blue hover:bg-wellness-blue/90 text-white flex items-center justify-center gap-3 text-lg font-medium rounded-xl shadow-lg"
+          onClick={() => navigate("/meditation")}
+        >
+          <Brain className="w-7 h-7" />
+          Start Meditation Session
+        </Button>
       </motion.div>
 
       {/* Quick Actions */}
@@ -107,7 +115,7 @@ export default function Dashboard() {
           onClick={() => navigate("/meditation")}
         >
           <Brain className="w-6 h-6 text-wellness-blue" />
-          <span>Meditate</span>
+          <span>All Meditations</span>
         </Button>
         <Button
           variant="outline"
@@ -229,6 +237,36 @@ export default function Dashboard() {
             </Card>
           </TabsContent>
         </Tabs>
+      </motion.div>
+      
+      {/* Mental Health Helpline Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="relative overflow-hidden rounded-xl glass-effect p-6 mt-8"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-wellness-purple/20 to-wellness-teal/20" />
+        <div className="relative z-10">
+          <h3 className="text-xl font-medium mb-4 flex items-center gap-2">
+            <Heart className="w-6 h-6 text-wellness-teal" />
+            Indian Mental Health Helplines
+          </h3>
+          <div className="space-y-2">
+            <p className="flex items-center gap-2">
+              <span className="font-medium">NIMHANS:</span> 080-46110007
+            </p>
+            <p className="flex items-center gap-2">
+              <span className="font-medium">Vandrevala Foundation:</span> 9999-666-555
+            </p>
+            <p className="flex items-center gap-2">
+              <span className="font-medium">iCall:</span> 022-25521111
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              These helplines provide free counseling and support 24/7
+            </p>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
