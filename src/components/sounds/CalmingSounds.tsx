@@ -60,16 +60,13 @@ export function CalmingSounds() {
         audioRef.current.play().catch(e => {
           console.error('Error playing sound:', e);
           
-          // Show a toast message if the file is missing
-          if (e.name === 'NotSupportedError' || e.name === 'NotFoundError') {
-            // Import toast dynamically to avoid circular dependencies
-            import('sonner').then(({ toast }) => {
-              toast.error(`Sound file not found: ${sound.name}`, {
-                description: 'Please download sound files as described in the documentation.',
-                duration: 5000,
-              });
+          // Show a more helpful error message
+          import('sonner').then(({ toast }) => {
+            toast.error(`Unable to play ${sound.name}`, {
+              description: 'There was an issue playing the sound file. Please try again.',
+              duration: 3000,
             });
-          }
+          });
         });
         setPlaying(soundId);
       }

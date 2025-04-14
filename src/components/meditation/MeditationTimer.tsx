@@ -487,11 +487,9 @@ export function MeditationTimer() {
         bellRef.current.volume = isMuted ? 0 : volume / 100;
         bellRef.current.play().catch(e => {
           console.error('Error playing bell:', e);
-          if (e.name === 'NotSupportedError' || e.name === 'NotFoundError') {
-            toast.error('Meditation bell sound file not found', {
-              description: 'Please download sound files as described in the documentation.',
-            });
-          }
+          toast.error('Unable to play meditation bell', {
+            description: 'There was an issue playing the sound file. Please try again.',
+          });
         });
       }
       
@@ -503,11 +501,9 @@ export function MeditationTimer() {
         ambienceRef.current.volume = isMuted ? 0 : (volume / 100) * 0.5;
         ambienceRef.current.play().catch(e => {
           console.error('Error playing ambience:', e);
-          if (e.name === 'NotSupportedError' || e.name === 'NotFoundError') {
-            toast.error(`Ambient sound file not found: ${ambienceForType.name}`, {
-              description: 'Please download sound files as described in the documentation.',
-            });
-          }
+          toast.error(`Unable to play ${ambienceForType.name}`, {
+            description: 'There was an issue playing the ambient sound. Please try again.',
+          });
         });
       }
     } else {
