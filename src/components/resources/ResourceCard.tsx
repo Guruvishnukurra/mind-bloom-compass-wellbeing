@@ -8,10 +8,11 @@ export interface Resource {
   id: string;
   title: string;
   description: string;
-  category: string;
-  url: string;
-  image_url: string;
+  content_type: 'article' | 'video' | 'exercise' | 'tool';
+  content_url: string;
+  tags: string[];
   created_at: string;
+  updated_at: string;
 }
 
 export interface ResourceCardProps {
@@ -54,10 +55,15 @@ export const ResourceCard = ({ resource, isSaved, onSaveToggle }: ResourceCardPr
       </CardHeader>
       <CardContent className="flex-grow">
         <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
-            {resource.category}
+            {resource.content_type}
           </span>
+          {resource.tags && resource.tags.map((tag, index) => (
+            <span key={index} className="text-xs px-2 py-1 bg-secondary/10 text-secondary rounded-full">
+              {tag}
+            </span>
+          ))}
         </div>
       </CardContent>
       <CardFooter className="flex justify-between gap-4">
@@ -73,7 +79,7 @@ export const ResourceCard = ({ resource, isSaved, onSaveToggle }: ResourceCardPr
         <Button
           variant="default"
           size="sm"
-          onClick={() => window.open(resource.url, '_blank')}
+          onClick={() => window.open(resource.content_url, '_blank')}
           className="flex items-center gap-2"
         >
           <ExternalLink className="h-4 w-4" />

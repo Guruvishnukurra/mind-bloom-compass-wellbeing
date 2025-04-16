@@ -1,95 +1,20 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
-import ResourceCard from "@/components/resources/ResourceCard";
+import { ResourcesList } from "@/components/resources/ResourcesList";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 
-// Dummy data for resources
-const educationalResources = [
-  {
-    id: 1,
-    title: "Understanding Anxiety",
-    description: "Learn about the science behind anxiety and evidence-based management strategies.",
-    type: "Article",
-    tags: ["Anxiety", "CBT", "Self-Help"],
-    url: "#",
-  },
-  {
-    id: 2,
-    title: "The Science of Sleep",
-    description: "How quality sleep impacts mental health and practical tips for better rest.",
-    type: "Guide",
-    tags: ["Sleep", "Habits", "Wellness"],
-    url: "#",
-  },
-  {
-    id: 3,
-    title: "Mindfulness Fundamentals",
-    description: "Core concepts of mindfulness practice and its benefits for mental health.",
-    type: "Course",
-    tags: ["Mindfulness", "Beginners", "Practice"],
-    url: "#",
-  },
-];
-
-const exercisesResources = [
-  {
-    id: 4,
-    title: "5-4-3-2-1 Grounding Technique",
-    description: "A simple exercise to manage anxiety and bring yourself back to the present moment.",
-    type: "Exercise",
-    tags: ["Anxiety", "Grounding", "Quick"],
-    url: "#",
-  },
-  {
-    id: 5,
-    title: "Cognitive Restructuring Worksheet",
-    description: "Identify and challenge negative thought patterns with this CBT-based exercise.",
-    type: "Worksheet",
-    tags: ["CBT", "Thoughts", "Depression"],
-    url: "#",
-  },
-  {
-    id: 6,
-    title: "Progressive Muscle Relaxation",
-    description: "Step-by-step guide to release physical tension and promote relaxation.",
-    type: "Exercise",
-    tags: ["Relaxation", "Stress", "Body"],
-    url: "#",
-  },
-];
-
-const crisisResources = [
-  {
-    id: 7,
-    title: "National Suicide Prevention Lifeline",
-    description: "24/7 support for people in distress. Call 988 or chat online.",
-    type: "Hotline",
-    tags: ["Crisis", "Suicide", "Immediate Help"],
-    url: "#",
-  },
-  {
-    id: 8,
-    title: "Crisis Text Line",
-    description: "Free 24/7 text support with a trained crisis counselor. Text HOME to 741741.",
-    type: "Text Service",
-    tags: ["Crisis", "Text", "Support"],
-    url: "#",
-  },
-  {
-    id: 9,
-    title: "Finding a Therapist Guide",
-    description: "Step-by-step guidance on finding professional mental health support.",
-    type: "Guide",
-    tags: ["Therapy", "Professional Help", "Resources"],
-    url: "#",
-  },
-];
-
 const ResourcesPage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedContentType, setSelectedContentType] = useState<'article' | 'video' | 'exercise' | 'tool' | null>(null);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
     <Layout>
       <section className="py-8 wellness-gradient">
@@ -109,69 +34,77 @@ const ResourcesPage = () => {
               <Input
                 placeholder="Search resources..."
                 className="pl-10"
+                value={searchQuery}
+                onChange={handleSearch}
               />
             </div>
           </div>
 
-          <Tabs defaultValue="educational" className="w-full">
-            <TabsList className="grid grid-cols-3 md:w-[400px] mb-8">
-              <TabsTrigger value="educational">Educational</TabsTrigger>
+          <Tabs defaultValue="all" className="w-full" onValueChange={(value) => {
+            if (value === 'all') setSelectedContentType(null);
+            else if (value === 'articles') setSelectedContentType('article');
+            else if (value === 'videos') setSelectedContentType('video');
+            else if (value === 'exercises') setSelectedContentType('exercise');
+            else if (value === 'tools') setSelectedContentType('tool');
+          }}>
+            <TabsList className="grid grid-cols-5 md:w-[500px] mb-8">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="articles">Articles</TabsTrigger>
+              <TabsTrigger value="videos">Videos</TabsTrigger>
               <TabsTrigger value="exercises">Exercises</TabsTrigger>
-              <TabsTrigger value="crisis">Crisis Support</TabsTrigger>
+              <TabsTrigger value="tools">Tools</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="educational">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {educationalResources.map((resource) => (
-                  <ResourceCard
-                    key={resource.id}
-                    title={resource.title}
-                    description={resource.description}
-                    type={resource.type}
-                    tags={resource.tags}
-                    url={resource.url}
-                  />
-                ))}
-              </div>
+            <TabsContent value="all">
+              <ResourcesList searchQuery={searchQuery} contentType={null} />
+            </TabsContent>
+            
+            <TabsContent value="articles">
+              <ResourcesList searchQuery={searchQuery} contentType="article" />
+            </TabsContent>
+            
+            <TabsContent value="videos">
+              <ResourcesList searchQuery={searchQuery} contentType="video" />
             </TabsContent>
             
             <TabsContent value="exercises">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {exercisesResources.map((resource) => (
-                  <ResourceCard
-                    key={resource.id}
-                    title={resource.title}
-                    description={resource.description}
-                    type={resource.type}
-                    tags={resource.tags}
-                    url={resource.url}
-                  />
-                ))}
-              </div>
+              <ResourcesList searchQuery={searchQuery} contentType="exercise" />
             </TabsContent>
             
-            <TabsContent value="crisis">
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <h3 className="text-lg font-medium text-red-800 mb-2">If you're in immediate danger</h3>
-                <p className="text-red-800">
-                  If you or someone you know is in immediate danger, please call emergency services (911 in the US) or go to your nearest emergency room.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {crisisResources.map((resource) => (
-                  <ResourceCard
-                    key={resource.id}
-                    title={resource.title}
-                    description={resource.description}
-                    type={resource.type}
-                    tags={resource.tags}
-                    url={resource.url}
-                  />
-                ))}
-              </div>
+            <TabsContent value="tools">
+              <ResourcesList searchQuery={searchQuery} contentType="tool" />
             </TabsContent>
           </Tabs>
+
+          <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <h3 className="text-lg font-medium text-amber-800 mb-2">Crisis Support</h3>
+            <p className="text-amber-800 mb-4">
+              If you or someone you know is in immediate danger, please call emergency services (911 in the US) or go to your nearest emergency room.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Button 
+                variant="outline" 
+                className="bg-white hover:bg-amber-100"
+                onClick={() => window.open('https://988lifeline.org/', '_blank')}
+              >
+                National Suicide Prevention Lifeline (988)
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-white hover:bg-amber-100"
+                onClick={() => window.open('https://www.crisistextline.org/', '_blank')}
+              >
+                Crisis Text Line (Text HOME to 741741)
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-white hover:bg-amber-100"
+                onClick={() => window.open('https://findtreatment.samhsa.gov/', '_blank')}
+              >
+                Find Treatment (SAMHSA)
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>

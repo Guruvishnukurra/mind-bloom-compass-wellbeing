@@ -7,11 +7,11 @@ import { Loader2 } from 'lucide-react';
 
 interface ResourcesListProps {
   searchQuery?: string;
-  category?: string | null;
+  contentType?: 'article' | 'video' | 'exercise' | 'tool' | null;
   limit?: number;
 }
 
-export const ResourcesList = ({ searchQuery = '', category = null, limit }: ResourcesListProps) => {
+export const ResourcesList = ({ searchQuery = '', contentType = null, limit }: ResourcesListProps) => {
   const { user } = useAuth();
   const [resources, setResources] = useState<Resource[]>([]);
   const [savedResources, setSavedResources] = useState<string[]>([]);
@@ -27,8 +27,8 @@ export const ResourcesList = ({ searchQuery = '', category = null, limit }: Reso
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (category) {
-          query = query.eq('category', category);
+        if (contentType) {
+          query = query.eq('content_type', contentType);
         }
 
         if (searchQuery) {
@@ -69,7 +69,7 @@ export const ResourcesList = ({ searchQuery = '', category = null, limit }: Reso
 
     fetchResources();
     fetchSavedResources();
-  }, [searchQuery, category, user, limit]);
+  }, [searchQuery, contentType, user, limit]);
 
   const handleSaveToggle = async (resourceId: string) => {
     if (!user) return;

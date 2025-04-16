@@ -7,20 +7,17 @@ import { ResourcesList } from '../components/resources/ResourcesList';
 import { useQuotes } from '../hooks/useQuotes';
 import { Search, BookOpen } from 'lucide-react';
 
-const categories = [
-  'All',
-  'Meditation',
-  'Mindfulness',
-  'Stress Relief',
-  'Sleep',
-  'Anxiety',
-  'Depression',
-  'Personal Growth',
+const contentTypes = [
+  { value: null, label: 'All' },
+  { value: 'article', label: 'Articles' },
+  { value: 'video', label: 'Videos' },
+  { value: 'exercise', label: 'Exercises' },
+  { value: 'tool', label: 'Tools' },
 ];
 
 export default function Resources() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedContentType, setSelectedContentType] = useState<'article' | 'video' | 'exercise' | 'tool' | null>(null);
   const quote = useQuotes();
 
   return (
@@ -57,20 +54,20 @@ export default function Resources() {
           />
         </div>
         <div className="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto">
-          {categories.map((category) => (
+          {contentTypes.map((type) => (
             <Button
-              key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
+              key={type.label}
+              variant={selectedContentType === type.value ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => setSelectedContentType(type.value)}
               className={`whitespace-nowrap ${
-                selectedCategory === category
+                selectedContentType === type.value
                   ? 'bg-primary-teal hover:bg-primary-teal/90'
                   : 'text-neutral-blue hover:text-primary-teal'
               }`}
             >
               <BookOpen className="h-4 w-4 mr-2" />
-              {category}
+              {type.label}
             </Button>
           ))}
         </div>
@@ -79,7 +76,7 @@ export default function Resources() {
       {/* Resources List */}
       <ResourcesList
         searchQuery={searchQuery}
-        category={selectedCategory === 'All' ? undefined : selectedCategory}
+        contentType={selectedContentType}
       />
     </div>
   );
