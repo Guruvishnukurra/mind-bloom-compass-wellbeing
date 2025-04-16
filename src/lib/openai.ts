@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 
 // Your OpenAI API key
-const apiKey = import.meta.env.VITE_OPENAI_API_KEY || 'sk-Yx9Yd9Yd9Yd9Yd9Yd9Yd9T3BlbkFJYd9Yd9Yd9Yd9Yd9Yd9Y';
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY || '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';
 
 // Initialize the OpenAI client with the API key
 const openai = new OpenAI({
@@ -17,6 +17,9 @@ export async function generateAIResponse(messages: { role: 'user' | 'assistant' 
       console.warn('OpenAI API key not configured. Using fallback responses.');
       return generateFallbackResponse(messages[messages.length - 1]?.content || '');
     }
+    
+    // Log that we're using the OpenAI API
+    console.log('Using OpenAI API for chat response');
 
     // Add a system message if one doesn't exist
     if (!messages.some(msg => msg.role === 'system')) {
