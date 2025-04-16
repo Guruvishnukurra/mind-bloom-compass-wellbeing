@@ -133,6 +133,14 @@ export default function Dashboard() {
           <Trophy className="w-6 h-6 text-wellness-amber" />
           <span>Achievements</span>
         </Button>
+        <Button
+          variant="outline"
+          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-purple/10 hover:border-wellness-purple transition-all duration-300"
+          onClick={() => navigate("/mood")}
+        >
+          <BarChart2 className="w-6 h-6 text-wellness-purple" />
+          <span>Mood Tracking</span>
+        </Button>
       </motion.div>
 
       {/* Achievements Section */}

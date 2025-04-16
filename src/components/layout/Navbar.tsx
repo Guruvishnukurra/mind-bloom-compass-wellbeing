@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User, Moon, Sun, MessageSquare, Trophy, BookOpen, Home, LogOut } from "lucide-react";
+import { Menu, User, Moon, Sun, MessageSquare, Trophy, BookOpen, Home, LogOut, BarChart2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '../../hooks/useAuth';
 
@@ -44,6 +44,13 @@ const Navbar: React.FC = () => {
           >
             <BookOpen className="h-5 w-5 inline-block mr-1" />
             Resources
+          </Link>
+          <Link
+            to="/mood"
+            className="text-neutral-blue hover:text-primary-teal px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+          >
+            <BarChart2 className="h-5 w-5 inline-block mr-1" />
+            Mood
           </Link>
           <Link
             to="/achievements"
