@@ -46,7 +46,27 @@ export default function Mood() {
       if (error) {
         console.error('Error fetching mood entries:', error);
       } else {
-        setMoodEntries(data || []);
+        // Transform the data to match the expected MoodEntry format
+        const transformedData = (data || []).map(entry => {
+          // Check if the entry has the expected structure
+          if (!entry.factors && entry.mood_score) {
+            // Create a default factors object if it doesn't exist
+            return {
+              ...entry,
+              factors: {
+                sleep: 3,
+                exercise: 3,
+                social: 3,
+                nutrition: 3,
+                stress: 3,
+                work: 3
+              }
+            };
+          }
+          return entry;
+        });
+        
+        setMoodEntries(transformedData);
       }
     } catch (error) {
       console.error('Exception fetching mood entries:', error);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { MoodEntry } from './MoodTracker';
+import { MoodEntry } from './MoodChart';
 import { Smile, Frown, TrendingUp, TrendingDown, Calendar, ArrowRight } from 'lucide-react';
 
 interface MoodInsightsProps {

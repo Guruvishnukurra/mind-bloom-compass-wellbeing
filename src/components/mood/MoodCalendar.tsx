@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MoodEntry } from './MoodTracker';
+import { MoodEntry } from './MoodChart';
 import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import {
   Tooltip,

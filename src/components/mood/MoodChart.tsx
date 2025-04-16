@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { MoodEntry } from './MoodTracker';
+export interface MoodEntry {
+  id: string;
+  user_id: string;
+  mood_score: number;
+  notes: string;
+  factors: Record<string, number>;
+  created_at: string;
+}
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
 
 interface MoodChartProps {
