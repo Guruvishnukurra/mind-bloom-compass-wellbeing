@@ -48,6 +48,16 @@ export async function generateAIResponse(messages: { role: 'user' | 'assistant' 
   } catch (error) {
     console.error('Error generating AI response:', error);
     console.error('Error details:', JSON.stringify(error, null, 2));
+    
+    // Check for quota exceeded error
+    const errorStr = String(error);
+    if (errorStr.includes('exceeded your current quota') || 
+        errorStr.includes('billing') || 
+        errorStr.includes('limit') || 
+        errorStr.includes('rate limit')) {
+      return "I'm sorry, but the OpenAI API quota has been exceeded. The application is currently using the fallback responses. Please try again later or contact the administrator to update the API key.";
+    }
+    
     return generateFallbackResponse(messages[messages.length - 1]?.content || '');
   }
 }

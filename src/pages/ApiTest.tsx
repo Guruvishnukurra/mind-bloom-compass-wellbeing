@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertTriangle } from 'lucide-react';
 import OpenAI from 'openai';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function ApiTest() {
   const [input, setInput] = useState('');
@@ -47,7 +48,17 @@ export default function ApiTest() {
       setResponse(result.choices[0].message.content || 'No response content');
     } catch (err) {
       console.error('Error testing OpenAI API:', err);
-      setError(err instanceof Error ? err.message : String(err));
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      
+      // Check for quota exceeded error
+      if (errorMessage.includes('exceeded your current quota') || 
+          errorMessage.includes('billing') || 
+          errorMessage.includes('limit') || 
+          errorMessage.includes('rate limit')) {
+        setError(`API Quota Exceeded: ${errorMessage}\n\nYou need to check your OpenAI account billing status or use a different API key.`);
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -61,8 +72,24 @@ export default function ApiTest() {
         <Card className="w-full">
           <CardHeader>
             <CardTitle>Test the OpenAI API</CardTitle>
+            <CardDescription>
+              Test the OpenAI API connection and check for quota issues
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Alert className="mb-4">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>API Quota Warning</AlertTitle>
+              <AlertDescription>
+                The OpenAI API has usage limits. If you see a "quota exceeded" error, you'll need to:
+                <ul className="list-disc pl-5 mt-2">
+                  <li>Check your OpenAI account billing status</li>
+                  <li>Upgrade your plan if needed</li>
+                  <li>Or use a different API key with available quota</li>
+                </ul>
+              </AlertDescription>
+            </Alert>
+            
             <div className="space-y-2">
               <Input
                 placeholder="Enter a test message"
