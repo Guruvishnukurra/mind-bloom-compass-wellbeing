@@ -11,6 +11,9 @@ const openai = new OpenAI({
 
 // Function to generate a response using OpenAI's API
 export async function generateAIResponse(messages: { role: 'user' | 'assistant' | 'system'; content: string }[]) {
+  console.log('generateAIResponse called with messages:', messages);
+  console.log('Current API key:', apiKey ? `${apiKey.substring(0, 5)}...${apiKey.substring(apiKey.length - 4)}` : 'none');
+  
   try {
     // Check if we have a valid API key
     if (!apiKey || apiKey === 'your-openai-api-key-here' || apiKey === 'dummy-key') {
@@ -19,7 +22,7 @@ export async function generateAIResponse(messages: { role: 'user' | 'assistant' 
     }
     
     // Log that we're using the OpenAI API
-    console.log('Using OpenAI API for chat response');
+    console.log('Using OpenAI API for chat response with key:', apiKey.substring(0, 5));
 
     // Add a system message if one doesn't exist
     if (!messages.some(msg => msg.role === 'system')) {
@@ -40,9 +43,11 @@ export async function generateAIResponse(messages: { role: 'user' | 'assistant' 
       max_tokens: 500,
     });
 
+    console.log('OpenAI API response received:', response.choices[0].message.content.substring(0, 50) + '...');
     return response.choices[0].message.content;
   } catch (error) {
     console.error('Error generating AI response:', error);
+    console.error('Error details:', JSON.stringify(error, null, 2));
     return generateFallbackResponse(messages[messages.length - 1]?.content || '');
   }
 }
