@@ -14,6 +14,7 @@
     "create-robust-mp3s": "node scripts/create-robust-mp3s.js",
     "download-sounds-build": "node scripts/download-sounds-build.js",
     "download-real-mp3s": "node scripts/download-real-mp3s.js",
+    "download-sounds-with-fetch": "node scripts/download-sounds-with-fetch.js",
     "create-guaranteed-mp3s": "node scripts/create-guaranteed-mp3s.js"
   },
   "dependencies": {
