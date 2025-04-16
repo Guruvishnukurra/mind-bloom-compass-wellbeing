@@ -1,9 +1,9 @@
 import OpenAI from 'openai';
 
-// Check if OpenAI API key is available
-const apiKey = import.meta.env.VITE_OPENAI_API_KEY || 'dummy-key';
+// Your OpenAI API key
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY || 'sk-Yx9Yd9Yd9Yd9Yd9Yd9Yd9T3BlbkFJYd9Yd9Yd9Yd9Yd9Yd9Y';
 
-// Initialize the OpenAI client with the API key from environment variables
+// Initialize the OpenAI client with the API key
 const openai = new OpenAI({
   apiKey: apiKey,
   dangerouslyAllowBrowser: true // Note: In production, you should use a backend proxy
@@ -13,7 +13,7 @@ const openai = new OpenAI({
 export async function generateAIResponse(messages: { role: 'user' | 'assistant' | 'system'; content: string }[]) {
   try {
     // Check if we have a valid API key
-    if (!import.meta.env.VITE_OPENAI_API_KEY || import.meta.env.VITE_OPENAI_API_KEY === 'your-openai-api-key-here') {
+    if (!apiKey || apiKey === 'your-openai-api-key-here' || apiKey === 'dummy-key') {
       console.warn('OpenAI API key not configured. Using fallback responses.');
       return generateFallbackResponse(messages[messages.length - 1]?.content || '');
     }
