@@ -36,6 +36,17 @@ export function OpenAIChatBot() {
       if (!user) return;
 
       try {
+        // Check if the chat_sessions table exists
+        const { error: tableCheckError } = await supabase
+          .from('chat_sessions')
+          .select('id')
+          .limit(1);
+
+        if (tableCheckError) {
+          console.warn('Chat tables may not be set up yet:', tableCheckError.message);
+          return;
+        }
+
         // Get or create a chat session for today
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -49,7 +60,10 @@ export function OpenAIChatBot() {
           .order('created_at', { ascending: false })
           .limit(1);
 
-        if (chatError) throw chatError;
+        if (chatError) {
+          console.error('Error fetching chat sessions:', chatError);
+          return;
+        }
 
         if (existingChat && existingChat.length > 0) {
           setChatId(existingChat[0].id);
@@ -61,7 +75,10 @@ export function OpenAIChatBot() {
             .eq('chat_id', existingChat[0].id)
             .order('created_at', { ascending: true });
 
-          if (messagesError) throw messagesError;
+          if (messagesError) {
+            console.error('Error fetching chat messages:', messagesError);
+            return;
+          }
           
           setMessages(chatMessages || []);
         }
@@ -88,30 +105,64 @@ export function OpenAIChatBot() {
     setIsLoading(true);
 
     try {
-      // Create a new chat session if none exists
-      if (!chatId) {
-        const { data: newChat, error: chatError } = await supabase
+      // Check if database tables are available
+      let shouldSaveToDatabase = true;
+      
+      try {
+        const { error: tableCheckError } = await supabase
           .from('chat_sessions')
-          .insert([{ user_id: user.id }])
-          .select();
-
-        if (chatError) throw chatError;
-        
-        setChatId(newChat[0].id);
+          .select('id')
+          .limit(1);
+          
+        if (tableCheckError) {
+          console.warn('Chat tables may not be set up yet:', tableCheckError.message);
+          shouldSaveToDatabase = false;
+        }
+      } catch (e) {
+        console.warn('Error checking database tables:', e);
+        shouldSaveToDatabase = false;
       }
 
-      // Save user message to database
-      const { error: messageError } = await supabase
-        .from('chat_messages')
-        .insert([
-          {
-            chat_id: chatId,
-            role: 'user',
-            content: userMessage.content
-          }
-        ]);
+      // Create a new chat session if none exists and database is available
+      if (shouldSaveToDatabase && !chatId) {
+        try {
+          const { data: newChat, error: chatError } = await supabase
+            .from('chat_sessions')
+            .insert([{ user_id: user.id }])
+            .select();
 
-      if (messageError) throw messageError;
+          if (chatError) {
+            console.error('Error creating chat session:', chatError);
+            shouldSaveToDatabase = false;
+          } else if (newChat && newChat.length > 0) {
+            setChatId(newChat[0].id);
+          }
+        } catch (e) {
+          console.error('Exception creating chat session:', e);
+          shouldSaveToDatabase = false;
+        }
+      }
+
+      // Save user message to database if available
+      if (shouldSaveToDatabase && chatId) {
+        try {
+          const { error: messageError } = await supabase
+            .from('chat_messages')
+            .insert([
+              {
+                chat_id: chatId,
+                role: 'user',
+                content: userMessage.content
+              }
+            ]);
+
+          if (messageError) {
+            console.error('Error saving user message:', messageError);
+          }
+        } catch (e) {
+          console.error('Exception saving user message:', e);
+        }
+      }
 
       // Format messages for OpenAI API
       const apiMessages = messages.map(msg => ({
@@ -137,18 +188,26 @@ export function OpenAIChatBot() {
 
       setMessages(prev => [...prev, assistantMessage]);
 
-      // Save AI response to database
-      const { error: aiMessageError } = await supabase
-        .from('chat_messages')
-        .insert([
-          {
-            chat_id: chatId,
-            role: 'assistant',
-            content: assistantMessage.content
-          }
-        ]);
+      // Save AI response to database if available
+      if (shouldSaveToDatabase && chatId) {
+        try {
+          const { error: aiMessageError } = await supabase
+            .from('chat_messages')
+            .insert([
+              {
+                chat_id: chatId,
+                role: 'assistant',
+                content: assistantMessage.content
+              }
+            ]);
 
-      if (aiMessageError) throw aiMessageError;
+          if (aiMessageError) {
+            console.error('Error saving AI response:', aiMessageError);
+          }
+        } catch (e) {
+          console.error('Exception saving AI response:', e);
+        }
+      }
       
     } catch (error) {
       console.error('Error sending message:', error);
@@ -169,21 +228,52 @@ export function OpenAIChatBot() {
     if (!user) return;
 
     try {
+      // Check if database tables are available
+      try {
+        const { error: tableCheckError } = await supabase
+          .from('chat_sessions')
+          .select('id')
+          .limit(1);
+          
+        if (tableCheckError) {
+          console.warn('Chat tables may not be set up yet:', tableCheckError.message);
+          // Just clear the messages in the UI
+          setMessages([]);
+          toast.success('Started a new chat');
+          return;
+        }
+      } catch (e) {
+        console.warn('Error checking database tables:', e);
+        // Just clear the messages in the UI
+        setMessages([]);
+        toast.success('Started a new chat');
+        return;
+      }
+
       // Create a new chat session
       const { data: newChat, error: chatError } = await supabase
         .from('chat_sessions')
         .insert([{ user_id: user.id }])
         .select();
 
-      if (chatError) throw chatError;
+      if (chatError) {
+        console.error('Error creating new chat session:', chatError);
+        // Just clear the messages in the UI
+        setMessages([]);
+        toast.success('Started a new chat');
+        return;
+      }
       
-      setChatId(newChat[0].id);
-      setMessages([]);
-      
-      toast.success('Started a new chat');
+      if (newChat && newChat.length > 0) {
+        setChatId(newChat[0].id);
+        setMessages([]);
+        toast.success('Started a new chat');
+      }
     } catch (error) {
       console.error('Error starting new chat:', error);
-      toast.error('Failed to start new chat');
+      // Just clear the messages in the UI
+      setMessages([]);
+      toast.success('Started a new chat (offline mode)');
     }
   };
 

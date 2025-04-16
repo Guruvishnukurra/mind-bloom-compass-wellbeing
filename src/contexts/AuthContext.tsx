@@ -25,8 +25,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
     
-    if (!supabaseUrl || !supabaseKey || supabaseUrl === 'your_supabase_url_here' || supabaseKey === 'your_supabase_anon_key_here') {
-      console.warn('Supabase credentials not properly configured. Auth functionality will be limited.');
+    if (!supabaseUrl || !supabaseKey || 
+        supabaseUrl === 'your_supabase_url_here' || 
+        supabaseKey === 'your_supabase_anon_key_here') {
+      console.warn('Supabase credentials not properly configured. Using demo mode with limited functionality.');
+      
+      // Create a demo user for development
+      const demoUser = {
+        id: 'demo-user-id',
+        email: 'demo@example.com',
+        user_metadata: {
+          name: 'Demo User'
+        }
+      } as User;
+      
+      setUser(demoUser);
       setLoading(false);
       return;
     }
@@ -61,6 +74,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       setError(null);
+      
+      // Check if Supabase is properly configured
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!supabaseUrl || !supabaseKey || 
+          supabaseUrl === 'your_supabase_url_here' || 
+          supabaseKey === 'your_supabase_anon_key_here') {
+        console.warn('Using demo mode - creating demo user');
+        
+        // Create a demo user for development
+        const demoUser = {
+          id: 'demo-user-id',
+          email: email,
+          user_metadata: {
+            name: email.split('@')[0]
+          }
+        } as User;
+        
+        setUser(demoUser);
+        return;
+      }
+      
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
     } catch (error) {
@@ -72,6 +108,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     try {
       setError(null);
+      
+      // Check if Supabase is properly configured
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!supabaseUrl || !supabaseKey || 
+          supabaseUrl === 'your_supabase_url_here' || 
+          supabaseKey === 'your_supabase_anon_key_here') {
+        console.warn('Using demo mode - creating demo user');
+        
+        // Create a demo user for development
+        const demoUser = {
+          id: 'demo-user-id',
+          email: email,
+          user_metadata: {
+            name: email.split('@')[0]
+          }
+        } as User;
+        
+        setUser(demoUser);
+        return;
+      }
+      
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
     } catch (error) {
@@ -83,6 +142,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = async () => {
     try {
       setError(null);
+      
+      // Check if Supabase is properly configured
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!supabaseUrl || !supabaseKey || 
+          supabaseUrl === 'your_supabase_url_here' || 
+          supabaseKey === 'your_supabase_anon_key_here') {
+        console.warn('Using demo mode - signing out demo user');
+        setUser(null);
+        return;
+      }
+      
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     } catch (error) {
