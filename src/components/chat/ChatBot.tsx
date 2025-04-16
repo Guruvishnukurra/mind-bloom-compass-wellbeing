@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
+import { generateAIResponse } from '@/lib/openai';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -115,9 +116,22 @@ export function ChatBot() {
 
       if (messageError) throw messageError;
 
-      // Simulate AI response (in a real app, this would call an AI API)
-      setTimeout(async () => {
-        const aiResponse = generateAIResponse(userMessage.content);
+      // Call OpenAI API for response
+      try {
+        // Convert messages to the format expected by OpenAI
+        const messageHistory = messages.map(msg => ({
+          role: msg.role as 'user' | 'assistant',
+          content: msg.content
+        }));
+        
+        // Add the new user message
+        messageHistory.push({
+          role: 'user',
+          content: userMessage.content
+        });
+        
+        // Get response from OpenAI
+        const aiResponse = await generateAIResponse(messageHistory);
         
         const assistantMessage: Message = {
           id: crypto.randomUUID(),
@@ -142,7 +156,11 @@ export function ChatBot() {
         if (aiMessageError) throw aiMessageError;
         
         setIsLoading(false);
-      }, 1000);
+      } catch (aiError) {
+        console.error('Error getting AI response:', aiError);
+        toast.error('Failed to get AI response');
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Failed to send message');
@@ -180,42 +198,7 @@ export function ChatBot() {
     }
   };
 
-  // Simple AI response generator (replace with actual AI API in production)
-  const generateAIResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    // Basic response patterns
-    if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-      return "Hello! I'm your wellbeing assistant. How can I help you today?";
-    }
-    
-    if (lowerMessage.includes('anxiety') || lowerMessage.includes('stress')) {
-      return "I understand you're feeling anxious or stressed. Try taking a few deep breaths and focusing on the present moment. Would you like to try a quick meditation exercise?";
-    }
-    
-    if (lowerMessage.includes('depression') || lowerMessage.includes('sad')) {
-      return "I'm sorry you're feeling down. Remember that it's okay to feel this way, and you don't have to go through it alone. Have you considered talking to a mental health professional? I can provide information about resources if you'd like.";
-    }
-    
-    if (lowerMessage.includes('meditation') || lowerMessage.includes('meditate')) {
-      return "Meditation is a great tool for mental wellbeing. You can try our guided meditation feature, which offers various sessions for different needs like stress relief, better sleep, or anxiety reduction.";
-    }
-    
-    if (lowerMessage.includes('gratitude') || lowerMessage.includes('thankful')) {
-      return "Practicing gratitude is an excellent way to improve your mood and overall wellbeing. Try listing three things you're grateful for today. You can use our Gratitude Journal feature to track these daily reflections.";
-    }
-    
-    if (lowerMessage.includes('sleep') || lowerMessage.includes('insomnia')) {
-      return "Sleep is crucial for mental health. Try establishing a regular sleep schedule, avoiding screens before bedtime, and creating a relaxing bedtime routine. Our app has sleep-focused meditations that might help.";
-    }
-    
-    if (lowerMessage.includes('help') || lowerMessage.includes('support')) {
-      return "I'm here to support you. You can use our various features like mood tracking, meditation, journaling, and the gratitude journal to support your mental wellbeing journey. Is there a specific area you'd like to focus on?";
-    }
-    
-    // Default response
-    return "I'm here to support your wellbeing journey. You can ask me about mental health topics, meditation techniques, or how to use the features in this app. How can I assist you today?";
-  };
+  // We're now using the OpenAI integration for AI responses
 
   return (
     <Card className="h-[600px] flex flex-col">
