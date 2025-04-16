@@ -76,22 +76,18 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 You can copy the `.env.example` file to `.env` and update it with your Supabase credentials. You can find these credentials in your Supabase project dashboard under Settings > API.
 
-## Sound Files
+## OpenAI Integration
 
-This project automatically downloads all necessary sound files for meditation and ambient sounds during the build process:
+This project uses OpenAI's API to power the AI Wellbeing Assistant. To use this feature, you need to:
 
-- Ambient sounds: rain.mp3, birds.mp3, night.mp3, ocean-waves.mp3, forest.mp3, stream.mp3, chimes.mp3, bells.mp3
-- Meditation bell: meditation-bell.mp3
+1. Get an API key from [OpenAI's platform](https://platform.openai.com/api-keys)
+2. Add your API key to the `.env` file:
 
-The sound files are downloaded when you run `npm run dev` or `npm run build`, so users don't need to download them separately. If the download fails, fallback sound files are created automatically.
-
-You can check if all required sound files are present with:
-
-```sh
-npm run check-sounds
+```
+VITE_OPENAI_API_KEY=your-openai-api-key-here
 ```
 
-You can also use your own sound files by placing MP3 files with the same names in the `public/sounds` directory.
+The AI assistant can provide guidance on mental health topics, meditation techniques, stress management, and more.
 
 ## How can I deploy this project?
 

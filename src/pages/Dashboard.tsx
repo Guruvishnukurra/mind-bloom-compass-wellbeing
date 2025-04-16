@@ -10,7 +10,7 @@ import { MeditationList } from "@/components/meditation/MeditationList";
 import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
 import { ResourcesList } from "@/components/resources/ResourcesList";
-import { CalmingSounds } from "@/components/sounds/CalmingSounds";
+import { OpenAIChatBot } from "@/components/chat/OpenAIChatBot";
 import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2, Heart } from "lucide-react";
 
 export default function Dashboard() {
@@ -168,7 +168,7 @@ export default function Dashboard() {
         transition={{ delay: 0.5 }}
         className="mb-8"
       >
-        <CalmingSounds />
+        <OpenAIChatBot />
       </motion.div>
 
       {/* Main Content */}
