@@ -11,7 +11,7 @@ import JournalList from "@/components/journal/JournalList";
 import { AchievementsList } from "@/components/achievements/AchievementsList";
 import { ResourcesList } from "@/components/resources/ResourcesList";
 import { OpenAIChatBot } from "@/components/chat/OpenAIChatBot";
-import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2, Heart } from "lucide-react";
+import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2, Heart, CheckSquare } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -140,6 +140,14 @@ export default function Dashboard() {
         >
           <BarChart2 className="w-6 h-6 text-wellness-purple" />
           <span>Mood Tracking</span>
+        </Button>
+        <Button
+          variant="outline"
+          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-teal/10 hover:border-wellness-teal transition-all duration-300"
+          onClick={() => navigate("/habits")}
+        >
+          <CheckSquare className="w-6 h-6 text-wellness-teal" />
+          <span>Habit Builder</span>
         </Button>
       </motion.div>
 

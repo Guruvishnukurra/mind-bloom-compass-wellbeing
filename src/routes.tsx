@@ -9,6 +9,7 @@ import Gratitude from '@/pages/Gratitude';
 import Chat from '@/pages/Chat';
 import ApiTest from '@/pages/ApiTest';
 import Mood from '@/pages/Mood';
+import Habits from '@/pages/Habits';
 import Achievements from '@/pages/Achievements';
 
 export function AppRoutes() {
@@ -88,6 +89,10 @@ export function AppRoutes() {
       <Route
         path="/mood"
         element={user ? <Mood /> : <Navigate to="/auth" />}
+      />
+      <Route
+        path="/habits"
+        element={user ? <Habits /> : <Navigate to="/auth" />}
       />
       <Route
         path="/achievements"
