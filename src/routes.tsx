@@ -7,6 +7,7 @@ import { Meditation } from '@/pages/Meditation';
 import Resources from '@/pages/Resources';
 import Gratitude from '@/pages/Gratitude';
 import Chat from '@/pages/Chat';
+import ApiTest from '@/pages/ApiTest';
 import Achievements from '@/pages/Achievements';
 
 export function AppRoutes() {
@@ -92,6 +93,10 @@ export function AppRoutes() {
             <Navigate to="/auth" replace />
           )
         }
+      />
+      <Route
+        path="/api-test"
+        element={<ApiTest />}
       />
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/auth'} />} />
     </Routes>

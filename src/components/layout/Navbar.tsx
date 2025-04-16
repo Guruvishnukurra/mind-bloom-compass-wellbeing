@@ -52,6 +52,12 @@ const Navbar: React.FC = () => {
             <Trophy className="h-5 w-5 inline-block mr-1" />
             Achievements
           </Link>
+          <Link
+            to="/api-test"
+            className="text-neutral-blue hover:text-primary-teal px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+          >
+            API Test
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
