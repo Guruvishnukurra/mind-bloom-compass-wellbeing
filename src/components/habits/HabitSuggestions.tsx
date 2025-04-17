@@ -3,7 +3,9 @@ import { Habit } from './HabitTracker';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, ChevronUp, Plus, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus, Sparkles, Seedling, Leaf, Flower, Tag } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
 
 interface HabitSuggestionsProps {
   existingHabits: Habit[];
@@ -27,7 +29,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Predefined habit suggestions
+  // Updated habit suggestions with new colors
   const habitSuggestions: HabitSuggestion[] = [
     {
       name: 'Morning Meditation',
@@ -36,7 +38,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       frequency: 'daily',
       time_of_day: 'morning',
       icon: 'meditation',
-      color: '#8b5cf6',
+      color: '#8B5CF6', // wellness-purple
       tags: ['mindfulness', 'morning', 'stress-reduction']
     },
     {
@@ -45,7 +47,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'nutrition',
       frequency: 'daily',
       icon: 'water',
-      color: '#3b82f6',
+      color: '#4A90E2', // wellness-blue
       tags: ['hydration', 'health', 'nutrition']
     },
     {
@@ -54,7 +56,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'physical',
       frequency: 'daily',
       icon: 'exercise',
-      color: '#ef4444',
+      color: '#FF8882', // wellness-coral
       tags: ['exercise', 'walking', 'fitness']
     },
     {
@@ -64,7 +66,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       frequency: 'daily',
       time_of_day: 'evening',
       icon: 'reading',
-      color: '#f59e0b',
+      color: '#F9B44A', // wellness-amber
       tags: ['reading', 'learning', 'evening-routine']
     },
     {
@@ -74,7 +76,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       frequency: 'daily',
       time_of_day: 'evening',
       icon: 'journal',
-      color: '#10b981',
+      color: '#4AD295', // wellness-green
       tags: ['reflection', 'gratitude', 'evening-routine']
     },
     {
@@ -84,7 +86,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       frequency: 'daily',
       time_of_day: 'night',
       icon: 'sleep',
-      color: '#6366f1',
+      color: '#3A7BD5', // wellness-deep-blue
       tags: ['sleep', 'night-routine', 'health']
     },
     {
@@ -93,7 +95,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'nutrition',
       frequency: 'weekly',
       icon: 'nutrition',
-      color: '#10b981',
+      color: '#4AD295', // wellness-green
       tags: ['nutrition', 'meal-planning', 'health']
     },
     {
@@ -102,7 +104,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'mindfulness',
       frequency: 'daily',
       icon: 'gratitude',
-      color: '#ec4899',
+      color: '#A78BFA', // wellness-lavender
       tags: ['gratitude', 'positivity', 'mindfulness']
     },
     {
@@ -112,7 +114,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       frequency: 'daily',
       time_of_day: 'evening',
       icon: 'sleep',
-      color: '#6366f1',
+      color: '#3A7BD5', // wellness-deep-blue
       tags: ['digital-wellness', 'sleep', 'evening-routine']
     },
     {
@@ -121,7 +123,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'social',
       frequency: 'weekly',
       icon: 'social',
-      color: '#f97316',
+      color: '#F8A97D', // wellness-orange
       tags: ['social', 'relationships', 'connection']
     },
     {
@@ -130,7 +132,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'self_care',
       frequency: 'daily',
       icon: 'nature',
-      color: '#10b981',
+      color: '#4AD295', // wellness-green
       tags: ['nature', 'outdoors', 'mood']
     },
     {
@@ -139,7 +141,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'learning',
       frequency: 'weekly',
       icon: 'learning',
-      color: '#f59e0b',
+      color: '#F9B44A', // wellness-amber
       tags: ['learning', 'growth', 'skills']
     },
     {
@@ -148,7 +150,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'creativity',
       frequency: 'weekly',
       icon: 'creativity',
-      color: '#ec4899',
+      color: '#A78BFA', // wellness-lavender
       tags: ['creativity', 'expression', 'art']
     },
     {
@@ -159,7 +161,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       frequency_value: 3,
       frequency_unit: 'week',
       icon: 'exercise',
-      color: '#ef4444',
+      color: '#FF8882', // wellness-coral
       tags: ['exercise', 'strength', 'fitness']
     },
     {
@@ -168,7 +170,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       category: 'mindfulness',
       frequency: 'daily',
       icon: 'nutrition',
-      color: '#10b981',
+      color: '#4AD295', // wellness-green
       tags: ['mindfulness', 'nutrition', 'awareness']
     }
   ];
@@ -197,32 +199,50 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
   };
 
   // Get icon for a category
-  const getCategoryIcon = (category: string): string => {
-    const iconMap: Record<string, string> = {
-      'mindfulness': '🧘',
-      'physical': '💪',
-      'nutrition': '🥗',
-      'sleep': '😴',
-      'social': '👥',
-      'productivity': '📊',
-      'learning': '📚',
-      'creativity': '🎨',
-      'self_care': '❤️',
-      'other': '✨',
+  const getCategoryIcon = (category: string): JSX.Element => {
+    const iconMap: Record<string, JSX.Element> = {
+      'mindfulness': <span className="text-wellness-purple">🧘</span>,
+      'physical': <span className="text-wellness-coral">💪</span>,
+      'nutrition': <span className="text-wellness-green">🥗</span>,
+      'sleep': <span className="text-wellness-deep-blue">😴</span>,
+      'social': <span className="text-wellness-orange">👥</span>,
+      'productivity': <span className="text-wellness-blue">📊</span>,
+      'learning': <span className="text-wellness-amber">📚</span>,
+      'creativity': <span className="text-wellness-lavender">🎨</span>,
+      'self_care': <span className="text-wellness-mint">❤️</span>,
+      'other': <span className="text-wellness-blue">✨</span>,
     };
     
-    return iconMap[category] || '✨';
+    return iconMap[category] || <span className="text-wellness-blue">✨</span>;
+  };
+
+  // Get color for a category
+  const getCategoryColor = (category: string): string => {
+    const colorMap: Record<string, string> = {
+      'mindfulness': 'wellness-purple',
+      'physical': 'wellness-coral',
+      'nutrition': 'wellness-green',
+      'sleep': 'wellness-deep-blue',
+      'social': 'wellness-orange',
+      'productivity': 'wellness-blue',
+      'learning': 'wellness-amber',
+      'creativity': 'wellness-lavender',
+      'self_care': 'wellness-mint',
+      'other': 'wellness-blue',
+    };
+    
+    return colorMap[category] || 'wellness-blue';
   };
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full mt-6">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium flex items-center">
-          <Sparkles className="h-5 w-5 mr-2 text-amber-500" />
-          Habit Suggestions
+        <h3 className="text-lg font-medium flex items-center gap-2">
+          <Seedling className="h-5 w-5 text-wellness-green" />
+          Habit Seeds
         </h3>
         <CollapsibleTrigger asChild>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" className="text-wellness-green hover:text-wellness-green/80 hover:bg-wellness-green/10">
             {isOpen ? (
               <ChevronUp className="h-4 w-4" />
             ) : (
@@ -233,22 +253,29 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
       </div>
       
       <CollapsibleContent className="mt-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle>Habit Stacking Suggestions</CardTitle>
-            <CardDescription>
-              Add these proven habits to your routine for better wellbeing
-            </CardDescription>
+        <Card className="border-0 shadow-md overflow-hidden">
+          <CardHeader className="pb-2 border-b border-neutral-mist/30">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-wellness-green/10 flex items-center justify-center">
+                <Seedling className="h-4 w-4 text-wellness-green" />
+              </div>
+              <div>
+                <CardTitle>Habit Seeds Collection</CardTitle>
+                <CardDescription>
+                  Plant these proven habits in your garden for better wellbeing
+                </CardDescription>
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2 mb-4">
+          <CardContent className="pt-6">
+            <div className="flex flex-wrap gap-2 mb-6">
               <Button
                 variant={selectedCategory === null ? "default" : "outline"}
                 size="sm"
                 onClick={() => setSelectedCategory(null)}
-                className="text-xs"
+                className={selectedCategory === null ? "bg-wellness-green hover:bg-wellness-green/90" : ""}
               >
-                All
+                All Seeds
               </Button>
               
               {categories.map(category => (
@@ -257,9 +284,9 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
                   variant={selectedCategory === category ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
-                  className="text-xs"
+                  className={selectedCategory === category ? `bg-${getCategoryColor(category)} hover:bg-${getCategoryColor(category)}/90` : ""}
                 >
-                  <span className="mr-1">{getCategoryIcon(category)}</span>
+                  <span className="mr-2">{getCategoryIcon(category)}</span>
                   {formatCategoryName(category)}
                 </Button>
               ))}
@@ -268,84 +295,97 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
               {filteredSuggestions.map((suggestion, index) => {
                 const isAdded = isSuggestionAdded(suggestion);
+        const categoryColor = getCategoryColor(suggestion.category);
                 
                 return (
-                  <Card key={index} className="overflow-hidden">
-                    <div className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center">
-                          <div 
-                            className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-                            style={{ backgroundColor: `${suggestion.color}20` }}
-                          >
-                            <span className="text-xl">
-                              {suggestion.icon === 'meditation' && '🧘'}
-                              {suggestion.icon === 'water' && '💧'}
-                              {suggestion.icon === 'exercise' && '🏃'}
-                              {suggestion.icon === 'reading' && '📚'}
-                              {suggestion.icon === 'journal' && '📝'}
-                              {suggestion.icon === 'sleep' && '😴'}
-                              {suggestion.icon === 'nutrition' && '🥗'}
-                              {suggestion.icon === 'gratitude' && '🙏'}
-                              {suggestion.icon === 'mindfulness' && '🧠'}
-                              {suggestion.icon === 'social' && '👥'}
-                              {suggestion.icon === 'nature' && '🌳'}
-                              {suggestion.icon === 'creativity' && '🎨'}
-                              {suggestion.icon === 'learning' && '🎓'}
-                              {suggestion.icon === 'default' && '✨'}
-                            </span>
-                          </div>
-                          <div>
-                            <h4 className="font-medium">{suggestion.name}</h4>
-                            <div className="flex items-center text-xs text-muted-foreground">
-                              <span>{formatCategoryName(suggestion.category)}</span>
-                              <span className="mx-1">•</span>
-                              <span>
-                                {suggestion.frequency === 'daily' && 'Daily'}
-                                {suggestion.frequency === 'weekly' && 'Weekly'}
-                                {suggestion.frequency === 'monthly' && 'Monthly'}
-                                {suggestion.frequency === 'custom' && 
-                                  `Every ${suggestion.frequency_value} ${suggestion.frequency_unit}${suggestion.frequency_value !== 1 ? 's' : ''}`
-                                }
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                  >
+                    <Card className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-all duration-300">
+                      <div className={`h-1.5 w-full bg-${categoryColor}`}></div>
+                      <div className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center">
+                            <div 
+                              className={`w-12 h-12 rounded-full flex items-center justify-center mr-3 bg-${categoryColor}/20 text-${categoryColor}`}
+                            >
+                              <span className="text-xl">
+                                {suggestion.icon === 'meditation' && '🧘'}
+                                {suggestion.icon === 'water' && '💧'}
+                                {suggestion.icon === 'exercise' && '🏃'}
+                                {suggestion.icon === 'reading' && '📚'}
+                                {suggestion.icon === 'journal' && '📝'}
+                                {suggestion.icon === 'sleep' && '😴'}
+                                {suggestion.icon === 'nutrition' && '🥗'}
+                                {suggestion.icon === 'gratitude' && '🙏'}
+                                {suggestion.icon === 'mindfulness' && '🧠'}
+                                {suggestion.icon === 'social' && '👥'}
+                                {suggestion.icon === 'nature' && '🌳'}
+                                {suggestion.icon === 'creativity' && '🎨'}
+                                {suggestion.icon === 'learning' && '🎓'}
+                                {suggestion.icon === 'default' && '✨'}
                               </span>
                             </div>
+                            <div>
+                              <h4 className="font-medium">{suggestion.name}</h4>
+                              <div className="flex items-center text-xs text-muted-foreground mt-1">
+                                <Badge variant="outline" className={`mr-2 border-${categoryColor}/30 bg-${categoryColor}/10 text-xs font-normal`}>
+                                  {formatCategoryName(suggestion.category)}
+                                </Badge>
+                                <span>
+                                  {suggestion.frequency === 'daily' && 'Daily'}
+                                  {suggestion.frequency === 'weekly' && 'Weekly'}
+                                  {suggestion.frequency === 'monthly' && 'Monthly'}
+                                  {suggestion.frequency === 'custom' && 
+                                    `Every ${suggestion.frequency_value} ${suggestion.frequency_unit}${suggestion.frequency_value !== 1 ? 's' : ''}`
+                                  }
+                                </span>
+                              </div>
+                            </div>
                           </div>
+                          
+                          <Button
+                            variant={isAdded ? "outline" : "default"}
+                            size="sm"
+                            disabled={isAdded}
+                            onClick={() => onSelectSuggestion(suggestion)}
+                            className={isAdded 
+                              ? "opacity-50" 
+                              : `bg-${categoryColor} hover:bg-${categoryColor}/90`
+                            }
+                          >
+                            {isAdded ? (
+                              'Planted'
+                            ) : (
+                              <>
+                                <Seedling className="h-3 w-3 mr-1" />
+                                Plant
+                              </>
+                            )}
+                          </Button>
                         </div>
                         
-                        <Button
-                          variant={isAdded ? "outline" : "default"}
-                          size="sm"
-                          disabled={isAdded}
-                          onClick={() => onSelectSuggestion(suggestion)}
-                          className={isAdded ? "opacity-50" : ""}
-                        >
-                          {isAdded ? (
-                            'Added'
-                          ) : (
-                            <>
-                              <Plus className="h-3 w-3 mr-1" />
-                              Add
-                            </>
-                          )}
-                        </Button>
+                        <p className="text-sm text-muted-foreground mt-3">
+                          {suggestion.description}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          <Tag className="h-3 w-3 text-muted-foreground mr-1" />
+                          {suggestion.tags.map((tag, tagIndex) => (
+                            <span 
+                              key={tagIndex}
+                              className="text-xs bg-neutral-mist/20 px-2 py-0.5 rounded-full text-muted-foreground"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                      
-                      <p className="text-sm text-muted-foreground mt-3">
-                        {suggestion.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-1 mt-3">
-                        {suggestion.tags.map((tag, tagIndex) => (
-                          <span 
-                            key={tagIndex}
-                            className="text-xs bg-muted px-2 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </Card>
+                    </Card>
+                  </motion.div>
                 );
               })}
             </div>
