@@ -8,7 +8,7 @@ import { HabitList } from './HabitList';
 import { HabitForm } from './HabitForm';
 import { HabitStats } from './HabitStats';
 import { HabitSuggestions } from './HabitSuggestions';
-import { Loader2, Plus, Seedling, Flower, Leaf, Sprout, Award, Sparkles, Droplets } from 'lucide-react';
+import { Loader2, Plus, Leaf, Trees, Sprout, Award, Sparkles, Droplets } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
@@ -329,12 +329,12 @@ export function HabitTracker() {
   const getGrowthStageIcon = (habitId: string) => {
     const habitCompletions = completions.filter(c => c.habit_id === habitId).length;
     
-    if (habitCompletions === 0) return <Seedling className="h-6 w-6" />;
+    if (habitCompletions === 0) return <Sprout className="h-6 w-6" />;
     if (habitCompletions < 3) return <Sprout className="h-6 w-6" />;
     if (habitCompletions < 7) return <Leaf className="h-6 w-6" />;
-    if (habitCompletions < 21) return <Seedling className="h-6 w-6" />;
-    if (habitCompletions < 30) return <Flower className="h-6 w-6" />;
-    return <Flower className="h-6 w-6" />;
+    if (habitCompletions < 21) return <Leaf className="h-6 w-6" />;
+    if (habitCompletions < 30) return <Trees className="h-6 w-6" />;
+    return <Trees className="h-6 w-6" />;
   };
 
   if (loading) {
@@ -354,7 +354,7 @@ export function HabitTracker() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <CardTitle className="text-xl flex items-center gap-2">
-              <Seedling className="h-5 w-5 text-wellness-green" />
+              <Trees className="h-5 w-5 text-wellness-green" />
               Growth Garden
             </CardTitle>
             <CardDescription className="mt-1">
@@ -398,7 +398,7 @@ export function HabitTracker() {
           >
             <div className="mb-4 p-4 rounded-lg bg-wellness-green/5 border border-wellness-green/20">
               <h3 className="text-lg font-medium flex items-center gap-2 mb-2">
-                <Seedling className="h-5 w-5 text-wellness-green" />
+                <Leaf className="h-5 w-5 text-wellness-green" />
                 {editingHabit ? 'Tend to Your Habit' : 'Plant a New Habit'}
               </h3>
               <p className="text-sm text-muted-foreground">
@@ -430,7 +430,7 @@ export function HabitTracker() {
             <TabsContent value="active" className="space-y-6">
               {activeHabits.length === 0 ? (
                 <div className="text-center py-8 px-4 bg-wellness-mint/10 rounded-xl border border-wellness-mint/20">
-                  <Seedling className="h-12 w-12 text-wellness-green/50 mx-auto mb-4" />
+                  <Leaf className="h-12 w-12 text-wellness-green/50 mx-auto mb-4" />
                   <h3 className="text-lg font-medium mb-2">Your Garden Awaits</h3>
                   <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                     Your garden is ready for planting! Start by adding your first habit and watch it grow with consistent care.
@@ -450,7 +450,7 @@ export function HabitTracker() {
                 <>
                   <div className="p-4 rounded-lg bg-wellness-mint/10 border border-wellness-mint/20 mb-6">
                     <h3 className="text-lg font-medium flex items-center gap-2 mb-2">
-                      <Flower className="h-5 w-5 text-wellness-green" />
+                      <Trees className="h-5 w-5 text-wellness-green" />
                       Your Growing Garden
                     </h3>
                     <p className="text-sm text-muted-foreground">

@@ -3,7 +3,7 @@ import { Habit } from './HabitTracker';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, ChevronUp, Plus, Sparkles, Seedling, Leaf, Flower, Tag } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus, Sparkles, Leaf, Trees, Sprout, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 
@@ -238,7 +238,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium flex items-center gap-2">
-          <Seedling className="h-5 w-5 text-wellness-green" />
+          <Sprout className="h-5 w-5 text-wellness-green" />
           Habit Seeds
         </h3>
         <CollapsibleTrigger asChild>
@@ -257,7 +257,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
           <CardHeader className="pb-2 border-b border-neutral-mist/30">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-wellness-green/10 flex items-center justify-center">
-                <Seedling className="h-4 w-4 text-wellness-green" />
+                <Sprout className="h-4 w-4 text-wellness-green" />
               </div>
               <div>
                 <CardTitle>Habit Seeds Collection</CardTitle>
@@ -361,7 +361,7 @@ export function HabitSuggestions({ existingHabits, onSelectSuggestion }: HabitSu
                               'Planted'
                             ) : (
                               <>
-                                <Seedling className="h-3 w-3 mr-1" />
+                                <Sprout className="h-3 w-3 mr-1" />
                                 Plant
                               </>
                             )}

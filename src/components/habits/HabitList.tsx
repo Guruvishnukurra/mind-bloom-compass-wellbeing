@@ -21,10 +21,9 @@ import {
   Flame,
   Droplets,
   Sun,
-  Seedling,
-  Sprout,
-  Flower,
-  Leaf
+  Leaf,
+  Trees,
+  Sprout
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
