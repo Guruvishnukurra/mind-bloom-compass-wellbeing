@@ -161,15 +161,15 @@
 }
 
 .nature-button-primary {
-  @apply bg-wellness-sage text-white hover:bg-wellness-sage hover:opacity-90 hover:animate-pulse-glow;
+  @apply bg-wellness-sage text-white hover:opacity-90 hover:animate-pulse-glow;
 }
 
 .nature-button-secondary {
-  @apply bg-wellness-teal text-white hover:bg-wellness-teal hover:opacity-90 hover:animate-pulse-glow;
+  @apply bg-wellness-teal text-white hover:opacity-90 hover:animate-pulse-glow;
 }
 
 .nature-button-accent {
-  @apply bg-wellness-soft-coral text-white hover:bg-wellness-soft-coral hover:opacity-90 hover:animate-pulse-glow;
+  @apply bg-wellness-soft-coral text-white hover:opacity-90 hover:animate-pulse-glow;
 }
 
 .nature-heading {
@@ -227,15 +227,15 @@
 }
 
 .tranquil-button-primary {
-  @apply bg-wellness-blue text-white hover:bg-wellness-blue hover:opacity-90;
+  @apply bg-wellness-blue text-white hover:opacity-90;
 }
 
 .tranquil-button-secondary {
-  @apply bg-wellness-green text-white hover:bg-wellness-green hover:opacity-90;
+  @apply bg-wellness-green text-white hover:opacity-90;
 }
 
 .tranquil-button-accent {
-  @apply bg-wellness-lavender text-white hover:bg-wellness-lavender hover:opacity-90;
+  @apply bg-wellness-lavender text-white hover:opacity-90;
 }
 
 .tranquil-heading {
