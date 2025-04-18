@@ -279,7 +279,7 @@ export function OpenAIChatBot() {
 
   return (
     <Card className="h-[600px] flex flex-col rounded-xl shadow-md overflow-hidden border-primary/20 container mx-auto">
-      <CardHeader className="pb-2 bg-gradient-to-r from-wellness-teal to-accent/80 text-white">
+      <CardHeader className="pb-2 bg-gradient-to-r from-sage-600 to-accent/80 text-white">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-inner animate-pulse-slow">
@@ -334,7 +334,7 @@ export function OpenAIChatBot() {
                   {message.role === 'assistant' && (
                     <div className="relative">
                       <Avatar className="h-10 w-10 shadow-md">
-                        <AvatarFallback className="bg-gradient-to-br from-wellness-teal to-accent text-white">
+                        <AvatarFallback className="bg-gradient-to-br from-sage-600 to-accent text-white">
                           <Bot className="h-5 w-5" />
                         </AvatarFallback>
                       </Avatar>

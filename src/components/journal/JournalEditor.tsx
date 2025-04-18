@@ -366,7 +366,7 @@ export function JournalEditor() {
   return (
     <div ref={editorContainerRef} className="relative">
       <Card className={`w-full max-w-4xl mx-auto ${isFullscreen ? 'h-screen' : ''}`}>
-        <CardHeader className="bg-gradient-to-r from-wellness-sage to-wellness-teal text-white">
+        <CardHeader className="bg-gradient-to-r from-sage-400 to-sage-600 text-white">
           <CardTitle>Journal Entry</CardTitle>
           <CardDescription className="text-white/80">
             Express yourself freely and capture your thoughts

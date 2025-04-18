@@ -82,6 +82,7 @@
     --wellness-terracotta: 14 58% 51%; /* Terracotta #CF5C36 */
     --wellness-lavender: 266 23% 64%; /* Lavender #9A8FB8 */
     --wellness-gold: 37 50% 67%; /* Muted Gold #D4B483 */
+    --wellness-teal: 174 72% 45%; /* Teal #3AAFA9 */
     
     /* Shades and tints */
     --wellness-deep-ocean-dark: 216 55% 18%; /* Darker Deep Ocean */
@@ -165,6 +166,7 @@
     --wellness-terracotta: 14 58% 41%; /* Darker Terracotta */
     --wellness-lavender: 266 23% 54%; /* Darker Lavender */
     --wellness-gold: 37 50% 57%; /* Darker Gold */
+    --wellness-teal: 174 72% 35%; /* Darker Teal */
     
     /* Shades and tints for dark mode */
     --wellness-deep-ocean-dark: 216 55% 13%; /* Even darker Deep Ocean */
@@ -265,7 +267,7 @@
 }
 
 .nature-gradient {
-  @apply bg-gradient-to-r from-wellness-sage to-wellness-teal;
+  @apply bg-gradient-to-r from-sage-400 to-sage-600;
 }
 
 .nature-button {

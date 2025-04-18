@@ -162,7 +162,7 @@ export function MoodTracker({ onMoodSaved }: { onMoodSaved?: () => void }) {
 
   return (
     <Card className="w-full max-w-2xl mx-auto relative overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-wellness-sage to-wellness-teal text-white">
+      <CardHeader className="bg-gradient-to-r from-sage-400 to-sage-600 text-white">
         <CardTitle className="text-center">Mood Check-In</CardTitle>
         <CardDescription className="text-white/80 text-center">
           Take a moment to reflect on how you're feeling
