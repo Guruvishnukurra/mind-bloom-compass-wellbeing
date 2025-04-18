@@ -240,7 +240,19 @@
 }
 
 .wellness-gradient {
-  @apply bg-gradient-to-r from-wellness-light-blue to-wellness-light-teal;
+  @apply bg-gradient-to-r from-deep-ocean-300 to-sage-400;
+}
+
+.wellness-gradient-warm {
+  @apply bg-gradient-to-r from-terracotta-400 to-gold-400;
+}
+
+.wellness-gradient-calm {
+  @apply bg-gradient-to-r from-deep-ocean-400 to-lavender-400;
+}
+
+.wellness-gradient-natural {
+  @apply bg-gradient-to-r from-sage-400 to-gold-400;
 }
 
 .wellness-button {
@@ -324,7 +336,7 @@
 }
 
 .tranquil-gradient {
-  @apply bg-gradient-to-r from-wellness-light-blue to-wellness-green;
+  @apply bg-gradient-to-r from-deep-ocean-300 to-sage-400;
 }
 
 .tranquil-button {
@@ -511,29 +523,50 @@
 
 /* Additional utility classes */
 @layer utilities {
+  /* Background color utilities */
   .bg-wellness-light-blue {
-    background-color: #B3E5FC;
+    background-color: theme('colors.deep-ocean.300');
+  }
+  
+  .bg-wellness-light-purple {
+    background-color: theme('colors.lavender.300');
+  }
+  
+  .bg-wellness-light-green {
+    background-color: theme('colors.sage.300');
+  }
+  
+  .bg-wellness-light-coral {
+    background-color: theme('colors.terracotta.300');
+  }
+  
+  .bg-wellness-light-gold {
+    background-color: theme('colors.gold.300');
   }
   
   /* Text color utilities */
   .text-wellness-blue {
-    color: hsl(var(--wellness-blue));
+    color: theme('colors.deep-ocean.500');
   }
   
   .text-wellness-green {
-    color: hsl(var(--wellness-green));
+    color: theme('colors.sage.500');
   }
   
   .text-wellness-lavender {
-    color: hsl(var(--wellness-lavender));
+    color: theme('colors.lavender.500');
   }
   
   .text-wellness-amber {
-    color: hsl(var(--wellness-amber));
+    color: theme('colors.gold.500');
   }
   
   .text-wellness-teal {
-    color: hsl(var(--wellness-teal));
+    color: theme('colors.sage.600');
+  }
+  
+  .text-wellness-light-blue {
+    color: theme('colors.deep-ocean.300');
   }
   
   .text-wellness-sage {
