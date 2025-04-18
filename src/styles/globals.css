@@ -5,36 +5,36 @@
 @tailwind utilities;
 
 :root {
-  /* Primary Colors */
-  --color-warm-yellow: #FFE382; /* Primary: Warm Yellow */
-  --color-soft-teal: #A3D2CA; /* Secondary: Soft Teal */
-  --color-terracotta: #E26A4B; /* Accent: Terracotta */
-  --color-deep-slate: #3B3B3B; /* Text: Deep Slate */
+  /* Primary Colors - Blue Palette */
+  --color-primary-blue: #3B82F6; /* Primary Blue */
+  --color-light-blue: #93C5FD; /* Light Blue */
+  --color-dark-blue: #1E40AF; /* Dark Blue */
+  --color-deep-blue: #1E3A8A; /* Deep Blue */
   
-  /* Secondary Colors - Soft and Soothing */
-  --color-peach: #FFCBA4;
-  --color-mauve: #D8BFD8;
+  /* Secondary Colors - Complementary */
+  --color-sky-blue: #7DD3FC;
+  --color-indigo: #6366F1;
   
   /* Neutral Colors */
-  --color-white: #F9F5F0;
-  --color-gray: #E2E8F0;
-  --color-blue: #3B3B3B; /* Changed to Deep Slate */
+  --color-white: #F9FAFB;
+  --color-gray: #E5E7EB;
+  --color-blue: #3B82F6; /* Primary Blue */
   
   /* Functional Colors */
-  --color-success: #A3D2CA; /* Soft Teal */
-  --color-alert: #E26A4B; /* Terracotta */
-  --color-focus: #FFE382; /* Warm Yellow */
+  --color-success: #10B981; /* Green */
+  --color-alert: #F59E0B; /* Amber */
+  --color-focus: #3B82F6; /* Primary Blue */
   
-  /* Wellness Theme Colors - New Palette */
-  --wellness-teal: #A3D2CA; /* Soft Teal */
-  --wellness-yellow: #FFE382; /* Warm Yellow */
-  --wellness-terracotta: #E26A4B; /* Terracotta */
-  --wellness-soft-coral: #FFCBA4;
-  --wellness-amber: #FFE382; /* Warm Yellow */
-  --wellness-blue: #A3D2CA; /* Soft Teal */
-  --wellness-accent: #E26A4B; /* Terracotta */
-  --wellness-pale-yellow: #FFF7D6; /* Lighter Warm Yellow */
-  --wellness-dark-gray: #3B3B3B; /* Deep Slate */
+  /* Wellness Theme Colors - Blue Palette */
+  --wellness-primary: #3B82F6; /* Primary Blue */
+  --wellness-secondary: #93C5FD; /* Light Blue */
+  --wellness-accent: #6366F1; /* Indigo */
+  --wellness-light: #DBEAFE; /* Very Light Blue */
+  --wellness-dark: #1E40AF; /* Dark Blue */
+  --wellness-deep: #1E3A8A; /* Deep Blue */
+  --wellness-sky: #7DD3FC; /* Sky Blue */
+  --wellness-highlight: #60A5FA; /* Medium Blue */
+  --wellness-text: #1F2937; /* Dark Gray for Text */
   
   /* Border Radius */
   --radius-sm: 0.5rem;
@@ -61,7 +61,7 @@
 
 @layer components {
   .serenity-gradient {
-    @apply bg-gradient-to-r from-warm-yellow-500 to-soft-teal-400;
+    @apply bg-gradient-to-r from-primary-blue-500 to-light-blue-400;
   }
 
   .serenity-card {
@@ -73,19 +73,19 @@
   }
 
   .serenity-button-primary {
-    @apply serenity-button bg-warm-yellow-500 text-deep-slate-700 hover:bg-warm-yellow-600;
+    @apply serenity-button bg-primary-blue-500 text-white hover:bg-primary-blue-600;
   }
 
   .serenity-button-secondary {
-    @apply serenity-button bg-soft-teal-400 text-deep-slate-700 hover:bg-soft-teal-500;
+    @apply serenity-button bg-light-blue-400 text-deep-blue-800 hover:bg-light-blue-500;
   }
 
   .serenity-button-accent {
-    @apply serenity-button bg-terracotta-500 text-white hover:bg-terracotta-600;
+    @apply serenity-button bg-indigo-500 text-white hover:bg-indigo-600;
   }
 
   .serenity-input {
-    @apply w-full px-4 py-2 rounded-xl border border-soft-teal-200 focus:border-warm-yellow-500 focus:ring-2 focus:ring-warm-yellow-500 focus:ring-opacity-50 transition-all duration-300;
+    @apply w-full px-4 py-2 rounded-xl border border-light-blue-200 focus:border-primary-blue-500 focus:ring-2 focus:ring-primary-blue-500 focus:ring-opacity-50 transition-all duration-300;
   }
 
   .mood-indicator {
@@ -93,23 +93,23 @@
   }
 
   .mood-calm {
-    @apply bg-soft-teal-400;
+    @apply bg-light-blue-400;
   }
 
   .mood-happy {
-    @apply bg-warm-yellow-400;
+    @apply bg-sky-blue-400;
   }
 
   .mood-anxious {
-    @apply bg-terracotta-300;
+    @apply bg-indigo-300;
   }
 
   .mood-sad {
-    @apply bg-soft-teal-600;
+    @apply bg-dark-blue-500;
   }
 
   .mood-angry {
-    @apply bg-terracotta-500;
+    @apply bg-deep-blue-600;
   }
 }
 

@@ -95,11 +95,11 @@ export default function Dashboard() {
         <Button
           variant="default"
           size="lg"
-          className="w-full py-8 bg-gradient-to-r from-warm-yellow-500 to-soft-teal-500 hover:from-warm-yellow-600 hover:to-soft-teal-600 text-deep-slate-800 flex items-center justify-center gap-3 text-lg font-medium rounded-3xl shadow-lg"
+          className="w-full py-8 bg-gradient-to-r from-primary-blue-500 to-dark-blue-600 hover:from-primary-blue-600 hover:to-dark-blue-700 text-white flex items-center justify-center gap-3 text-lg font-medium rounded-3xl shadow-lg"
           onClick={() => navigate("/meditation")}
         >
           <Brain className="w-7 h-7" />
-          Start Meditation Session
+          <span className="inline-block">Start Meditation Session</span>
         </Button>
       </motion.div>
 
