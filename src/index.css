@@ -181,7 +181,7 @@
 }
 
 .nature-text {
-  @apply text-base text-wellness-dark-gray;
+  @apply text-base text-neutral-night;
 }
 
 /* Glassmorphism effect */
@@ -215,7 +215,7 @@
 
 /* Tranquil Mind specific styles */
 .tranquil-card {
-  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-gray;
+  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-shadow;
 }
 
 .tranquil-gradient {
@@ -247,7 +247,7 @@
 }
 
 .tranquil-text {
-  @apply text-base text-wellness-dark-gray;
+  @apply text-base text-neutral-night;
 }
 
 @keyframes float {
@@ -403,11 +403,11 @@
 }
 
 .tranquil-text {
-  @apply text-base text-wellness-dark-gray;
+  @apply text-base text-neutral-night;
 }
 
 .tranquil-card {
-  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-gray;
+  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-shadow;
 }
 
 .glass-effect {
