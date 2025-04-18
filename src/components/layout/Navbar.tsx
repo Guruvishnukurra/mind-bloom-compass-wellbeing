@@ -20,56 +20,56 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-sage-500 to-sage-600 backdrop-blur-md border-b border-sage-400 shadow-md">
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-warm-yellow-500 to-warm-yellow-600 backdrop-blur-md border-b border-warm-yellow-400 shadow-md">
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 relative bg-white/10 rounded-full flex items-center justify-center shadow-inner">
-              <div className="w-6 h-6 bg-gradient-to-br from-gold-400 to-sage-400 rounded-full animate-pulse-slow"></div>
+              <div className="w-6 h-6 bg-gradient-to-br from-soft-teal-400 to-terracotta-400 rounded-full animate-pulse-slow"></div>
             </div>
-            <span className="text-xl font-heading font-semibold text-white">MindBloom</span>
+            <span className="text-xl font-heading font-semibold text-deep-slate-800">MindBloom</span>
           </Link>
         </div>
 
         <div className="hidden md:flex items-center space-x-2">
           <Link
             to="/"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <Home className="h-5 w-5 mr-1.5" />
             Home
           </Link>
           <Link
             to="/resources"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <BookOpen className="h-5 w-5 mr-1.5" />
             Resources
           </Link>
           <Link
             to="/mood"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <BarChart2 className="h-5 w-5 mr-1.5" />
             Mood
           </Link>
           <Link
             to="/habits"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <CheckSquare className="h-5 w-5 mr-1.5" />
             Habits
           </Link>
           <Link
             to="/achievements"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <Trophy className="h-5 w-5 mr-1.5" />
             Achievements
           </Link>
           <Link
             to="/chat"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <MessageSquare className="h-5 w-5 mr-1.5" />
             Chat
@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
             size="icon" 
             onClick={toggleDarkMode}
             aria-label="Toggle dark mode"
-            className="text-white/80 hover:text-white hover:bg-white/10 rounded-full"
+            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 rounded-full"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="md:hidden text-white/80 hover:text-white hover:bg-white/10 rounded-full"
+            className="md:hidden text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 rounded-full"
             aria-label="Open menu"
           >
             <Menu size={20} />
@@ -98,13 +98,13 @@ const Navbar: React.FC = () => {
           
           {user ? (
             <div className="hidden md:flex items-center gap-3">
-              <div className="bg-white/10 text-white px-3 py-1.5 rounded-full text-sm font-medium flex items-center">
+              <div className="bg-deep-slate-800/10 text-deep-slate-800 px-3 py-1.5 rounded-full text-sm font-medium flex items-center">
                 <User className="h-4 w-4 mr-1.5 opacity-70" />
                 <span className="truncate max-w-[120px]">{user.email}</span>
               </div>
               <Button
                 onClick={signOut}
-                className="bg-gold-500 hover:bg-gold-600 text-deep-ocean-800 rounded-full shadow-md"
+                className="bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-full shadow-md"
                 size="sm"
               >
                 <LogOut className="h-4 w-4 mr-1.5" />
@@ -114,7 +114,7 @@ const Navbar: React.FC = () => {
           ) : (
             <Link
               to="/auth"
-              className="hidden md:flex bg-gold-500 hover:bg-gold-600 text-deep-ocean-800 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-md"
+              className="hidden md:flex bg-soft-teal-500 hover:bg-soft-teal-600 text-deep-slate-800 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-md"
             >
               Sign In
             </Link>

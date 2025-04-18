@@ -5,10 +5,11 @@
 @tailwind utilities;
 
 :root {
-  /* Primary Colors - Greens and Soft Yellows */
-  --color-teal: #7C9A92;
-  --color-lavender: #9A8FB8;
-  --color-sage: #7C9A92;
+  /* Primary Colors */
+  --color-warm-yellow: #FFE382; /* Primary: Warm Yellow */
+  --color-soft-teal: #A3D2CA; /* Secondary: Soft Teal */
+  --color-terracotta: #E26A4B; /* Accent: Terracotta */
+  --color-deep-slate: #3B3B3B; /* Text: Deep Slate */
   
   /* Secondary Colors - Soft and Soothing */
   --color-peach: #FFCBA4;
@@ -17,23 +18,23 @@
   /* Neutral Colors */
   --color-white: #F9F5F0;
   --color-gray: #E2E8F0;
-  --color-blue: #1A365D;
+  --color-blue: #3B3B3B; /* Changed to Deep Slate */
   
   /* Functional Colors */
-  --color-success: #7C9A92;
-  --color-alert: #D4B483;
-  --color-focus: #9A8FB8;
+  --color-success: #A3D2CA; /* Soft Teal */
+  --color-alert: #E26A4B; /* Terracotta */
+  --color-focus: #FFE382; /* Warm Yellow */
   
-  /* Wellness Theme Colors - Calming Palette */
-  --wellness-teal: #7C9A92;
-  --wellness-lavender: #9A8FB8;
-  --wellness-sage: #7C9A92;
+  /* Wellness Theme Colors - New Palette */
+  --wellness-teal: #A3D2CA; /* Soft Teal */
+  --wellness-yellow: #FFE382; /* Warm Yellow */
+  --wellness-terracotta: #E26A4B; /* Terracotta */
   --wellness-soft-coral: #FFCBA4;
-  --wellness-amber: #D4B483;
-  --wellness-blue: #1A365D;
-  --wellness-purple: #9A8FB8;
-  --wellness-pale-yellow: #F9F5F0;
-  --wellness-dark-gray: #1A365D;
+  --wellness-amber: #FFE382; /* Warm Yellow */
+  --wellness-blue: #A3D2CA; /* Soft Teal */
+  --wellness-accent: #E26A4B; /* Terracotta */
+  --wellness-pale-yellow: #FFF7D6; /* Lighter Warm Yellow */
+  --wellness-dark-gray: #3B3B3B; /* Deep Slate */
   
   /* Border Radius */
   --radius-sm: 0.5rem;
@@ -60,7 +61,7 @@
 
 @layer components {
   .serenity-gradient {
-    @apply bg-gradient-to-r from-sage-500 to-gold-400;
+    @apply bg-gradient-to-r from-warm-yellow-500 to-soft-teal-400;
   }
 
   .serenity-card {
@@ -72,15 +73,19 @@
   }
 
   .serenity-button-primary {
-    @apply serenity-button bg-sage-500 text-white hover:bg-sage-600;
+    @apply serenity-button bg-warm-yellow-500 text-deep-slate-700 hover:bg-warm-yellow-600;
   }
 
   .serenity-button-secondary {
-    @apply serenity-button bg-gold-400 text-deep-ocean-600 hover:bg-gold-500;
+    @apply serenity-button bg-soft-teal-400 text-deep-slate-700 hover:bg-soft-teal-500;
+  }
+
+  .serenity-button-accent {
+    @apply serenity-button bg-terracotta-500 text-white hover:bg-terracotta-600;
   }
 
   .serenity-input {
-    @apply w-full px-4 py-2 rounded-xl border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500 focus:ring-opacity-50 transition-all duration-300;
+    @apply w-full px-4 py-2 rounded-xl border border-soft-teal-200 focus:border-warm-yellow-500 focus:ring-2 focus:ring-warm-yellow-500 focus:ring-opacity-50 transition-all duration-300;
   }
 
   .mood-indicator {
@@ -88,23 +93,23 @@
   }
 
   .mood-calm {
-    @apply bg-primary-lavender;
+    @apply bg-soft-teal-400;
   }
 
   .mood-happy {
-    @apply bg-secondary-peach;
+    @apply bg-warm-yellow-400;
   }
 
   .mood-anxious {
-    @apply bg-secondary-mauve;
+    @apply bg-terracotta-300;
   }
 
   .mood-sad {
-    @apply bg-primary-teal;
+    @apply bg-soft-teal-600;
   }
 
   .mood-angry {
-    @apply bg-functional-alert;
+    @apply bg-terracotta-500;
   }
 }
 
