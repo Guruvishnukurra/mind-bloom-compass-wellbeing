@@ -11,6 +11,7 @@ import ApiTest from '@/pages/ApiTest';
 import Mood from '@/pages/Mood';
 import Habits from '@/pages/Habits';
 import Achievements from '@/pages/Achievements';
+import Layout from '@/components/layout/Layout';
 
 export function AppRoutes() {
   const { user, loading, error } = useAuth();
@@ -64,41 +65,41 @@ export function AppRoutes() {
       />
       <Route
         path="/dashboard"
-        element={user ? <Dashboard /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Dashboard /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/journal"
-        element={user ? <Journal /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Journal /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/meditation"
-        element={user ? <Meditation /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Meditation /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/resources"
-        element={user ? <Resources /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Resources /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/gratitude"
-        element={user ? <Gratitude /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Gratitude /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/chat"
-        element={user ? <Chat /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Chat /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/mood"
-        element={user ? <Mood /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Mood /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/habits"
-        element={user ? <Habits /> : <Navigate to="/auth" />}
+        element={user ? <Layout><Habits /></Layout> : <Navigate to="/auth" />}
       />
       <Route
         path="/achievements"
         element={
           user ? (
-            <Achievements />
+            <Layout><Achievements /></Layout>
           ) : (
             <Navigate to="/auth" replace />
           )
@@ -106,7 +107,7 @@ export function AppRoutes() {
       />
       <Route
         path="/api-test"
-        element={<ApiTest />}
+        element={<Layout><ApiTest /></Layout>}
       />
       <Route path="/" element={<Navigate to={user ? '/dashboard' : '/auth'} />} />
     </Routes>

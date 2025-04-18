@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,6 +10,7 @@ import { HabitSuggestions } from './HabitSuggestions';
 import { Loader2, Plus, Leaf, Trees, Sprout, Award, Sparkles, Droplets } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface Habit {
   id: string;
@@ -38,6 +38,10 @@ export interface HabitCompletion {
   notes?: string;
 }
 
+// Local storage keys
+const HABITS_STORAGE_KEY = 'mindbloom_habits';
+const COMPLETIONS_STORAGE_KEY = 'mindbloom_habit_completions';
+
 export function HabitTracker() {
   const { user } = useAuth();
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -51,80 +55,92 @@ export function HabitTracker() {
 
   useEffect(() => {
     if (user) {
-      fetchHabits();
-      fetchCompletions();
+      loadHabitsFromLocalStorage();
+      loadCompletionsFromLocalStorage();
     }
   }, [user]);
 
-  const fetchHabits = async () => {
-    if (!user) return;
-    
+  const loadHabitsFromLocalStorage = () => {
     try {
-      // Check if the habits table exists
-      const { error: tableCheckError } = await supabase
-        .from('habits')
-        .select('id')
-        .limit(1);
-        
-      if (tableCheckError) {
-        console.warn('Habits table may not exist yet:', tableCheckError.message);
-        setLoading(false);
-        return;
-      }
-      
-      const { data, error } = await supabase
-        .from('habits')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-        
-      if (error) {
-        console.error('Error fetching habits:', error);
-        toast.error('Failed to load habits');
-      } else {
-        setHabits(data || []);
+      const storedHabits = localStorage.getItem(HABITS_STORAGE_KEY);
+      if (storedHabits) {
+        const parsedHabits = JSON.parse(storedHabits) as Habit[];
+        // Filter habits for current user
+        const userHabits = parsedHabits.filter(habit => habit.user_id === user?.id);
+        setHabits(userHabits);
       }
     } catch (error) {
-      console.error('Exception fetching habits:', error);
+      console.error('Error loading habits from local storage:', error);
       toast.error('Failed to load habits');
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchCompletions = async () => {
-    if (!user) return;
-    
+  const loadCompletionsFromLocalStorage = () => {
     try {
-      // Check if the habit_completions table exists
-      const { error: tableCheckError } = await supabase
-        .from('habit_completions')
-        .select('id')
-        .limit(1);
-        
-      if (tableCheckError) {
-        console.warn('Habit completions table may not exist yet:', tableCheckError.message);
-        return;
-      }
-      
-      const { data, error } = await supabase
-        .from('habit_completions')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('completed_at', { ascending: false });
-        
-      if (error) {
-        console.error('Error fetching habit completions:', error);
-      } else {
-        setCompletions(data || []);
+      const storedCompletions = localStorage.getItem(COMPLETIONS_STORAGE_KEY);
+      if (storedCompletions) {
+        const parsedCompletions = JSON.parse(storedCompletions) as HabitCompletion[];
+        // Filter completions for current user
+        const userCompletions = parsedCompletions.filter(completion => completion.user_id === user?.id);
+        setCompletions(userCompletions);
       }
     } catch (error) {
-      console.error('Exception fetching habit completions:', error);
+      console.error('Error loading completions from local storage:', error);
     }
   };
 
-  const handleHabitCreated = () => {
-    fetchHabits();
+  const saveHabitsToLocalStorage = (updatedHabits: Habit[]) => {
+    try {
+      // Get all habits from storage first
+      const storedHabits = localStorage.getItem(HABITS_STORAGE_KEY);
+      let allHabits: Habit[] = [];
+      
+      if (storedHabits) {
+        // Parse stored habits
+        allHabits = JSON.parse(storedHabits) as Habit[];
+        // Remove current user's habits
+        allHabits = allHabits.filter(habit => habit.user_id !== user?.id);
+      }
+      
+      // Add updated habits for current user
+      allHabits = [...allHabits, ...updatedHabits];
+      
+      // Save back to local storage
+      localStorage.setItem(HABITS_STORAGE_KEY, JSON.stringify(allHabits));
+    } catch (error) {
+      console.error('Error saving habits to local storage:', error);
+    }
+  };
+
+  const saveCompletionsToLocalStorage = (updatedCompletions: HabitCompletion[]) => {
+    try {
+      // Get all completions from storage first
+      const storedCompletions = localStorage.getItem(COMPLETIONS_STORAGE_KEY);
+      let allCompletions: HabitCompletion[] = [];
+      
+      if (storedCompletions) {
+        // Parse stored completions
+        allCompletions = JSON.parse(storedCompletions) as HabitCompletion[];
+        // Keep completions from other users
+        allCompletions = allCompletions.filter(completion => completion.user_id !== user?.id);
+      }
+      
+      // Add updated completions for current user
+      allCompletions = [...allCompletions, ...updatedCompletions];
+      
+      // Save back to local storage
+      localStorage.setItem(COMPLETIONS_STORAGE_KEY, JSON.stringify(allCompletions));
+    } catch (error) {
+      console.error('Error saving completions to local storage:', error);
+    }
+  };
+
+  const handleHabitCreated = (newHabit: Habit) => {
+    const updatedHabits = [...habits, newHabit];
+    setHabits(updatedHabits);
+    saveHabitsToLocalStorage(updatedHabits);
     setShowForm(false);
     
     // Show celebration for new habit
@@ -133,47 +149,40 @@ export function HabitTracker() {
     setTimeout(() => setShowCelebration(false), 3000);
   };
 
-  const handleHabitUpdated = () => {
-    fetchHabits();
+  const handleHabitUpdated = (updatedHabit: Habit) => {
+    const updatedHabits = habits.map(habit => 
+      habit.id === updatedHabit.id ? updatedHabit : habit
+    );
+    setHabits(updatedHabits);
+    saveHabitsToLocalStorage(updatedHabits);
     setEditingHabit(null);
     setShowForm(false);
     toast.success('Habit updated successfully');
   };
 
-  const handleHabitCompleted = async (habitId: string) => {
+  const handleHabitCompleted = (habitId: string) => {
     if (!user) return;
     
-    try {
-      const { error } = await supabase
-        .from('habit_completions')
-        .insert([
-          {
-            habit_id: habitId,
-            user_id: user.id,
-            completed_at: new Date().toISOString(),
-          }
-        ]);
-        
-      if (error) {
-        console.error('Error completing habit:', error);
-        toast.error('Failed to mark habit as complete');
-      } else {
-        fetchCompletions();
-        
-        // Find the habit name
-        const habit = habits.find(h => h.id === habitId);
-        const habitName = habit ? habit.name : 'Habit';
-        
-        // Simple success message
-        toast.success(`${habitName} completed! Your plant is growing.`);
-        
-        // Check for streaks and milestones
-        checkForMilestones(habitId);
-      }
-    } catch (error) {
-      console.error('Exception completing habit:', error);
-      toast.error('Failed to mark habit as complete');
-    }
+    const newCompletion: HabitCompletion = {
+      id: uuidv4(),
+      habit_id: habitId,
+      user_id: user.id,
+      completed_at: new Date().toISOString(),
+    };
+    
+    const updatedCompletions = [...completions, newCompletion];
+    setCompletions(updatedCompletions);
+    saveCompletionsToLocalStorage(updatedCompletions);
+    
+    // Find the habit name
+    const habit = habits.find(h => h.id === habitId);
+    const habitName = habit ? habit.name : 'Habit';
+    
+    // Simple success message
+    toast.success(`${habitName} completed! Your plant is growing.`);
+    
+    // Check for streaks and milestones
+    checkForMilestones(habitId);
   };
 
   const handleEditHabit = (habit: Habit) => {
@@ -181,53 +190,31 @@ export function HabitTracker() {
     setShowForm(true);
   };
 
-  const handleArchiveHabit = async (habitId: string) => {
+  const handleArchiveHabit = (habitId: string) => {
     if (!user) return;
     
-    try {
-      const { error } = await supabase
-        .from('habits')
-        .update({ archived: true })
-        .eq('id', habitId)
-        .eq('user_id', user.id);
-        
-      if (error) {
-        console.error('Error archiving habit:', error);
-        toast.error('Failed to archive habit');
-      } else {
-        fetchHabits();
-        toast.success('Habit moved to dormant garden');
-      }
-    } catch (error) {
-      console.error('Exception archiving habit:', error);
-      toast.error('Failed to archive habit');
-    }
+    const updatedHabits = habits.map(habit => 
+      habit.id === habitId ? { ...habit, archived: true } : habit
+    );
+    
+    setHabits(updatedHabits);
+    saveHabitsToLocalStorage(updatedHabits);
+    toast.success('Habit moved to dormant garden');
   };
 
-  const handleRestoreHabit = async (habitId: string) => {
+  const handleRestoreHabit = (habitId: string) => {
     if (!user) return;
     
-    try {
-      const { error } = await supabase
-        .from('habits')
-        .update({ archived: false })
-        .eq('id', habitId)
-        .eq('user_id', user.id);
-        
-      if (error) {
-        console.error('Error restoring habit:', error);
-        toast.error('Failed to restore habit');
-      } else {
-        fetchHabits();
-        toast.success('Habit replanted in your active garden');
-      }
-    } catch (error) {
-      console.error('Exception restoring habit:', error);
-      toast.error('Failed to restore habit');
-    }
+    const updatedHabits = habits.map(habit => 
+      habit.id === habitId ? { ...habit, archived: false } : habit
+    );
+    
+    setHabits(updatedHabits);
+    saveHabitsToLocalStorage(updatedHabits);
+    toast.success('Habit replanted in your active garden');
   };
 
-  const checkForMilestones = async (habitId: string) => {
+  const checkForMilestones = (habitId: string) => {
     // Get all completions for this habit
     const habitCompletions = completions.filter(c => c.habit_id === habitId);
     
@@ -340,7 +327,7 @@ export function HabitTracker() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-wellness-blue" />
+        <Loader2 className="h-8 w-8 animate-spin text-deep-ocean-500" />
       </div>
     );
   }
@@ -349,15 +336,15 @@ export function HabitTracker() {
   const archivedHabits = habits.filter(habit => habit.archived);
 
   return (
-    <Card className="w-full border-0 shadow-lg">
-      <CardHeader className="border-b border-neutral-mist/30">
+    <Card className="w-full border border-sage-200 shadow-lg bg-gradient-to-br from-cream-50 to-white">
+      <CardHeader className="border-b border-sage-200">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <CardTitle className="text-xl flex items-center gap-2">
-              <Trees className="h-5 w-5 text-wellness-green" />
+            <CardTitle className="text-xl flex items-center gap-2 font-heading text-deep-ocean-600">
+              <Trees className="h-5 w-5 text-sage-500" />
               Growth Garden
             </CardTitle>
-            <CardDescription className="mt-1">
+            <CardDescription className="mt-1 text-deep-ocean-600/70">
               Plant, nurture, and watch your habits bloom
             </CardDescription>
           </div>
@@ -366,7 +353,7 @@ export function HabitTracker() {
               setEditingHabit(null);
               setShowForm(!showForm);
             }}
-            className="mindbloom-button-primary"
+            className="bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white shadow-md"
           >
             <Plus className="mr-2 h-4 w-4" />
             {showForm ? 'Cancel' : 'Plant New Habit'}
@@ -382,10 +369,10 @@ export function HabitTracker() {
             exit={{ opacity: 0, scale: 0.8 }}
             className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
           >
-            <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg border border-wellness-green/30 max-w-md text-center">
-              <Sparkles className="h-12 w-12 text-wellness-amber mx-auto mb-3 animate-pulse-glow" />
-              <h3 className="text-xl font-medium text-wellness-green mb-2">Achievement Unlocked!</h3>
-              <p className="text-lg">{celebrationMessage}</p>
+            <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg border border-sage-300 max-w-md text-center">
+              <Sparkles className="h-12 w-12 text-gold-500 mx-auto mb-3 animate-pulse-glow" />
+              <h3 className="text-xl font-medium text-deep-ocean-600 mb-2 font-heading">Achievement Unlocked!</h3>
+              <p className="text-lg text-deep-ocean-600/80">{celebrationMessage}</p>
             </div>
           </motion.div>
         )}
@@ -396,12 +383,12 @@ export function HabitTracker() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="mb-4 p-4 rounded-lg bg-wellness-green/5 border border-wellness-green/20">
-              <h3 className="text-lg font-medium flex items-center gap-2 mb-2">
-                <Leaf className="h-5 w-5 text-wellness-green" />
+            <div className="mb-4 p-4 rounded-lg bg-sage-50 border border-sage-200">
+              <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
+                <Leaf className="h-5 w-5 text-sage-500" />
                 {editingHabit ? 'Tend to Your Habit' : 'Plant a New Habit'}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-deep-ocean-600/70">
                 {editingHabit 
                   ? 'Adjust and nurture your existing habit to help it thrive.' 
                   : 'Choose a habit to cultivate in your wellness garden.'}
@@ -416,23 +403,23 @@ export function HabitTracker() {
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
             <TabsList className="grid grid-cols-3 w-full">
-              <TabsTrigger value="active" className="data-[state=active]:bg-wellness-green/10 data-[state=active]:text-wellness-green">
+              <TabsTrigger value="active" className="data-[state=active]:bg-sage-500/10 data-[state=active]:text-sage-600">
                 Growing Garden
               </TabsTrigger>
-              <TabsTrigger value="stats" className="data-[state=active]:bg-wellness-blue/10 data-[state=active]:text-wellness-blue">
+              <TabsTrigger value="stats" className="data-[state=active]:bg-deep-ocean-500/10 data-[state=active]:text-deep-ocean-600">
                 Garden Stats
               </TabsTrigger>
-              <TabsTrigger value="archived" className="data-[state=active]:bg-wellness-amber/10 data-[state=active]:text-wellness-amber">
+              <TabsTrigger value="archived" className="data-[state=active]:bg-gold-500/10 data-[state=active]:text-gold-600">
                 Dormant Plants
               </TabsTrigger>
             </TabsList>
             
             <TabsContent value="active" className="space-y-6">
               {activeHabits.length === 0 ? (
-                <div className="text-center py-8 px-4 bg-wellness-mint/10 rounded-xl border border-wellness-mint/20">
-                  <Leaf className="h-12 w-12 text-wellness-green/50 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Your Garden Awaits</h3>
-                  <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                <div className="text-center py-8 px-4 bg-sage-50 rounded-xl border border-sage-200">
+                  <Leaf className="h-12 w-12 text-sage-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium mb-2 text-deep-ocean-600 font-heading">Your Garden Awaits</h3>
+                  <p className="text-deep-ocean-600/70 mb-6 max-w-md mx-auto">
                     Your garden is ready for planting! Start by adding your first habit and watch it grow with consistent care.
                   </p>
                   <Button 
@@ -440,20 +427,20 @@ export function HabitTracker() {
                       setEditingHabit(null);
                       setShowForm(true);
                     }}
-                    className="mindbloom-button-primary"
+                    className="bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white shadow-md"
                   >
-                    <Seedling className="mr-2 h-4 w-4" />
+                    <Sprout className="mr-2 h-4 w-4" />
                     Plant Your First Habit
                   </Button>
                 </div>
               ) : (
                 <>
-                  <div className="p-4 rounded-lg bg-wellness-mint/10 border border-wellness-mint/20 mb-6">
-                    <h3 className="text-lg font-medium flex items-center gap-2 mb-2">
-                      <Trees className="h-5 w-5 text-wellness-green" />
+                  <div className="p-4 rounded-lg bg-sage-50 border border-sage-200 mb-6">
+                    <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
+                      <Trees className="h-5 w-5 text-sage-500" />
                       Your Growing Garden
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-deep-ocean-600/70">
                       Nurture your habits daily to help them flourish. Each completion helps your habits grow stronger.
                     </p>
                   </div>
@@ -467,24 +454,18 @@ export function HabitTracker() {
                     getGrowthStageIcon={getGrowthStageIcon}
                   />
                   
-                  <div className="mt-8 p-4 rounded-lg bg-wellness-blue/5 border border-wellness-blue/20">
-                    <h3 className="text-lg font-medium flex items-center gap-2 mb-3">
-                      <Seedling className="h-5 w-5 text-wellness-blue" />
+                  <div className="mt-8 p-4 rounded-lg bg-deep-ocean-50 border border-deep-ocean-200">
+                    <h3 className="text-lg font-medium flex items-center gap-2 mb-3 text-deep-ocean-600 font-heading">
+                      <Sprout className="h-5 w-5 text-deep-ocean-500" />
                       Habit Seeds to Plant
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-sm text-deep-ocean-600/70 mb-4">
                       Consider adding these habits to your garden for a more balanced wellness routine.
                     </p>
                     <HabitSuggestions 
                       existingHabits={activeHabits}
                       onSelectSuggestion={(habit) => {
-                        setEditingHabit({
-                          ...habit,
-                          id: '',
-                          user_id: user?.id || '',
-                          created_at: new Date().toISOString(),
-                          archived: false
-                        });
+                        
                         setShowForm(true);
                       }}
                     />
@@ -494,12 +475,12 @@ export function HabitTracker() {
             </TabsContent>
             
             <TabsContent value="stats">
-              <div className="p-4 rounded-lg bg-wellness-blue/5 border border-wellness-blue/20 mb-6">
-                <h3 className="text-lg font-medium flex items-center gap-2 mb-2">
-                  <Award className="h-5 w-5 text-wellness-blue" />
+              <div className="p-4 rounded-lg bg-deep-ocean-50 border border-deep-ocean-200 mb-6">
+                <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
+                  <Award className="h-5 w-5 text-deep-ocean-500" />
                   Garden Growth Analytics
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-deep-ocean-600/70">
                   Track how your habits are growing and flourishing over time.
                 </p>
               </div>
@@ -507,20 +488,20 @@ export function HabitTracker() {
             </TabsContent>
             
             <TabsContent value="archived">
-              <div className="p-4 rounded-lg bg-wellness-amber/5 border border-wellness-amber/20 mb-6">
-                <h3 className="text-lg font-medium flex items-center gap-2 mb-2">
-                  <Leaf className="h-5 w-5 text-wellness-amber" />
+              <div className="p-4 rounded-lg bg-gold-50 border border-gold-200 mb-6">
+                <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
+                  <Leaf className="h-5 w-5 text-gold-500" />
                   Dormant Plants
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-deep-ocean-600/70">
                   These habits are currently dormant. You can replant them in your active garden anytime.
                 </p>
               </div>
               
               {archivedHabits.length === 0 ? (
-                <div className="text-center py-8 bg-neutral-mist/10 rounded-lg">
-                  <Leaf className="h-10 w-10 text-neutral-mist mx-auto mb-3" />
-                  <p className="text-muted-foreground">Your dormant garden is empty.</p>
+                <div className="text-center py-8 bg-cream-100 rounded-lg border border-gold-100">
+                  <Leaf className="h-10 w-10 text-gold-300 mx-auto mb-3" />
+                  <p className="text-deep-ocean-600/60">Your dormant garden is empty.</p>
                 </div>
               ) : (
                 <HabitList 

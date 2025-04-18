@@ -92,7 +92,7 @@ export function OpenAIChatBot() {
   };
 
   return (
-    <Card className="h-[600px] flex flex-col rounded-2xl shadow-lg overflow-hidden border-primary/10 container mx-auto bg-white">
+    <Card className="h-[600px] flex flex-col rounded-2xl shadow-lg overflow-hidden border-primary/10 mx-auto bg-cream-100">
       <CardHeader className="pb-3 bg-gradient-to-r from-lavender-500 to-deep-ocean-400 text-white">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -117,7 +117,7 @@ export function OpenAIChatBot() {
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 p-0 flex flex-col bg-gradient-to-b from-lavender-50 to-white">
+      <CardContent className="flex-1 p-0 flex flex-col bg-gradient-to-b from-cream-50 to-cream-100">
         <ScrollArea className="flex-1 px-6 py-5" ref={scrollAreaRef}>
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8">
@@ -152,10 +152,10 @@ export function OpenAIChatBot() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-5`}
+                className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-5 w-full`}
               >
                 {message.role === 'assistant' && (
-                  <div className="relative">
+                  <div className="relative flex-shrink-0">
                     <Avatar className="h-10 w-10 shadow-md">
                       <AvatarFallback className="bg-gradient-to-br from-lavender-500 to-deep-ocean-400 text-white">
                         <Bot className="h-5 w-5" />
@@ -165,10 +165,10 @@ export function OpenAIChatBot() {
                   </div>
                 )}
                 <motion.div 
-                  className={`rounded-2xl p-4 max-w-[80%] ${
+                  className={`rounded-2xl p-4 ${
                     message.role === 'user' 
-                      ? 'bg-gradient-to-r from-deep-ocean-500 to-deep-ocean-600 text-white shadow-md' 
-                      : 'bg-white border border-lavender-200 shadow-sm'
+                      ? 'bg-gradient-to-r from-deep-ocean-500 to-deep-ocean-600 text-white shadow-md ml-auto max-w-[75%]' 
+                      : 'bg-white border border-lavender-200 shadow-sm max-w-[75%]'
                   }`}
                   initial={{ scale: 0.95 }}
                   animate={{ scale: 1 }}
@@ -182,7 +182,7 @@ export function OpenAIChatBot() {
                   </ReactMarkdown>
                 </motion.div>
                 {message.role === 'user' && (
-                  <Avatar className="h-10 w-10 shadow-md">
+                  <Avatar className="h-10 w-10 shadow-md flex-shrink-0">
                     <AvatarFallback className="bg-gradient-to-br from-sage-500 to-sage-700 text-white">
                       <User className="h-5 w-5" />
                     </AvatarFallback>
@@ -208,21 +208,21 @@ export function OpenAIChatBot() {
             </div>
           )}
         </ScrollArea>
-        <div className="p-4 border-t border-lavender-100 bg-white">
+        <div className="p-4 border-t border-lavender-100 bg-cream-50">
           <div className="flex gap-3">
             <Textarea
               placeholder="Type your message here..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="min-h-[60px] resize-none border-lavender-200 focus-visible:ring-lavender-400"
+              className="min-h-[60px] resize-none border-lavender-200 focus-visible:ring-lavender-400 bg-white rounded-xl"
               disabled={isLoading}
               ref={inputRef}
             />
             <Button 
               onClick={handleSendMessage} 
               disabled={isLoading || !input.trim()}
-              className="self-end bg-lavender-600 hover:bg-lavender-700 text-white"
+              className="self-end bg-deep-ocean-500 hover:bg-deep-ocean-600 text-white rounded-xl shadow-md"
             >
               <Send className="h-4 w-4" />
             </Button>

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Achievement, achievements, getAchievementProgress } from '@/utils/achievements';
 import { supabase } from '@/lib/supabase';
+import { motion } from 'framer-motion';
 
 interface UserAchievement {
   achievement_id: string;
@@ -53,17 +54,24 @@ export function AchievementsList({ limit }: AchievementsListProps) {
   }, {} as Record<Achievement['category'], Achievement[]>);
 
   if (loading) {
-    return <div>Loading achievements...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center p-12 space-y-4">
+        <div className="w-16 h-16 rounded-full bg-lavender-100 flex items-center justify-center animate-pulse">
+          <div className="w-8 h-8 rounded-full bg-lavender-500 animate-ping"></div>
+        </div>
+        <p className="text-lg font-medium text-deep-ocean-600">Loading your achievements...</p>
+      </div>
+    );
   }
 
   return (
     <div className="space-y-6">
       {Object.entries(achievementsByCategory).map(([category, categoryAchievements]) => (
-        <Card key={category}>
-          <CardHeader>
-            <CardTitle className="capitalize">{category} Achievements</CardTitle>
+        <Card key={category} className="overflow-hidden border-primary/10 shadow-md bg-cream-50 hover:shadow-lg transition-all duration-300">
+          <CardHeader className="bg-gradient-to-r from-deep-ocean-500 to-deep-ocean-600 text-white">
+            <CardTitle className="capitalize font-heading">{category} Achievements</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <div className="space-y-4">
               {categoryAchievements
                 .slice(0, limit)
@@ -75,19 +83,19 @@ export function AchievementsList({ limit }: AchievementsListProps) {
                   );
 
                   return (
-                    <div key={achievement.id} className="space-y-3 p-4 rounded-xl hover:bg-primary/5 transition-colors duration-300">
+                    <div key={achievement.id} className="space-y-3 p-4 rounded-xl hover:bg-cream-100 transition-all duration-300 border border-transparent hover:border-lavender-200 shadow-sm hover:shadow-md">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isEarned ? 'bg-primary/20' : 'bg-muted'} transition-all duration-500`}>
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center ${isEarned ? 'bg-gradient-to-br from-lavender-400 to-lavender-600 text-white' : 'bg-muted'} transition-all duration-500 shadow-md`}>
                             <span className={`text-2xl ${isEarned ? 'animate-bounce-gentle' : ''}`}>{achievement.icon}</span>
                           </div>
                           <div>
-                            <h3 className="font-medium font-sans">{achievement.title}</h3>
+                            <h3 className="font-medium font-heading text-deep-ocean-600">{achievement.title}</h3>
                             <p className="text-sm text-muted-foreground font-body">{achievement.description}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className={`px-3 py-1 rounded-full ${isEarned ? 'bg-primary/20 text-primary' : 'bg-muted/50 text-muted-foreground'}`}>
+                          <div className={`px-3 py-1 rounded-full ${isEarned ? 'bg-gradient-to-r from-gold-400 to-gold-500 text-deep-ocean-700' : 'bg-muted/50 text-muted-foreground'} shadow-sm`}>
                             <span className="font-medium">{achievement.points} pts</span>
                           </div>
                         </div>
@@ -95,11 +103,9 @@ export function AchievementsList({ limit }: AchievementsListProps) {
                       {!isEarned && progress.nextAchievement ? (
                         <div className="space-y-2">
                           <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <motion.div 
+                            <div 
                               className="h-full bg-gradient-to-r from-primary/60 to-primary"
-                              initial={{ width: 0 }}
-                              animate={{ width: `${progress.progress}%` }}
-                              transition={{ duration: 1, ease: "easeOut" }}
+                              style={{ width: `${progress.progress}%` }}
                             />
                           </div>
                           <div className="flex justify-between text-xs">
@@ -109,11 +115,11 @@ export function AchievementsList({ limit }: AchievementsListProps) {
                         </div>
                       ) : isEarned ? (
                         <div className="flex items-center justify-center p-2">
-                          <span className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 text-primary text-sm">
-                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-sage-400 to-sage-500 text-white text-sm shadow-md">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
-                            Completed
+                            Achievement Unlocked!
                           </span>
                         </div>
                       ) : null}

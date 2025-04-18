@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
 import { Habit } from './HabitTracker';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,10 +28,11 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { toast } from 'sonner';
 import { Loader2, Save } from 'lucide-react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface HabitFormProps {
-  onHabitCreated: () => void;
-  onHabitUpdated: () => void;
+  onHabitCreated: (habit: Habit) => void;
+  onHabitUpdated: (habit: Habit) => void;
   existingHabit: Habit | null;
 }
 
@@ -117,59 +117,50 @@ export function HabitForm({ onHabitCreated, onHabitUpdated, existingHabit }: Hab
   const frequency = form.watch('frequency');
   const reminder = form.watch('reminder');
   
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (!user) return;
     
     setIsSubmitting(true);
     try {
       if (existingHabit) {
         // Update existing habit
-        const { error } = await supabase
-          .from('habits')
-          .update({
-            name: values.name,
-            description: values.description,
-            category: values.category,
-            frequency: values.frequency,
-            frequency_value: values.frequency === 'custom' ? values.frequency_value : null,
-            frequency_unit: values.frequency === 'custom' ? values.frequency_unit : null,
-            time_of_day: values.time_of_day,
-            reminder: values.reminder,
-            reminder_time: values.reminder ? values.reminder_time : null,
-            color: values.color,
-            icon: values.icon,
-          })
-          .eq('id', existingHabit.id)
-          .eq('user_id', user.id);
-          
-        if (error) throw error;
+        const updatedHabit: Habit = {
+          ...existingHabit,
+          name: values.name,
+          description: values.description,
+          category: values.category,
+          frequency: values.frequency,
+          frequency_value: values.frequency === 'custom' ? values.frequency_value : undefined,
+          frequency_unit: values.frequency === 'custom' ? values.frequency_unit : undefined,
+          time_of_day: values.time_of_day,
+          reminder: values.reminder,
+          reminder_time: values.reminder ? values.reminder_time : undefined,
+          color: values.color,
+          icon: values.icon,
+        };
         
-        onHabitUpdated();
+        onHabitUpdated(updatedHabit);
       } else {
         // Create new habit
-        const { error } = await supabase
-          .from('habits')
-          .insert([
-            {
-              user_id: user.id,
-              name: values.name,
-              description: values.description,
-              category: values.category,
-              frequency: values.frequency,
-              frequency_value: values.frequency === 'custom' ? values.frequency_value : null,
-              frequency_unit: values.frequency === 'custom' ? values.frequency_unit : null,
-              time_of_day: values.time_of_day,
-              reminder: values.reminder,
-              reminder_time: values.reminder ? values.reminder_time : null,
-              color: values.color,
-              icon: values.icon,
-              archived: false,
-            }
-          ]);
-          
-        if (error) throw error;
+        const newHabit: Habit = {
+          id: uuidv4(),
+          user_id: user.id,
+          name: values.name,
+          description: values.description,
+          category: values.category,
+          frequency: values.frequency,
+          frequency_value: values.frequency === 'custom' ? values.frequency_value : undefined,
+          frequency_unit: values.frequency === 'custom' ? values.frequency_unit : undefined,
+          time_of_day: values.time_of_day,
+          reminder: values.reminder,
+          reminder_time: values.reminder ? values.reminder_time : undefined,
+          color: values.color,
+          icon: values.icon,
+          created_at: new Date().toISOString(),
+          archived: false,
+        };
         
-        onHabitCreated();
+        onHabitCreated(newHabit);
       }
     } catch (error) {
       console.error('Error saving habit:', error);
