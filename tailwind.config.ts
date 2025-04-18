@@ -186,10 +186,4 @@ const config: Config = {
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
-@layer utilities {
-  .bg-wellness-light-blue {
-    background-color: #B3E5FC;
-  }
-}
-
 export default config;

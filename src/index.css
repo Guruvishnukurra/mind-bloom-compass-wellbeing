@@ -417,3 +417,10 @@
 .dark .glass-effect {
   @apply bg-gray-900/70 border-gray-800/20;
 }
+
+/* Additional utility classes */
+@layer utilities {
+  .bg-wellness-light-blue {
+    background-color: #B3E5FC;
+  }
+}
