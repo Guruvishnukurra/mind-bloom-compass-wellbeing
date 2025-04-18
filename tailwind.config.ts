@@ -81,7 +81,7 @@ const config: Config = {
 				'neutral-mist': '#E2E8F0', // Neutral mist
 				'neutral-shadow': '#64748B', // Neutral shadow
 				'neutral-night': '#334155', // Neutral night
-				'from-wellness-light-blue': '#B3E5FC', // Light blue gradient start
+				'wellness-light-blue': '#B3E5FC', // Light blue color
 			},
 			boxShadow: {
 				'blue-glow': '0 0 15px rgba(74, 144, 226, 0.5)',
@@ -185,5 +185,11 @@ const config: Config = {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
+@layer utilities {
+  .bg-wellness-light-blue {
+    background-color: #B3E5FC;
+  }
+}
 
 export default config;
