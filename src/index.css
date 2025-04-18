@@ -173,11 +173,11 @@
 }
 
 .nature-heading {
-  @apply text-3xl font-bold text-wellness-sage;
+  @apply text-3xl font-bold text-primary;
 }
 
 .nature-subheading {
-  @apply text-xl font-semibold text-wellness-teal;
+  @apply text-xl font-semibold text-accent;
 }
 
 .nature-text {
@@ -239,11 +239,11 @@
 }
 
 .tranquil-heading {
-  @apply text-3xl font-bold text-wellness-blue;
+  @apply text-3xl font-bold text-primary;
 }
 
 .tranquil-subheading {
-  @apply text-xl font-semibold text-wellness-green;
+  @apply text-xl font-semibold text-accent;
 }
 
 .tranquil-text {
@@ -326,21 +326,7 @@
 }
 
 /* Utility classes for wellness colors */
-.text-wellness-amber {
-  color: hsl(var(--wellness-amber));
-}
-
-.text-wellness-teal {
-  color: hsl(var(--wellness-teal));
-}
-
-.text-wellness-sage {
-  color: hsl(var(--wellness-sage));
-}
-
-.text-wellness-soft-coral {
-  color: hsl(var(--wellness-soft-coral));
-}
+/* Use standard Tailwind text colors instead */
 
 .bg-wellness-blue {
   background-color: hsl(var(--wellness-blue));
@@ -399,7 +385,7 @@
 }
 
 .tranquil-heading {
-  @apply text-3xl font-bold text-wellness-blue;
+  @apply text-3xl font-bold text-primary;
 }
 
 .tranquil-text {
@@ -422,5 +408,34 @@
 @layer utilities {
   .bg-wellness-light-blue {
     background-color: #B3E5FC;
+  }
+  
+  /* Text color utilities */
+  .text-wellness-blue {
+    color: hsl(var(--wellness-blue));
+  }
+  
+  .text-wellness-green {
+    color: hsl(var(--wellness-green));
+  }
+  
+  .text-wellness-lavender {
+    color: hsl(var(--wellness-lavender));
+  }
+  
+  .text-wellness-amber {
+    color: hsl(var(--wellness-amber));
+  }
+  
+  .text-wellness-teal {
+    color: hsl(var(--wellness-teal));
+  }
+  
+  .text-wellness-sage {
+    color: hsl(var(--wellness-sage));
+  }
+  
+  .text-wellness-soft-coral {
+    color: hsl(var(--wellness-soft-coral));
   }
 }
