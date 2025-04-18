@@ -72,7 +72,7 @@ export const ResourcesList = ({ searchQuery = '', contentType = null, limit }: R
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (contentType) {
+        if (contentType !== null) {
           query = query.eq('content_type', contentType);
         }
 

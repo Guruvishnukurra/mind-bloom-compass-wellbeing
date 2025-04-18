@@ -7,7 +7,12 @@ import { ResourcesList } from '../components/resources/ResourcesList';
 import { useQuotes } from '../hooks/useQuotes';
 import { Search, BookOpen } from 'lucide-react';
 
-const contentTypes = [
+interface ContentTypeOption {
+  value: 'article' | 'video' | 'exercise' | 'tool' | null;
+  label: string;
+}
+
+const contentTypes: ContentTypeOption[] = [
   { value: null, label: 'All' },
   { value: 'article', label: 'Articles' },
   { value: 'video', label: 'Videos' },
