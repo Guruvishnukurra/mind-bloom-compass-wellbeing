@@ -5,35 +5,47 @@
 @tailwind utilities;
 
 :root {
-  /* Primary Colors - Calming Blues and Greens */
-  --color-teal: #3AAFA9;
-  --color-lavender: #7B68EE;
-  --color-sage: #A8D8B9;
+  /* Primary Colors - Greens and Soft Yellows */
+  --color-teal: #7C9A92;
+  --color-lavender: #9A8FB8;
+  --color-sage: #7C9A92;
   
   /* Secondary Colors - Soft and Soothing */
   --color-peach: #FFCBA4;
   --color-mauve: #D8BFD8;
   
   /* Neutral Colors */
-  --color-white: #F8FAFC;
+  --color-white: #F9F5F0;
   --color-gray: #E2E8F0;
-  --color-blue: #334155;
+  --color-blue: #1A365D;
   
   /* Functional Colors */
-  --color-success: #4AD295;
-  --color-alert: #F9B44A;
-  --color-focus: #9370DB;
+  --color-success: #7C9A92;
+  --color-alert: #D4B483;
+  --color-focus: #9A8FB8;
   
   /* Wellness Theme Colors - Calming Palette */
-  --wellness-teal: #3AAFA9;
-  --wellness-lavender: #7B68EE;
-  --wellness-sage: #A8D8B9;
+  --wellness-teal: #7C9A92;
+  --wellness-lavender: #9A8FB8;
+  --wellness-sage: #7C9A92;
   --wellness-soft-coral: #FFCBA4;
-  --wellness-amber: #FFD700;
-  --wellness-blue: #6495ED;
-  --wellness-purple: #9370DB;
-  --wellness-pale-yellow: #FFFACD;
-  --wellness-dark-gray: #334155;
+  --wellness-amber: #D4B483;
+  --wellness-blue: #1A365D;
+  --wellness-purple: #9A8FB8;
+  --wellness-pale-yellow: #F9F5F0;
+  --wellness-dark-gray: #1A365D;
+  
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius: 0.75rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 }
 
 @layer base {
@@ -48,27 +60,27 @@
 
 @layer components {
   .serenity-gradient {
-    @apply bg-gradient-to-r from-primary-teal to-primary-lavender;
+    @apply bg-gradient-to-r from-sage-500 to-gold-400;
   }
 
   .serenity-card {
-    @apply bg-white rounded-lg shadow-md p-6 transition-all duration-300;
+    @apply bg-white rounded-2xl shadow-md p-6 transition-all duration-300;
   }
 
   .serenity-button {
-    @apply px-4 py-2 rounded-lg transition-all duration-300 font-medium;
+    @apply px-4 py-2 rounded-full transition-all duration-300 font-medium;
   }
 
   .serenity-button-primary {
-    @apply serenity-button bg-primary-teal text-white hover:bg-opacity-90;
+    @apply serenity-button bg-sage-500 text-white hover:bg-sage-600;
   }
 
   .serenity-button-secondary {
-    @apply serenity-button bg-primary-lavender text-white hover:bg-opacity-90;
+    @apply serenity-button bg-gold-400 text-deep-ocean-600 hover:bg-gold-500;
   }
 
   .serenity-input {
-    @apply w-full px-4 py-2 rounded-lg border border-neutral-gray focus:border-primary-teal focus:ring-2 focus:ring-primary-teal focus:ring-opacity-50 transition-all duration-300;
+    @apply w-full px-4 py-2 rounded-xl border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500 focus:ring-opacity-50 transition-all duration-300;
   }
 
   .mood-indicator {
