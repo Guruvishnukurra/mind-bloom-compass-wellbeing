@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,115 +9,174 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%; /* Soft blue-white background */
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors */
+    --background: 35 33% 96%; /* Soft Cream #F9F5F0 */
+    --foreground: 216 55% 23%; /* Deep Ocean #1A365D */
 
+    /* Card colors */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 216 55% 23%;
 
+    /* Popover colors */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 216 55% 23%;
 
-    --primary: 174 70% 32%; /* Vibrant teal */
-    --primary-foreground: 210 40% 98%;
+    /* Primary colors */
+    --primary: 216 55% 23%; /* Deep Ocean #1A365D */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 340 80% 65%; /* Soft coral pink */
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary colors */
+    --secondary: 152 13% 54%; /* Sage Green #7C9A92 */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted colors */
+    --muted: 35 33% 90%;
+    --muted-foreground: 216 10% 45%;
 
-    --accent: 262 60% 60%; /* Rich purple */
-    --accent-foreground: 210 40% 98%;
+    /* Accent colors */
+    --accent: 266 23% 64%; /* Lavender #9A8FB8 */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive colors */
+    --destructive: 0 68% 58%; /* Error #F44336 */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 174 70% 32%; /* Vibrant teal */
+    /* Terracotta accent */
+    --terracotta: 14 58% 51%; /* Terracotta #CF5C36 */
+    --terracotta-foreground: 0 0% 100%;
 
-    --radius: 0.9375rem; /* 15px rounded corners */
+    /* Gold accent */
+    --gold: 37 50% 67%; /* Muted Gold #D4B483 */
+    --gold-foreground: 216 55% 23%;
 
-    --sidebar-background: 174 70% 32%; /* Vibrant teal */
+    /* Success, warning, info */
+    --success: 122 39% 49%;
+    --warning: 36 100% 50%;
+    --info: 207 90% 54%;
+
+    /* Border, input, ring */
+    --border: 216 15% 85%;
+    --input: 216 15% 85%;
+    --ring: 216 55% 23%;
+
+    /* Border radius */
+    --radius-sm: 0.375rem; /* 6px */
+    --radius-md: 0.75rem; /* 12px */
+    --radius-lg: 1.5rem; /* 24px */
+    --radius: var(--radius-md);
+
+    /* Sidebar */
+    --sidebar-background: 216 55% 23%; /* Deep Ocean */
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 262 60% 60%; /* Rich purple */
+    --sidebar-primary: 152 13% 54%; /* Sage Green */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 174 70% 15%; /* Darker teal */
+    --sidebar-accent: 266 23% 64%; /* Lavender */
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 174 70% 25%;
-    --sidebar-ring: 262 60% 60%; /* Rich purple */
+    --sidebar-border: 0 0% 100% / 0.1;
+    --sidebar-ring: 0 0% 100% / 0.1;
 
     /* Custom wellness colors */
-    --wellness-blue: 210 90% 60%; /* Brighter blue */
-    --wellness-green: 142 76% 45%; /* Brighter green */
-    --wellness-lavender: 270 70% 75%; /* Rich lavender */
-    --wellness-amber: 35 95% 60%; /* Warm amber */
-    --wellness-teal: 174 70% 32%; /* Vibrant teal */
+    --wellness-deep-ocean: 216 55% 23%; /* Deep Ocean #1A365D */
+    --wellness-sage: 152 13% 54%; /* Sage Green #7C9A92 */
+    --wellness-cream: 35 33% 96%; /* Soft Cream #F9F5F0 */
+    --wellness-terracotta: 14 58% 51%; /* Terracotta #CF5C36 */
+    --wellness-lavender: 266 23% 64%; /* Lavender #9A8FB8 */
+    --wellness-gold: 37 50% 67%; /* Muted Gold #D4B483 */
     
-    /* Nature-inspired theme colors */
-    --wellness-sage: 150 40% 50%; /* Brighter sage */
-    --wellness-light-sage: 150 40% 70%; /* Lighter sage */
-    --wellness-teal: 174 70% 32%; /* Vibrant teal */
-    --wellness-light-teal: 174 70% 55%; /* Lighter teal */
-    --wellness-warm-sand: 28 80% 85%; /* Warmer sand */
-    --wellness-pale-yellow: 45 90% 85%; /* Brighter yellow */
-    --wellness-soft-coral: 340 80% 65%; /* Soft coral pink */
+    /* Shades and tints */
+    --wellness-deep-ocean-dark: 216 55% 18%; /* Darker Deep Ocean */
+    --wellness-deep-ocean-light: 216 55% 33%; /* Lighter Deep Ocean */
+    --wellness-sage-dark: 152 13% 44%; /* Darker Sage */
+    --wellness-sage-light: 152 13% 64%; /* Lighter Sage */
+    --wellness-terracotta-dark: 14 58% 41%; /* Darker Terracotta */
+    --wellness-terracotta-light: 14 58% 61%; /* Lighter Terracotta */
+    --wellness-lavender-dark: 266 23% 54%; /* Darker Lavender */
+    --wellness-lavender-light: 266 23% 74%; /* Lighter Lavender */
+    --wellness-gold-dark: 37 50% 57%; /* Darker Gold */
+    --wellness-gold-light: 37 50% 77%; /* Lighter Gold */
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
+    --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.05);
   }
 
   .dark {
-    --background: 222 30% 10%; /* Deep blue-gray background */
-    --foreground: 210 40% 98%;
+    /* Base colors */
+    --background: 216 55% 10%; /* Deep Ocean Dark */
+    --foreground: 35 33% 96%; /* Soft Cream */
 
-    --card: 222 25% 15%; /* Slightly lighter than background */
-    --card-foreground: 210 40% 98%;
+    /* Card colors */
+    --card: 216 55% 15%;
+    --card-foreground: 35 33% 96%;
 
-    --popover: 222 25% 15%;
-    --popover-foreground: 210 40% 98%;
+    /* Popover colors */
+    --popover: 216 55% 15%;
+    --popover-foreground: 35 33% 96%;
 
-    --primary: 174 60% 35%; /* Rich teal */
-    --primary-foreground: 210 40% 98%;
+    /* Primary colors */
+    --primary: 152 13% 54%; /* Sage Green */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 340 70% 50%; /* Deep coral pink */
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary colors */
+    --secondary: 14 58% 51%; /* Terracotta */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Muted colors */
+    --muted: 216 55% 20%;
+    --muted-foreground: 35 33% 80%;
 
-    --accent: 262 50% 50%; /* Deep purple */
-    --accent-foreground: 210 40% 98%;
+    /* Accent colors */
+    --accent: 266 23% 64%; /* Lavender */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive colors */
+    --destructive: 0 68% 58%; /* Error */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 174 60% 35%; /* Rich teal */
+    /* Terracotta accent */
+    --terracotta: 14 58% 51%; /* Terracotta */
+    --terracotta-foreground: 0 0% 100%;
+
+    /* Gold accent */
+    --gold: 37 50% 67%; /* Muted Gold */
+    --gold-foreground: 0 0% 100%;
+
+    /* Border, input, ring */
+    --border: 216 55% 25%;
+    --input: 216 55% 25%;
+    --ring: 152 13% 54%; /* Sage Green */
     
-    --sidebar-background: 222 30% 15%; /* Slightly lighter than background */
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 174 60% 35%; /* Rich teal */
+    /* Sidebar */
+    --sidebar-background: 216 55% 15%;
+    --sidebar-foreground: 35 33% 96%;
+    --sidebar-primary: 152 13% 54%; /* Sage Green */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 262 50% 50%; /* Deep purple */
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 222 30% 20%;
-    --sidebar-ring: 174 60% 35%; /* Rich teal */
+    --sidebar-accent: 266 23% 64%; /* Lavender */
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 216 55% 20%;
+    --sidebar-ring: 152 13% 54%; /* Sage Green */
 
-    /* Custom wellness colors - darker variants */
-    --wellness-blue: 210 90% 45%;
-    --wellness-green: 142 70% 35%;
-    --wellness-lavender: 270 60% 60%;
-    --wellness-amber: 35 90% 50%;
-    --wellness-teal: 174 60% 35%;
+    /* Custom wellness colors - dark mode variants */
+    --wellness-deep-ocean: 216 55% 23%; /* Deep Ocean */
+    --wellness-sage: 152 13% 44%; /* Darker Sage */
+    --wellness-cream: 35 33% 90%; /* Slightly darker cream */
+    --wellness-terracotta: 14 58% 41%; /* Darker Terracotta */
+    --wellness-lavender: 266 23% 54%; /* Darker Lavender */
+    --wellness-gold: 37 50% 57%; /* Darker Gold */
     
-    /* Nature-inspired theme colors - darker variants */
-    --wellness-sage: 150 40% 40%;
-    --wellness-light-sage: 150 40% 60%;
-    --wellness-teal: 174 60% 35%;
-    --wellness-light-teal: 174 60% 50%;
-    --wellness-warm-sand: 28 70% 75%;
-    --wellness-pale-yellow: 45 80% 75%;
-    --wellness-soft-coral: 340 70% 50%;
+    /* Shades and tints for dark mode */
+    --wellness-deep-ocean-dark: 216 55% 13%; /* Even darker Deep Ocean */
+    --wellness-deep-ocean-light: 216 55% 28%; /* Lighter Deep Ocean */
+    --wellness-sage-dark: 152 13% 34%; /* Even darker Sage */
+    --wellness-sage-light: 152 13% 54%; /* Lighter Sage */
+    --wellness-terracotta-dark: 14 58% 31%; /* Even darker Terracotta */
+    --wellness-terracotta-light: 14 58% 51%; /* Lighter Terracotta */
+    --wellness-lavender-dark: 266 23% 44%; /* Even darker Lavender */
+    --wellness-lavender-light: 266 23% 64%; /* Lighter Lavender */
+    --wellness-gold-dark: 37 50% 47%; /* Even darker Gold */
+    --wellness-gold-light: 37 50% 67%; /* Lighter Gold */;
   }
 }
 
@@ -132,15 +191,43 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans;
+    @apply font-heading tracking-tight;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl font-bold;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl font-semibold;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+  
+  h4 {
+    @apply text-xl md:text-2xl font-medium;
+  }
+  
+  h5 {
+    @apply text-lg md:text-xl font-medium;
+  }
+  
+  h6 {
+    @apply text-base md:text-lg font-medium;
   }
   
   p {
-    @apply font-body;
+    @apply font-body leading-relaxed;
   }
   
   .quote, blockquote {
-    @apply font-accent;
+    @apply font-accent italic text-lg md:text-xl leading-relaxed;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
