@@ -37,18 +37,18 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
+    <div className="bg-wellness-cream min-h-screen p-4 space-y-6">
       {/* Header with animated gradient text */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-8"
+        className="text-center mb-8 container mx-auto"
       >
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-wellness-light-blue via-wellness-lavender to-wellness-teal bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold bg-gradient-header bg-clip-text text-transparent font-sans">
           Mind Bloom
         </h1>
-        <p className="text-muted-foreground mt-2">Your journey to mental wellness</p>
+        <p className="text-muted-foreground mt-2 font-body">Your journey to mental wellness</p>
       </motion.div>
       
       {/* Daily Quote Section */}
@@ -56,16 +56,17 @@ export default function Dashboard() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
+        className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8 container mx-auto"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-wellness-lavender/20 to-wellness-light-blue/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-wellness-lavender/20 to-wellness-light-blue/20 opacity-50" />
+        <div className="absolute inset-0 bg-bubbles-pattern opacity-10 animate-float" />
         <div className="relative z-10">
-          <h3 className="text-xl font-medium mb-2 flex items-center gap-2">
-            <Quote className="w-5 h-5 text-wellness-light-blue" />
+          <h3 className="text-xl font-medium mb-2 flex items-center gap-2 font-sans">
+            <Quote className="w-5 h-5 text-wellness-light-blue animate-bounce-gentle" />
             Daily Inspiration
           </h3>
-          <p className="italic text-lg">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
-          <p className="text-sm text-muted-foreground mt-2">— {quote?.author || "Lao Tzu"}</p>
+          <p className="italic text-2xl font-accent">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
+          <p className="text-sm text-muted-foreground mt-2 font-accent">— {quote?.author || "Lao Tzu"}</p>
         </div>
       </motion.div>
 
@@ -107,48 +108,68 @@ export default function Dashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        className="container mx-auto"
       >
-        <Button
-          variant="outline"
-          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-light-blue/10 hover:border-wellness-light-blue transition-all duration-300"
-          onClick={() => navigate("/meditation")}
-        >
-          <Brain className="w-6 h-6 text-wellness-light-blue" />
-          <span>All Meditations</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-green/10 hover:border-wellness-green transition-all duration-300"
-          onClick={() => navigate("/journal")}
-        >
-          <BookOpen className="w-6 h-6 text-wellness-green" />
-          <span>Journal</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-amber/10 hover:border-wellness-amber transition-all duration-300"
-          onClick={() => navigate("/achievements")}
-        >
-          <Trophy className="w-6 h-6 text-wellness-amber" />
-          <span>Achievements</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-purple/10 hover:border-wellness-purple transition-all duration-300"
-          onClick={() => navigate("/mood")}
-        >
-          <BarChart2 className="w-6 h-6 text-wellness-purple" />
-          <span>Mood Tracking</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-teal/10 hover:border-wellness-teal transition-all duration-300"
-          onClick={() => navigate("/habits")}
-        >
-          <CheckSquare className="w-6 h-6 text-wellness-teal" />
-          <span>Habit Builder</span>
-        </Button>
+        <div className="relative">
+          <div className="absolute inset-x-0 top-0 h-16 bg-wellness-cream rounded-b-[50%] -translate-y-full"></div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-white rounded-xl shadow-md">
+          <Button
+            variant="ghost"
+            className="h-28 flex flex-col items-center justify-center gap-3 hover:bg-wellness-light-blue/10 rounded-xl transition-all duration-300 group"
+            onClick={() => navigate("/meditation")}
+          >
+            <div className="w-14 h-14 rounded-full bg-wellness-light-blue/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <Brain className="w-8 h-8 text-wellness-light-blue group-hover:animate-pulse-slow" />
+            </div>
+            <span className="font-sans">Meditation</span>
+          </Button>
+          <Button
+            variant="ghost"
+            className="h-28 flex flex-col items-center justify-center gap-3 hover:bg-wellness-green/10 rounded-xl transition-all duration-300 group"
+            onClick={() => navigate("/journal")}
+          >
+            <div className="w-14 h-14 rounded-full bg-wellness-green/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <BookOpen className="w-8 h-8 text-wellness-green group-hover:animate-pulse-slow" />
+            </div>
+            <span className="font-sans">Journal</span>
+          </Button>
+          <Button
+            variant="ghost"
+            className="h-28 flex flex-col items-center justify-center gap-3 hover:bg-wellness-amber/10 rounded-xl transition-all duration-300 group"
+            onClick={() => navigate("/achievements")}
+          >
+            <div className="w-14 h-14 rounded-full bg-wellness-amber/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <Trophy className="w-8 h-8 text-wellness-amber group-hover:animate-pulse-slow" />
+            </div>
+            <span className="font-sans">Achievements</span>
+          </Button>
+          <Button
+            variant="ghost"
+            className="h-28 flex flex-col items-center justify-center gap-3 hover:bg-wellness-purple/10 rounded-xl transition-all duration-300 group"
+            onClick={() => navigate("/mood")}
+          >
+            <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <BarChart2 className="w-8 h-8 text-accent group-hover:animate-pulse-slow" />
+            </div>
+            <span className="font-sans">Mood Tracking</span>
+          </Button>
+          <Button
+            variant="ghost"
+            className="h-28 flex flex-col items-center justify-center gap-3 hover:bg-wellness-teal/10 rounded-xl transition-all duration-300 group"
+            onClick={() => navigate("/habits")}
+          >
+            <div className="w-14 h-14 rounded-full bg-wellness-teal/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <CheckSquare className="w-8 h-8 text-wellness-teal group-hover:animate-pulse-slow" />
+            </div>
+            <span className="font-sans">Habit Builder</span>
+          </Button>
+        </div>
+        
+        <div className="relative">
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-wellness-cream rounded-t-[50%] translate-y-full"></div>
+        </div>
       </motion.div>
 
       {/* Achievements Section */}

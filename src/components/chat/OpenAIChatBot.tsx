@@ -278,26 +278,30 @@ export function OpenAIChatBot() {
   };
 
   return (
-    <Card className="h-[600px] flex flex-col">
-      <CardHeader className="pb-2">
+    <Card className="h-[600px] flex flex-col rounded-xl shadow-md overflow-hidden border-primary/20 container mx-auto">
+      <CardHeader className="pb-2 bg-gradient-to-r from-wellness-teal to-accent/80 text-white">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Bot className="h-5 w-5 text-primary" />
-            <CardTitle>AI Wellbeing Assistant</CardTitle>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-inner animate-pulse-slow">
+              <Bot className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <CardTitle className="font-sans">AI Wellbeing Assistant</CardTitle>
+              <CardDescription className="text-white/80 font-body text-sm">
+                Your personal guide to mental wellness
+              </CardDescription>
+            </div>
           </div>
           <Button 
-            variant="outline" 
+            variant="ghost" 
             size="sm" 
             onClick={startNewChat}
-            className="h-8"
+            className="h-8 text-white hover:bg-white/20"
           >
             <RefreshCw className="h-4 w-4 mr-1" />
             New Chat
           </Button>
         </div>
-        <CardDescription>
-          Chat with your AI wellbeing assistant powered by OpenAI
-        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col p-0">
         <ScrollArea className="flex-1 p-4">
@@ -320,34 +324,43 @@ export function OpenAIChatBot() {
           ) : (
             <div className="space-y-4">
               {messages.map((message) => (
-                <div 
+                <motion.div 
                   key={message.id} 
-                  className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
                 >
                   {message.role === 'assistant' && (
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-primary/10 text-primary">
-                        <Bot className="h-4 w-4" />
-                      </AvatarFallback>
-                    </Avatar>
+                    <div className="relative">
+                      <Avatar className="h-10 w-10 shadow-md">
+                        <AvatarFallback className="bg-gradient-to-br from-wellness-teal to-accent text-white">
+                          <Bot className="h-5 w-5" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="absolute inset-0 bg-white rounded-full opacity-20 animate-pulse-slow"></div>
+                    </div>
                   )}
-                  <div 
-                    className={`rounded-lg p-3 max-w-[80%] ${
+                  <motion.div 
+                    className={`rounded-2xl p-4 max-w-[80%] shadow-md ${
                       message.role === 'user' 
-                        ? 'bg-primary text-primary-foreground' 
-                        : 'bg-muted'
+                        ? 'bg-gradient-to-r from-primary to-primary/90 text-white' 
+                        : 'bg-white border border-primary/10'
                     }`}
+                    initial={{ scale: 0.95 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
-                    <p className="whitespace-pre-wrap">{message.content}</p>
-                  </div>
+                    <p className="whitespace-pre-wrap font-body">{message.content}</p>
+                  </motion.div>
                   {message.role === 'user' && (
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-primary/10 text-primary">
-                        <User className="h-4 w-4" />
+                    <Avatar className="h-10 w-10 shadow-md">
+                      <AvatarFallback className="bg-gradient-to-br from-secondary to-secondary/80 text-white">
+                        <User className="h-5 w-5" />
                       </AvatarFallback>
                     </Avatar>
                   )}
-                </div>
+                </motion.div>
               ))}
               {isLoading && (
                 <div className="flex gap-3 justify-start">

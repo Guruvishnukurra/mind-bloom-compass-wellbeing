@@ -208,12 +208,23 @@ export function MoodTracker({ onMoodSaved }: { onMoodSaved?: () => void }) {
                             className={`flex flex-col items-center cursor-pointer`}
                             onClick={() => setMoodScore(value * 2)}
                           >
-                            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isSelected ? emoji.color : 'bg-gray-100'} transition-colors duration-200`}>
+                            <motion.div 
+                              className={`w-14 h-14 rounded-full flex items-center justify-center ${isSelected ? emoji.color : 'bg-gray-100'} transition-colors duration-200 shadow-md`}
+                              animate={isSelected ? { 
+                                scale: [1, 1.1, 1],
+                                boxShadow: ['0 4px 6px rgba(0,0,0,0.1)', '0 10px 15px rgba(0,0,0,0.2)', '0 4px 6px rgba(0,0,0,0.1)']
+                              } : {}}
+                              transition={isSelected ? { 
+                                repeat: Infinity, 
+                                duration: 2,
+                                repeatType: "reverse"
+                              } : {}}
+                            >
                               {React.cloneElement(emoji.icon, { 
-                                className: `h-6 w-6 ${isSelected ? 'text-white' : 'text-gray-500'}` 
+                                className: `h-7 w-7 ${isSelected ? 'text-white' : 'text-gray-500'}` 
                               })}
-                            </div>
-                            <span className={`text-xs mt-1 ${isSelected ? 'font-medium' : 'text-gray-500'}`}>
+                            </motion.div>
+                            <span className={`text-sm mt-2 font-sans ${isSelected ? 'font-medium' : 'text-gray-500'}`}>
                               {emoji.label}
                             </span>
                           </motion.div>

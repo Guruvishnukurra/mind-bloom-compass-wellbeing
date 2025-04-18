@@ -21,12 +21,14 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="sticky top-0 z-50 bg-gradient-header backdrop-blur-md border-b border-border">
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-wellness-blue to-wellness-green"></div>
-            <span className="text-lg font-semibold">MindBloom</span>
+            <div className="w-8 h-8 relative">
+              <div className="absolute inset-0 bg-lotus-pattern bg-no-repeat bg-center bg-contain animate-pulse-slow"></div>
+            </div>
+            <span className="text-lg font-semibold text-white">MindBloom</span>
           </Link>
         </div>
 

@@ -82,6 +82,8 @@ const config: Config = {
 				'neutral-shadow': '#64748B', // Neutral shadow
 				'neutral-night': '#334155', // Neutral night
 				'wellness-light-blue': '#B3E5FC', // Light blue color
+				'wellness-purple': '#5B3E90', // Deep purple for header gradient
+				'wellness-cream': '#FAF7F2', // Soft cream for dashboard background
 			},
 			boxShadow: {
 				'blue-glow': '0 0 15px rgba(74, 144, 226, 0.5)',
@@ -148,6 +150,14 @@ const config: Config = {
 					'25%': { transform: 'translateX(-5px) translateY(5px)' },
 					'50%': { transform: 'translateX(0) translateY(10px)' },
 					'75%': { transform: 'translateX(5px) translateY(5px)' }
+				},
+				'bounce-gentle': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
+				},
+				'pulse-emotion': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.1)' }
 				}
 			},
 			animation: {
@@ -160,11 +170,14 @@ const config: Config = {
 				'float': 'float 6s ease-in-out infinite',
 				'shimmer': 'shimmer 2.5s infinite',
 				'expand': 'expand 0.4s cubic-bezier(0.26, 0.54, 0.32, 1) forwards',
-				'wave': 'wave 3s ease-in-out infinite'
+				'wave': 'wave 3s ease-in-out infinite',
+				'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
+				'pulse-emotion': 'pulse-emotion 1.5s ease-in-out infinite'
 			},
 			fontFamily: {
-				sans: ['Nunito', 'Quicksand', 'sans-serif'],
-				accent: ['Quicksand', 'sans-serif'],
+				sans: ['Nunito', 'sans-serif'],
+				body: ['Open Sans', 'sans-serif'],
+				accent: ['Cormorant Garamond', 'serif'],
 				handwritten: ['Caveat', 'cursive'],
 				mono: ["monospace"],
 			},
@@ -176,10 +189,12 @@ const config: Config = {
 				'gradient-calm': 'linear-gradient(135deg, #4A90E2 0%, #A78BFA 100%)',
 				'gradient-energy': 'linear-gradient(135deg, #F8A97D 0%, #FF8882 100%)',
 				'gradient-growth': 'linear-gradient(135deg, #4AD295 0%, #A4E8C9 100%)',
+				'gradient-header': 'linear-gradient(135deg, #167D7F 0%, #5B3E90 100%)',
 				'leaf-pattern': "url('/patterns/leaf-pattern.svg')",
 				'wave-pattern': "url('/patterns/wave-pattern.svg')",
 				'circles-pattern': "url('/patterns/circles.svg')",
-				'bubbles-pattern': "url('/patterns/bubbles.svg')"
+				'bubbles-pattern': "url('/patterns/bubbles.svg')",
+				'lotus-pattern': "url('/patterns/lotus.svg')"
 			}
 		}
 	},

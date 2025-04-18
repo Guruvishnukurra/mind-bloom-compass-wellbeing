@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.6">
+    <g transform="translate(10, 10)" fill="#FFFFFF">
+      <path d="M40,0 C40,0 30,15 30,30 C30,45 40,60 40,60 C40,60 50,45 50,30 C50,15 40,0 40,0 Z" opacity="0.8"></path>
+      <path d="M40,0 C40,0 25,10 15,20 C5,30 0,45 0,45 C0,45 20,50 35,40 C50,30 40,0 40,0 Z" opacity="0.7"></path>
+      <path d="M40,0 C40,0 55,10 65,20 C75,30 80,45 80,45 C80,45 60,50 45,40 C30,30 40,0 40,0 Z" opacity="0.7"></path>
+      <path d="M40,60 C40,60 30,70 25,80 C20,90 20,80 20,80 C20,80 30,70 40,60 Z" opacity="0.9"></path>
+      <path d="M40,60 C40,60 50,70 55,80 C60,90 60,80 60,80 C60,80 50,70 40,60 Z" opacity="0.9"></path>
+      <circle cx="40" cy="30" r="8" opacity="0.9"></circle>
+    </g>
+  </g>
+</svg>

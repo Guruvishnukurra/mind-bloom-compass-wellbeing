@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -36,7 +37,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 174 70% 32%; /* Vibrant teal */
 
-    --radius: 1rem; /* More rounded corners */
+    --radius: 0.9375rem; /* 15px rounded corners */
 
     --sidebar-background: 174 70% 32%; /* Vibrant teal */
     --sidebar-foreground: 0 0% 100%;
@@ -126,8 +127,20 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-body;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans;
+  }
+  
+  p {
+    @apply font-body;
+  }
+  
+  .quote, blockquote {
+    @apply font-accent;
   }
 }
 

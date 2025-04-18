@@ -75,30 +75,48 @@ export function AchievementsList({ limit }: AchievementsListProps) {
                   );
 
                   return (
-                    <div key={achievement.id} className="space-y-2">
+                    <div key={achievement.id} className="space-y-3 p-4 rounded-xl hover:bg-primary/5 transition-colors duration-300">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <span className="text-2xl">{achievement.icon}</span>
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isEarned ? 'bg-primary/20' : 'bg-muted'} transition-all duration-500`}>
+                            <span className={`text-2xl ${isEarned ? 'animate-bounce-gentle' : ''}`}>{achievement.icon}</span>
+                          </div>
                           <div>
-                            <h3 className="font-medium">{achievement.title}</h3>
-                            <p className="text-sm text-muted-foreground">{achievement.description}</p>
+                            <h3 className="font-medium font-sans">{achievement.title}</h3>
+                            <p className="text-sm text-muted-foreground font-body">{achievement.description}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-medium">{achievement.points} pts</span>
-                          {isEarned && (
-                            <span className="ml-2 text-green-500">✓</span>
-                          )}
+                          <div className={`px-3 py-1 rounded-full ${isEarned ? 'bg-primary/20 text-primary' : 'bg-muted/50 text-muted-foreground'}`}>
+                            <span className="font-medium">{achievement.points} pts</span>
+                          </div>
                         </div>
                       </div>
-                      {!isEarned && progress.nextAchievement && (
-                        <div className="space-y-1">
-                          <Progress value={progress.progress} />
-                          <p className="text-xs text-muted-foreground">
-                            Progress: {Math.round(progress.progress)}%
-                          </p>
+                      {!isEarned && progress.nextAchievement ? (
+                        <div className="space-y-2">
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <motion.div 
+                              className="h-full bg-gradient-to-r from-primary/60 to-primary"
+                              initial={{ width: 0 }}
+                              animate={{ width: `${progress.progress}%` }}
+                              transition={{ duration: 1, ease: "easeOut" }}
+                            />
+                          </div>
+                          <div className="flex justify-between text-xs">
+                            <span className="text-muted-foreground">Progress: {Math.round(progress.progress)}%</span>
+                            <span className="text-primary font-medium">{Math.round(progress.progress)}/100</span>
+                          </div>
                         </div>
-                      )}
+                      ) : isEarned ? (
+                        <div className="flex items-center justify-center p-2">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 text-primary text-sm">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Completed
+                          </span>
+                        </div>
+                      ) : null}
                     </div>
                   );
                 })}
