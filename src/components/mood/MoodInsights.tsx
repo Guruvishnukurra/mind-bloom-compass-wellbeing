@@ -190,13 +190,13 @@ export function MoodInsights({ entries }: MoodInsightsProps) {
           <div className="flex flex-col items-center justify-center p-4 bg-muted rounded-lg">
             <span className="text-sm text-muted-foreground mb-1">Average Mood</span>
             <div className="flex items-center">
-              {averageMood && averageMood >= 3.5 ? (
+              {averageMood && averageMood >= 7 ? (
                 <Smile className="h-5 w-5 text-green-500 mr-1" />
               ) : (
                 <Frown className="h-5 w-5 text-orange-500 mr-1" />
               )}
               <span className="text-2xl font-bold">{averageMood}</span>
-              <span className="text-sm text-muted-foreground ml-1">/5</span>
+              <span className="text-sm text-muted-foreground ml-1">/10</span>
             </div>
           </div>
           

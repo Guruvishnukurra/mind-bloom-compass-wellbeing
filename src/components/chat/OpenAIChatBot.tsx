@@ -209,20 +209,20 @@ export function OpenAIChatBot() {
           )}
         </ScrollArea>
         <div className="p-4 border-t border-sage-200 bg-cream-50">
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-end">
             <Textarea
               placeholder="Type your message here..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="min-h-[60px] resize-none border-sage-200 focus-visible:ring-gold-400 bg-white rounded-2xl w-full"
+              className="min-h-[60px] resize-none border-sage-200 focus-visible:ring-gold-400 bg-white rounded-2xl flex-1"
               disabled={isLoading}
               ref={inputRef}
             />
             <Button 
               onClick={handleSendMessage} 
               disabled={isLoading || !input.trim()}
-              className="self-end bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-deep-ocean-800 rounded-full shadow-md h-12 w-12 p-0 flex items-center justify-center"
+              className="flex-shrink-0 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-deep-ocean-800 rounded-full shadow-md h-12 w-12 p-0 flex items-center justify-center"
             >
               <Send className="h-5 w-5" />
             </Button>
