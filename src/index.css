@@ -8,7 +8,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 40% 98%; /* Soft blue-white background */
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -17,73 +17,73 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 142 30% 45%; /* Sage green */
+    --primary: 174 70% 32%; /* Vibrant teal */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 38 60% 80%; /* Warm sand */
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 340 80% 65%; /* Soft coral pink */
+    --secondary-foreground: 210 40% 98%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 174 40% 45%; /* Soft teal */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 262 60% 60%; /* Rich purple */
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 142 30% 45%; /* Sage green */
+    --ring: 174 70% 32%; /* Vibrant teal */
 
-    --radius: 0.75rem; /* Slightly more rounded */
+    --radius: 1rem; /* More rounded corners */
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 142 30% 45%; /* Sage green */
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 142 30% 45%; /* Sage green */
+    --sidebar-background: 174 70% 32%; /* Vibrant teal */
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 262 60% 60%; /* Rich purple */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 174 70% 15%; /* Darker teal */
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 174 70% 25%;
+    --sidebar-ring: 262 60% 60%; /* Rich purple */
 
     /* Custom wellness colors */
-    --wellness-blue: 210 100% 50%;
-    --wellness-green: 142 76% 36%;
-    --wellness-lavender: 270 67% 75%;
-    --wellness-amber: 38 92% 50%;
-    --wellness-teal: 174 84% 32%;
+    --wellness-blue: 210 90% 60%; /* Brighter blue */
+    --wellness-green: 142 76% 45%; /* Brighter green */
+    --wellness-lavender: 270 70% 75%; /* Rich lavender */
+    --wellness-amber: 35 95% 60%; /* Warm amber */
+    --wellness-teal: 174 70% 32%; /* Vibrant teal */
     
     /* Nature-inspired theme colors */
-    --wellness-sage: 142 30% 45%;
-    --wellness-light-sage: 142 30% 65%;
-    --wellness-teal: 174 40% 45%;
-    --wellness-light-teal: 174 40% 65%;
-    --wellness-warm-sand: 28 60% 80%;
-    --wellness-pale-yellow: 38 80% 85%;
-    --wellness-soft-coral: 0 80% 75%;
+    --wellness-sage: 150 40% 50%; /* Brighter sage */
+    --wellness-light-sage: 150 40% 70%; /* Lighter sage */
+    --wellness-teal: 174 70% 32%; /* Vibrant teal */
+    --wellness-light-teal: 174 70% 55%; /* Lighter teal */
+    --wellness-warm-sand: 28 80% 85%; /* Warmer sand */
+    --wellness-pale-yellow: 45 90% 85%; /* Brighter yellow */
+    --wellness-soft-coral: 340 80% 65%; /* Soft coral pink */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 30% 10%; /* Deep blue-gray background */
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222 25% 15%; /* Slightly lighter than background */
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 25% 15%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 142 30% 40%; /* Darker sage green */
+    --primary: 174 60% 35%; /* Rich teal */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 38 60% 70%; /* Darker warm sand */
+    --secondary: 340 70% 50%; /* Deep coral pink */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 174 40% 40%; /* Darker soft teal */
+    --accent: 262 50% 50%; /* Deep purple */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -91,32 +91,32 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 142 30% 40%; /* Darker sage green */
+    --ring: 174 60% 35%; /* Rich teal */
     
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 142 30% 40%; /* Darker sage green */
+    --sidebar-background: 222 30% 15%; /* Slightly lighter than background */
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 174 60% 35%; /* Rich teal */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 142 30% 40%; /* Darker sage green */
+    --sidebar-accent: 262 50% 50%; /* Deep purple */
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 30% 20%;
+    --sidebar-ring: 174 60% 35%; /* Rich teal */
 
     /* Custom wellness colors - darker variants */
-    --wellness-blue: 210 100% 40%;
-    --wellness-green: 142 76% 30%;
-    --wellness-lavender: 270 67% 65%;
-    --wellness-amber: 38 92% 45%;
-    --wellness-teal: 174 84% 25%;
+    --wellness-blue: 210 90% 45%;
+    --wellness-green: 142 70% 35%;
+    --wellness-lavender: 270 60% 60%;
+    --wellness-amber: 35 90% 50%;
+    --wellness-teal: 174 60% 35%;
     
     /* Nature-inspired theme colors - darker variants */
-    --wellness-sage: 142 30% 35%;
-    --wellness-light-sage: 142 30% 55%;
-    --wellness-teal: 174 40% 35%;
-    --wellness-light-teal: 174 40% 55%;
-    --wellness-warm-sand: 28 60% 70%;
-    --wellness-pale-yellow: 38 80% 75%;
-    --wellness-soft-coral: 0 80% 65%;
+    --wellness-sage: 150 40% 40%;
+    --wellness-light-sage: 150 40% 60%;
+    --wellness-teal: 174 60% 35%;
+    --wellness-light-teal: 174 60% 50%;
+    --wellness-warm-sand: 28 70% 75%;
+    --wellness-pale-yellow: 45 80% 75%;
+    --wellness-soft-coral: 340 70% 50%;
   }
 }
 
@@ -149,7 +149,7 @@
 
 /* Nature-inspired theme styles */
 .nature-card {
-  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white/80 backdrop-blur-sm border border-wellness-shadow/30;
+  @apply p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg bg-white/90 backdrop-blur-sm border border-primary/20 hover:border-primary/30;
 }
 
 .nature-gradient {
@@ -161,15 +161,15 @@
 }
 
 .nature-button-primary {
-  @apply bg-wellness-sage text-white hover:opacity-90 hover:animate-pulse-glow;
+  @apply bg-primary text-white shadow-md hover:shadow-lg hover:opacity-90 hover:translate-y-[-2px] transition-all duration-300;
 }
 
 .nature-button-secondary {
-  @apply bg-wellness-teal text-white hover:opacity-90 hover:animate-pulse-glow;
+  @apply bg-accent text-white shadow-md hover:shadow-lg hover:opacity-90 hover:translate-y-[-2px] transition-all duration-300;
 }
 
 .nature-button-accent {
-  @apply bg-wellness-soft-coral text-white hover:opacity-90 hover:animate-pulse-glow;
+  @apply bg-secondary text-white shadow-md hover:shadow-lg hover:opacity-90 hover:translate-y-[-2px] transition-all duration-300;
 }
 
 .nature-heading {
@@ -186,11 +186,11 @@
 
 /* Glassmorphism effect */
 .glass-effect {
-  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+  @apply bg-white/70 backdrop-blur-md border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30;
 }
 
 .dark .glass-effect {
-  @apply bg-gray-900/70 border-gray-800/20;
+  @apply bg-gray-900/70 border-primary/30 hover:border-primary/40;
 }
 
 /* Wave background */
@@ -200,7 +200,12 @@
 
 .wave-bg::before {
   content: "";
-  @apply absolute inset-0 bg-wave-pattern opacity-10 animate-wave;
+  @apply absolute inset-0 bg-wave-pattern opacity-15 animate-wave;
+}
+
+.wave-bg::after {
+  content: "";
+  @apply absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5;
 }
 
 /* Leaf pattern background */
@@ -215,7 +220,7 @@
 
 /* Tranquil Mind specific styles */
 .tranquil-card {
-  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-shadow;
+  @apply p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-white to-primary/5 border border-primary/20 hover:border-primary/30;
 }
 
 .tranquil-gradient {
@@ -393,15 +398,15 @@
 }
 
 .tranquil-card {
-  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white border border-wellness-shadow;
+  @apply p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-white to-primary/5 border border-primary/20 hover:border-primary/30;
 }
 
 .glass-effect {
-  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+  @apply bg-white/70 backdrop-blur-md border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30;
 }
 
 .dark .glass-effect {
-  @apply bg-gray-900/70 border-gray-800/20;
+  @apply bg-gray-900/70 border-primary/30 hover:border-primary/40;
 }
 
 /* Additional utility classes */
@@ -437,5 +442,18 @@
   
   .text-wellness-soft-coral {
     color: hsl(var(--wellness-soft-coral));
+  }
+  
+  /* Enhanced background gradients */
+  .bg-wellness-gradient-1 {
+    background: linear-gradient(135deg, hsl(var(--primary)/0.1) 0%, hsl(var(--accent)/0.1) 100%);
+  }
+  
+  .bg-wellness-gradient-2 {
+    background: linear-gradient(135deg, hsl(var(--secondary)/0.1) 0%, hsl(var(--primary)/0.1) 100%);
+  }
+  
+  .bg-wellness-gradient-3 {
+    background: linear-gradient(135deg, hsl(var(--accent)/0.1) 0%, hsl(var(--secondary)/0.1) 100%);
   }
 }
