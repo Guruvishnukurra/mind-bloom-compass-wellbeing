@@ -314,7 +314,7 @@
 
 .wave-bg::before {
   content: "";
-  @apply absolute inset-0 bg-wave-pattern opacity-15 animate-wave;
+  @apply absolute inset-0 bg-pattern-waves opacity-5 animate-wave;
 }
 
 .wave-bg::after {
@@ -329,7 +329,7 @@
 
 .leaf-bg::before {
   content: "";
-  @apply absolute inset-0 bg-leaf-pattern opacity-5;
+  @apply absolute inset-0 bg-pattern-leaves opacity-5;
 }
 
 /* Tranquil Mind specific styles */
