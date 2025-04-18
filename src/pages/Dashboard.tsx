@@ -45,7 +45,7 @@ export default function Dashboard() {
         transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-wellness-blue via-wellness-lavender to-wellness-teal bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-wellness-light-blue via-wellness-lavender to-wellness-teal bg-clip-text text-transparent">
           Mind Bloom
         </h1>
         <p className="text-muted-foreground mt-2">Your journey to mental wellness</p>
@@ -58,10 +58,10 @@ export default function Dashboard() {
         transition={{ delay: 0.2 }}
         className="relative overflow-hidden rounded-xl glass-effect p-6 mb-8"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-wellness-lavender/20 to-wellness-blue/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-wellness-lavender/20 to-wellness-light-blue/20" />
         <div className="relative z-10">
           <h3 className="text-xl font-medium mb-2 flex items-center gap-2">
-            <Quote className="w-5 h-5 text-wellness-blue" />
+            <Quote className="w-5 h-5 text-wellness-light-blue" />
             Daily Inspiration
           </h3>
           <p className="italic text-lg">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
@@ -94,7 +94,7 @@ export default function Dashboard() {
         <Button
           variant="default"
           size="lg"
-          className="w-full py-8 bg-wellness-blue hover:bg-wellness-blue/90 text-white flex items-center justify-center gap-3 text-lg font-medium rounded-xl shadow-lg"
+          className="w-full py-8 bg-wellness-light-blue hover:bg-wellness-light-blue/90 text-white flex items-center justify-center gap-3 text-lg font-medium rounded-xl shadow-lg"
           onClick={() => navigate("/meditation")}
         >
           <Brain className="w-7 h-7" />
@@ -111,10 +111,10 @@ export default function Dashboard() {
       >
         <Button
           variant="outline"
-          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-blue/10 hover:border-wellness-blue transition-all duration-300"
+          className="h-24 flex flex-col items-center justify-center gap-2 hover:bg-wellness-light-blue/10 hover:border-wellness-light-blue transition-all duration-300"
           onClick={() => navigate("/meditation")}
         >
-          <Brain className="w-6 h-6 text-wellness-blue" />
+          <Brain className="w-6 h-6 text-wellness-light-blue" />
           <span>All Meditations</span>
         </Button>
         <Button
@@ -195,7 +195,7 @@ export default function Dashboard() {
       >
         <Tabs defaultValue="meditation" className="space-y-4">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="meditation" className="data-[state=active]:bg-wellness-blue/10 data-[state=active]:text-wellness-blue">
+            <TabsTrigger value="meditation" className="data-[state=active]:bg-wellness-light-blue/10 data-[state=active]:text-wellness-light-blue">
               Meditation
             </TabsTrigger>
             <TabsTrigger value="journal" className="data-[state=active]:bg-wellness-green/10 data-[state=active]:text-wellness-green">
@@ -212,7 +212,7 @@ export default function Dashboard() {
             <Card className="p-4">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">Recent Meditations</h3>
-                <Button variant="ghost" size="sm" onClick={() => navigate("/meditation")} className="text-wellness-blue">
+                <Button variant="ghost" size="sm" onClick={() => navigate("/meditation")} className="text-wellness-light-blue">
                   View All <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </div>

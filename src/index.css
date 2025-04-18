@@ -140,7 +140,7 @@
 }
 
 .wellness-gradient {
-  @apply bg-gradient-to-r from-wellness-light-blue via-wellness-blue to-wellness-light-teal;
+  @apply bg-gradient-to-r from-wellness-light-blue to-wellness-light-teal;
 }
 
 .wellness-button {
@@ -219,7 +219,7 @@
 }
 
 .tranquil-gradient {
-  @apply bg-gradient-to-r from-wellness-blue to-wellness-green;
+  @apply bg-gradient-to-r from-wellness-light-blue to-wellness-green;
 }
 
 .tranquil-button {
