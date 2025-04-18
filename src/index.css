@@ -149,7 +149,7 @@
 
 /* Nature-inspired theme styles */
 .nature-card {
-  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white/80 backdrop-blur-sm border border-wellness-gray/30;
+  @apply p-6 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md bg-white/80 backdrop-blur-sm border border-wellness-shadow/30;
 }
 
 .nature-gradient {
