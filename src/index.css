@@ -295,7 +295,7 @@
 }
 
 .nature-text {
-  @apply text-base text-neutral-night;
+  @apply text-base text-foreground;
 }
 
 /* Glassmorphism effect */
@@ -366,7 +366,7 @@
 }
 
 .tranquil-text {
-  @apply text-base text-neutral-night;
+  @apply text-base text-foreground;
 }
 
 @keyframes float {
@@ -508,7 +508,7 @@
 }
 
 .tranquil-text {
-  @apply text-base text-neutral-night;
+  @apply text-base text-foreground;
 }
 
 .tranquil-card {
