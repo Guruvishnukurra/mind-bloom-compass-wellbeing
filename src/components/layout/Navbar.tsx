@@ -20,12 +20,12 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-deep-ocean-500 to-deep-ocean-600 backdrop-blur-md border-b border-deep-ocean-400 shadow-md">
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-sage-500 to-sage-600 backdrop-blur-md border-b border-sage-400 shadow-md">
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 relative bg-white/10 rounded-full flex items-center justify-center shadow-inner">
-              <div className="w-6 h-6 bg-gradient-to-br from-lavender-400 to-sage-400 rounded-full animate-pulse-slow"></div>
+              <div className="w-6 h-6 bg-gradient-to-br from-gold-400 to-sage-400 rounded-full animate-pulse-slow"></div>
             </div>
             <span className="text-xl font-heading font-semibold text-white">MindBloom</span>
           </Link>
@@ -34,42 +34,42 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-2">
           <Link
             to="/"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <Home className="h-5 w-5 mr-1.5" />
             Home
           </Link>
           <Link
             to="/resources"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <BookOpen className="h-5 w-5 mr-1.5" />
             Resources
           </Link>
           <Link
             to="/mood"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <BarChart2 className="h-5 w-5 mr-1.5" />
             Mood
           </Link>
           <Link
             to="/habits"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <CheckSquare className="h-5 w-5 mr-1.5" />
             Habits
           </Link>
           <Link
             to="/achievements"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <Trophy className="h-5 w-5 mr-1.5" />
             Achievements
           </Link>
           <Link
             to="/chat"
-            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center"
+            className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center"
           >
             <MessageSquare className="h-5 w-5 mr-1.5" />
             Chat
@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
             size="icon" 
             onClick={toggleDarkMode}
             aria-label="Toggle dark mode"
-            className="text-white/80 hover:text-white hover:bg-white/10"
+            className="text-white/80 hover:text-white hover:bg-white/10 rounded-full"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="md:hidden text-white/80 hover:text-white hover:bg-white/10"
+            className="md:hidden text-white/80 hover:text-white hover:bg-white/10 rounded-full"
             aria-label="Open menu"
           >
             <Menu size={20} />
@@ -104,7 +104,7 @@ const Navbar: React.FC = () => {
               </div>
               <Button
                 onClick={signOut}
-                className="bg-sage-500 hover:bg-sage-600 text-white rounded-full shadow-md"
+                className="bg-gold-500 hover:bg-gold-600 text-deep-ocean-800 rounded-full shadow-md"
                 size="sm"
               >
                 <LogOut className="h-4 w-4 mr-1.5" />
@@ -114,7 +114,7 @@ const Navbar: React.FC = () => {
           ) : (
             <Link
               to="/auth"
-              className="hidden md:flex bg-sage-500 hover:bg-sage-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-md"
+              className="hidden md:flex bg-gold-500 hover:bg-gold-600 text-deep-ocean-800 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-md"
             >
               Sign In
             </Link>

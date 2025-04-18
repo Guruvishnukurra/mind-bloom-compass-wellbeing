@@ -45,7 +45,7 @@ export default function Dashboard() {
         transition={{ duration: 0.5 }}
         className="text-center mb-8 container mx-auto"
       >
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-deep-ocean-500 to-sage-500 bg-clip-text text-transparent font-heading">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-sage-500 to-gold-500 bg-clip-text text-transparent font-heading">
           Mind Bloom
         </h1>
         <p className="text-deep-ocean-600/80 mt-2 font-body">Your journey to mental wellness</p>
@@ -56,13 +56,13 @@ export default function Dashboard() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="relative overflow-hidden rounded-xl bg-gradient-to-r from-lavender-50 to-cream-100 p-6 mb-8 container mx-auto shadow-md border border-lavender-200"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sage-50 to-cream-100 p-6 mb-8 container mx-auto shadow-md border border-sage-200"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-lavender-200/20 to-deep-ocean-200/20 opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-gold-200/20 to-sage-200/20 opacity-50" />
         <div className="absolute inset-0 opacity-10 animate-float" />
         <div className="relative z-10">
           <h3 className="text-xl font-medium mb-2 flex items-center gap-2 font-heading text-deep-ocean-600">
-            <Quote className="w-5 h-5 text-lavender-500 animate-bounce-gentle" />
+            <Quote className="w-5 h-5 text-gold-500 animate-bounce-gentle" />
             Daily Inspiration
           </h3>
           <p className="italic text-2xl font-accent text-deep-ocean-700">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
@@ -77,7 +77,7 @@ export default function Dashboard() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3 }}
-        className="p-6 rounded-xl shadow-md bg-gradient-to-br from-white to-cream-50 border border-sage-200"
+        className="p-6 rounded-3xl shadow-md bg-gradient-to-br from-white to-cream-50 border border-sage-200"
       >
         <h2 className="text-2xl font-semibold mb-2 font-heading text-deep-ocean-600">
           Welcome back, {user?.email ? user.email.split("@")[0] : 'Guest'}
@@ -95,7 +95,7 @@ export default function Dashboard() {
         <Button
           variant="default"
           size="lg"
-          className="w-full py-8 bg-gradient-to-r from-deep-ocean-500 to-deep-ocean-600 hover:from-deep-ocean-600 hover:to-deep-ocean-700 text-white flex items-center justify-center gap-3 text-lg font-medium rounded-xl shadow-lg"
+          className="w-full py-8 bg-gradient-to-r from-sage-500 to-gold-500 hover:from-sage-600 hover:to-gold-600 text-white flex items-center justify-center gap-3 text-lg font-medium rounded-3xl shadow-lg"
           onClick={() => navigate("/meditation")}
         >
           <Brain className="w-7 h-7" />

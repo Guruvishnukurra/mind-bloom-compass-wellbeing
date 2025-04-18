@@ -93,7 +93,7 @@ export function OpenAIChatBot() {
 
   return (
     <Card className="h-[600px] flex flex-col rounded-3xl shadow-lg overflow-hidden border-sage-200 mx-auto bg-cream-100">
-      <CardHeader className="pb-3 bg-gradient-to-r from-sage-500 to-sage-600 text-white">
+      <CardHeader className="pb-3 bg-gradient-to-r from-sage-500 to-gold-500 text-white">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center shadow-md animate-pulse-slow">
@@ -110,7 +110,7 @@ export function OpenAIChatBot() {
             variant="outline" 
             size="sm" 
             onClick={startNewChat}
-            className="h-9 bg-white/20 text-white border-white/30 hover:bg-white/30 hover:text-white"
+            className="h-9 bg-white/20 text-white border-white/30 hover:bg-white/30 hover:text-white rounded-full"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             New Chat
@@ -121,7 +121,7 @@ export function OpenAIChatBot() {
         <ScrollArea className="flex-1 px-6 py-5" ref={scrollAreaRef}>
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8">
-              <div className="w-20 h-20 rounded-full bg-sage-100 flex items-center justify-center mb-5 shadow-md">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-sage-100 to-gold-100 flex items-center justify-center mb-5 shadow-md">
                 <Bot className="h-10 w-10 text-sage-600" />
               </div>
               <h3 className="text-2xl font-heading font-medium mb-3 text-deep-ocean-600">Welcome to Your Mindful Assistant</h3>
@@ -133,13 +133,13 @@ export function OpenAIChatBot() {
                   <Button
                     key={index}
                     variant="outline"
-                    className="justify-start h-auto py-3 px-4 text-left border-sage-200 hover:bg-sage-50 hover:border-sage-300 transition-all rounded-xl"
+                    className="justify-start h-auto py-3 px-4 text-left border-sage-200 hover:bg-gold-50 hover:border-gold-300 transition-all rounded-2xl"
                     onClick={() => {
                       setInput(prompt);
                       inputRef.current?.focus();
                     }}
                   >
-                    <MessageSquare className="h-4 w-4 mr-2 flex-shrink-0 text-sage-500" />
+                    <MessageSquare className="h-4 w-4 mr-2 flex-shrink-0 text-gold-500" />
                     <span className="truncate text-deep-ocean-600">{prompt}</span>
                   </Button>
                 ))}
@@ -167,7 +167,7 @@ export function OpenAIChatBot() {
                 <motion.div 
                   className={`rounded-2xl p-4 ${
                     message.role === 'user' 
-                      ? 'bg-gradient-to-r from-sage-500 to-sage-600 text-white shadow-md ml-auto max-w-[75%]' 
+                      ? 'bg-gradient-to-r from-sage-500 to-gold-500 text-white shadow-md ml-auto max-w-[75%]' 
                       : 'bg-white border border-sage-200 shadow-sm max-w-[75%]'
                   }`}
                   initial={{ scale: 0.95 }}
@@ -183,7 +183,7 @@ export function OpenAIChatBot() {
                 </motion.div>
                 {message.role === 'user' && (
                   <Avatar className="h-10 w-10 shadow-md flex-shrink-0">
-                    <AvatarFallback className="bg-gradient-to-br from-sage-500 to-sage-700 text-white">
+                    <AvatarFallback className="bg-gradient-to-br from-gold-500 to-gold-600 text-deep-ocean-800">
                       <User className="h-5 w-5" />
                     </AvatarFallback>
                   </Avatar>
@@ -200,9 +200,9 @@ export function OpenAIChatBot() {
               </Avatar>
               <div className="rounded-2xl p-4 max-w-[80%] shadow-sm bg-white border border-sage-200">
                 <div className="flex gap-2">
-                  <div className="w-2 h-2 rounded-full bg-sage-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-sage-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-sage-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-gold-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-gold-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-gold-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
               </div>
             </div>
@@ -215,16 +215,16 @@ export function OpenAIChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="min-h-[60px] resize-none border-sage-200 focus-visible:ring-sage-400 bg-white rounded-xl w-full"
+              className="min-h-[60px] resize-none border-sage-200 focus-visible:ring-gold-400 bg-white rounded-2xl w-full"
               disabled={isLoading}
               ref={inputRef}
             />
             <Button 
               onClick={handleSendMessage} 
               disabled={isLoading || !input.trim()}
-              className="self-end bg-sage-500 hover:bg-sage-600 text-white rounded-full shadow-md h-10 w-10 p-0 flex items-center justify-center"
+              className="self-end bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-deep-ocean-800 rounded-full shadow-md h-12 w-12 p-0 flex items-center justify-center"
             >
-              <Send className="h-4 w-4" />
+              <Send className="h-5 w-5" />
             </Button>
           </div>
         </div>
