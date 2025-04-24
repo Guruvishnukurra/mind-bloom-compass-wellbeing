@@ -37,7 +37,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen p-4 space-y-6">
+    <div className="min-h-screen p-4 space-y-6 bg-background">
       {/* Enhanced Header with animated gradient text */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

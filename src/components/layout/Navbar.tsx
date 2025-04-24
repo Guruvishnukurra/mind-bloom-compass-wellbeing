@@ -1,33 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, User, Moon, Sun, MessageSquare, Trophy, BookOpen, Home, LogOut, BarChart2, CheckSquare } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Navbar: React.FC = () => {
-  // Using sonner toast directly
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const { theme, setTheme } = useTheme();
   const { user, signOut } = useAuth();
+  const [mounted, setMounted] = React.useState(false);
+
+  // After mounting, we can safely show the UI that depends on the theme
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle("dark");
-    toast.success(isDarkMode ? "Light mode activated" : "Dark mode activated", {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    toast.success(theme === 'dark' ? "Light mode activated" : "Dark mode activated", {
       description: "Your preference has been saved.",
       duration: 2000,
     });
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-warm-yellow-500 to-warm-yellow-600 backdrop-blur-md border-b border-warm-yellow-400 shadow-md">
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-warm-yellow-500 to-warm-yellow-600 dark:from-deep-ocean-600 dark:to-deep-ocean-700 backdrop-blur-md border-b border-warm-yellow-400 dark:border-deep-ocean-500 shadow-md">
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 relative bg-white/10 rounded-full flex items-center justify-center shadow-inner">
               <div className="w-6 h-6 bg-gradient-to-br from-soft-teal-400 to-terracotta-400 rounded-full animate-pulse-slow"></div>
             </div>
-            <span className="text-xl font-heading font-semibold text-deep-slate-800">MindBloom</span>
+            <span className="text-xl font-heading font-semibold text-deep-slate-800 dark:text-white">MindBloom</span>
           </Link>
         </div>
 
@@ -82,9 +88,9 @@ const Navbar: React.FC = () => {
             size="icon" 
             onClick={toggleDarkMode}
             aria-label="Toggle dark mode"
-            className="text-deep-slate-800/80 hover:text-deep-slate-800 hover:bg-deep-slate-800/10 rounded-full"
+            className="text-deep-slate-800/80 dark:text-white/80 hover:text-deep-slate-800 dark:hover:text-white hover:bg-deep-slate-800/10 dark:hover:bg-white/10 rounded-full"
           >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            {mounted && (theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />)}
           </Button>
           
           <Button 
