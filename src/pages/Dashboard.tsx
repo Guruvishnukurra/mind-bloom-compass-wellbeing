@@ -56,17 +56,24 @@ export default function Dashboard() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-warm-yellow-50 to-warm-yellow-100 p-6 mb-8 container mx-auto shadow-md border border-warm-yellow-200"
+        className="relative overflow-hidden rounded-3xl p-6 mb-8 container mx-auto shadow-md border border-warm-yellow-200"
+        style={{
+          backgroundImage: "url('/yoga-inspo.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
+        {/* Semi-transparent overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-warm-yellow-50/80 to-warm-yellow-100/80 backdrop-blur-sm" />
         <div className="absolute inset-0 bg-gradient-to-r from-soft-teal-200/20 to-warm-yellow-200/20 opacity-50" />
         <div className="absolute inset-0 opacity-10 animate-float" />
         <div className="relative z-10">
-          <h3 className="text-xl font-medium mb-2 flex items-center gap-2 font-heading text-deep-slate-800">
+          <h3 className="text-xl font-medium mb-2 flex items-center gap-2 font-heading text-deep-slate-800 text-shadow-sm">
             <Quote className="w-5 h-5 text-terracotta-500 animate-bounce-gentle" />
             Daily Inspiration
           </h3>
-          <p className="italic text-2xl font-accent text-deep-slate-800">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
-          <p className="text-sm text-deep-slate-700/70 mt-2 font-accent">— {quote?.author || "Lao Tzu"}</p>
+          <p className="italic text-2xl font-accent text-deep-slate-800 text-shadow-sm font-semibold">{quote?.text || "The journey of a thousand miles begins with a single step."}</p>
+          <p className="text-sm text-deep-slate-700/90 mt-2 font-accent font-medium">— {quote?.author || "Lao Tzu"}</p>
         </div>
       </motion.div>
 
