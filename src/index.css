@@ -338,7 +338,7 @@
 }
 
 .tranquil-gradient {
-  @apply bg-gradient-to-r from-deep-ocean-300 to-sage-400;
+  @apply bg-gradient-to-r from-primary to-accent;
 }
 
 .tranquil-button {
