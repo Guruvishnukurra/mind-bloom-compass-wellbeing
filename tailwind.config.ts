@@ -1,171 +1,80 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+export default {
 	darkMode: ["class"],
 	content: [
-		"./index.html",
-		"./src/**/*.{js,ts,jsx,tsx,mdx}",
+		'./pages/**/*.{ts,tsx}',
+		'./components/**/*.{ts,tsx}',
+		'./app/**/*.{ts,tsx}',
+		'./src/**/*.{ts,tsx}',
 	],
-	prefix: "",
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: "2rem",
 			screens: {
-				'2xl': '1400px'
-			}
+				"2xl": "1400px",
+			},
 		},
 		extend: {
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
+				border: "hsl(var(--border))",
+				input: "hsl(var(--input))",
+				ring: "hsl(var(--ring))",
+				background: "hsl(var(--background))",
+				foreground: "hsl(var(--foreground))",
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: "hsl(var(--primary))",
+					foreground: "hsl(var(--primary-foreground))",
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					DEFAULT: "hsl(var(--secondary))",
+					foreground: "hsl(var(--secondary-foreground))",
 				},
 				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+					DEFAULT: "hsl(var(--destructive))",
+					foreground: "hsl(var(--destructive-foreground))",
 				},
 				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					DEFAULT: "hsl(var(--muted))",
+					foreground: "hsl(var(--muted-foreground))",
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: "hsl(var(--accent))",
+					foreground: "hsl(var(--accent-foreground))",
 				},
 				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+					DEFAULT: "hsl(var(--popover))",
+					foreground: "hsl(var(--popover-foreground))",
 				},
 				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					DEFAULT: "hsl(var(--card))",
+					foreground: "hsl(var(--card-foreground))",
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				},
-				// New color palette
-				'deep-ocean': {
-					DEFAULT: '#1A365D', // Deep Ocean
-					50: '#E9EDF3',
-					100: '#D3DBE7',
-					200: '#A7B7CF',
-					300: '#7B93B7',
-					400: '#4F6F9F',
-					500: '#1A365D', // Base
-					600: '#152C4A',
-					700: '#102138',
-					800: '#0A1625',
-					900: '#050B13',
-					950: '#020509',
-				},
-				'sage': {
-					DEFAULT: '#7C9A92', // Sage Green
-					50: '#F2F5F4',
-					100: '#E5EBE9',
-					200: '#CBD7D3',
-					300: '#B1C3BD',
-					400: '#97AFA7',
-					500: '#7C9A92', // Base
-					600: '#637B74',
-					700: '#4A5C57',
-					800: '#323E3A',
-					900: '#191F1D',
-					950: '#0D100F',
-				},
-				'cream': {
-					DEFAULT: '#F9F5F0', // Soft Cream
-					50: '#FFFFFF',
-					100: '#FFFFFF',
-					200: '#FFFFFF',
-					300: '#FFFFFF',
-					400: '#FFFFFF',
-					500: '#F9F5F0', // Base
-					600: '#EAE0D0',
-					700: '#DBCBB0',
-					800: '#CCB690',
-					900: '#BDA170',
-					950: '#B39460',
-				},
-				'terracotta': {
-					DEFAULT: '#CF5C36', // Terracotta
-					50: '#F9E6E0',
-					100: '#F4CEC1',
-					200: '#EB9E83',
-					300: '#E26E45',
-					400: '#D96536',
-					500: '#CF5C36', // Base
-					600: '#A6492B',
-					700: '#7D3721',
-					800: '#532416',
-					900: '#2A120B',
-					950: '#150906',
-				},
-				'lavender': {
-					DEFAULT: '#9A8FB8', // Lavender
-					50: '#F5F4F8',
-					100: '#EBE9F1',
-					200: '#D7D3E3',
-					300: '#C3BDD5',
-					400: '#AEA6C7',
-					500: '#9A8FB8', // Base
-					600: '#7B6DA3',
-					700: '#625587',
-					800: '#493F65',
-					900: '#312A43',
-					950: '#231E32',
-				},
-				'gold': {
-					DEFAULT: '#D4B483', // Muted Gold
-					50: '#FAF6F0',
-					100: '#F5EDE1',
-					200: '#EBDBC3',
-					300: '#E0C9A5',
-					400: '#DAC194',
-					500: '#D4B483', // Base
-					600: '#C79A5A',
-					700: '#B88237',
-					800: '#8F652B',
-					900: '#67491F',
-					950: '#533A19',
+				wellness: {
+					teal: "hsl(var(--wellness-teal))",
+					sage: "hsl(var(--wellness-sage))",
+					lavender: "hsl(var(--wellness-lavender))",
+					blue: "hsl(var(--wellness-blue))",
+					"soft-coral": "hsl(var(--wellness-soft-coral))",
+					amber: "hsl(var(--wellness-amber))",
+					purple: "hsl(var(--wellness-purple))",
+					"pale-yellow": "hsl(var(--wellness-pale-yellow))",
 				}
 			},
-			boxShadow: {
-				'sm': 'var(--shadow-sm)',
-				'md': 'var(--shadow-md)',
-				'lg': 'var(--shadow-lg)',
-				'inner': 'var(--shadow-inner)',
-			},
 			borderRadius: {
-				sm: 'var(--radius-sm)',
-				md: 'var(--radius-md)',
-				lg: 'var(--radius-lg)',
-				DEFAULT: 'var(--radius)',
+				lg: "var(--radius)",
+				md: "calc(var(--radius) - 2px)",
+				sm: "calc(var(--radius) - 4px)",
 			},
 			keyframes: {
-				'accordion-down': {
-					from: { height: '0' },
-					to: { height: 'var(--radix-accordion-content-height)' }
+				"accordion-down": {
+					from: { height: "0" },
+					to: { height: "var(--radix-accordion-content-height)" },
 				},
-				'accordion-up': {
-					from: { height: 'var(--radix-accordion-content-height)' },
-					to: { height: '0' }
+				"accordion-up": {
+					from: { height: "var(--radix-accordion-content-height)" },
+					to: { height: "0" },
 				},
 				'fade-in': {
 					'0%': { opacity: '0', transform: 'translateY(10px)' },
@@ -221,8 +130,8 @@ const config: Config = {
 				}
 			},
 			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
 				'fade-in': 'fade-in 0.5s ease-out',
 				'fade-out': 'fade-out 0.5s ease-out',
 				'breathing': 'breathing 4s ease-in-out infinite',
@@ -261,5 +170,3 @@ const config: Config = {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
-
-export default config;
