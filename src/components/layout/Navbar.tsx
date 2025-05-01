@@ -29,9 +29,7 @@ const Navbar: React.FC = () => {
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 relative bg-primary/10 rounded-full flex items-center justify-center">
-              <div className="w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-full animate-pulse-slow"></div>
-            </div>
+            <img src="/mindbloom-logo.svg" alt="MindBloom Logo" className="w-10 h-10" />
             <span className="text-xl font-heading font-semibold text-foreground">MindBloom</span>
           </Link>
         </div>

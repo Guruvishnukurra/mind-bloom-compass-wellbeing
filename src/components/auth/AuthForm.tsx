@@ -36,6 +36,10 @@ export function AuthForm() {
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-[350px]">
         <CardHeader>
+          <div className="flex flex-col items-center mb-4">
+            <img src="/mindbloom-logo.svg" alt="MindBloom Logo" className="w-16 h-16 mb-2" />
+            <h1 className="text-2xl font-heading font-semibold text-foreground">MindBloom</h1>
+          </div>
           <CardTitle>{mode === 'signin' ? 'Sign In' : 'Sign Up'}</CardTitle>
           <CardDescription>
             {mode === 'signin' 
