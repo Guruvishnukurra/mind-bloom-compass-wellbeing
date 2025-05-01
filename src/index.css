@@ -267,7 +267,7 @@
 }
 
 .nature-gradient {
-  @apply bg-gradient-to-r from-sage-400 to-sage-600;
+  background: linear-gradient(to right, hsl(var(--wellness-sage)) 0%, hsl(var(--wellness-teal)) 100%);
 }
 
 .nature-button {
