@@ -242,19 +242,19 @@
 }
 
 .wellness-gradient {
-  @apply bg-gradient-to-r from-deep-ocean-300 to-sage-400;
+  background: linear-gradient(to right, hsl(var(--wellness-teal)) 0%, hsl(var(--wellness-sage)) 100%);
 }
 
 .wellness-gradient-warm {
-  @apply bg-gradient-to-r from-terracotta-400 to-gold-400;
+  background: linear-gradient(to right, hsl(var(--wellness-soft-coral)) 0%, hsl(var(--wellness-amber)) 100%);
 }
 
 .wellness-gradient-calm {
-  @apply bg-gradient-to-r from-deep-ocean-400 to-lavender-400;
+  background: linear-gradient(to right, hsl(var(--wellness-blue)) 0%, hsl(var(--wellness-lavender)) 100%);
 }
 
 .wellness-gradient-natural {
-  @apply bg-gradient-to-r from-sage-400 to-gold-400;
+  background: linear-gradient(to right, hsl(var(--wellness-sage)) 0%, hsl(var(--wellness-amber)) 100%);
 }
 
 .wellness-button {
