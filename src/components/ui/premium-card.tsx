@@ -1,23 +1,22 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import * as React from "react";
+import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface PremiumCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'ocean' | 'sage' | 'terracotta' | 'lavender' | 'gold';
   pattern?: 'none' | 'waves' | 'leaves' | 'mountains' | 'dots';
   elevation?: 'flat' | 'raised' | 'floating';
-  children: React.ReactNode;
 }
 
 const PremiumCard = React.forwardRef<HTMLDivElement, PremiumCardProps>(
   ({ className, variant = 'default', pattern = 'none', elevation = 'raised', children, ...props }, ref) => {
     const variantStyles = {
       default: 'bg-card text-card-foreground',
-      ocean: 'bg-gradient-to-br from-deep-ocean-400 to-deep-ocean-600 text-white',
-      sage: 'bg-gradient-to-br from-sage-400 to-sage-600 text-white',
-      terracotta: 'bg-gradient-to-br from-terracotta-400 to-terracotta-600 text-white',
-      lavender: 'bg-gradient-to-br from-lavender-400 to-lavender-600 text-white',
-      gold: 'bg-gradient-to-br from-gold-400 to-gold-600 text-deep-ocean-900',
+      ocean: 'bg-gradient-to-br from-primary/80 to-primary text-primary-foreground',
+      sage: 'bg-gradient-to-br from-secondary/80 to-secondary text-secondary-foreground',
+      terracotta: 'bg-gradient-to-br from-accent/80 to-accent text-accent-foreground',
+      lavender: 'bg-gradient-to-br from-muted/80 to-muted text-muted-foreground',
+      gold: 'bg-gradient-to-br from-primary/20 to-primary/40 text-primary-foreground',
     };
 
     const patternStyles = {
@@ -29,9 +28,9 @@ const PremiumCard = React.forwardRef<HTMLDivElement, PremiumCardProps>(
     };
 
     const elevationStyles = {
-      flat: 'border',
-      raised: 'border shadow-md',
-      floating: 'border shadow-lg hover:shadow-xl transition-shadow duration-300',
+      flat: 'border border-border',
+      raised: 'border border-border shadow-sm',
+      floating: 'border border-border shadow-md hover:shadow-lg transition-shadow duration-300',
     };
 
     return (

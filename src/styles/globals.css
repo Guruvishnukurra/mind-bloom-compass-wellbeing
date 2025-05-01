@@ -4,54 +4,60 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Primary Colors - Blue Palette */
-  --color-primary-blue: #3B82F6; /* Primary Blue */
-  --color-light-blue: #93C5FD; /* Light Blue */
-  --color-dark-blue: #1E40AF; /* Dark Blue */
-  --color-deep-blue: #1E3A8A; /* Deep Blue */
-  
-  /* Secondary Colors - Complementary */
-  --color-sky-blue: #7DD3FC;
-  --color-indigo: #6366F1;
-  
-  /* Neutral Colors */
-  --color-white: #F9FAFB;
-  --color-gray: #E5E7EB;
-  --color-blue: #3B82F6; /* Primary Blue */
-  
-  /* Functional Colors */
-  --color-success: #10B981; /* Green */
-  --color-alert: #F59E0B; /* Amber */
-  --color-focus: #3B82F6; /* Primary Blue */
-  
-  /* Wellness Theme Colors - Blue Palette */
-  --wellness-primary: #3B82F6; /* Primary Blue */
-  --wellness-secondary: #93C5FD; /* Light Blue */
-  --wellness-accent: #6366F1; /* Indigo */
-  --wellness-light: #DBEAFE; /* Very Light Blue */
-  --wellness-dark: #1E40AF; /* Dark Blue */
-  --wellness-deep: #1E3A8A; /* Deep Blue */
-  --wellness-sky: #7DD3FC; /* Sky Blue */
-  --wellness-highlight: #60A5FA; /* Medium Blue */
-  --wellness-text: #1F2937; /* Dark Gray for Text */
-  
-  /* Border Radius */
-  --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.5rem;
-  --radius: 0.75rem;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
   body {
-    @apply bg-neutral-white text-neutral-blue font-primary;
+    @apply bg-background text-foreground;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -145,4 +151,112 @@
 .paper-texture {
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
   background-repeat: repeat;
+}
+
+/* Glass effect styles */
+.glass-effect {
+  @apply bg-white/70 backdrop-blur-md border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30;
+}
+
+.dark .glass-effect {
+  @apply bg-gray-900/70 border-primary/30 hover:border-primary/40;
+}
+
+/* Nature-inspired theme styles */
+.nature-card {
+  @apply p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg bg-card border border-primary/20 hover:border-primary/30;
+}
+
+.nature-gradient {
+  @apply bg-gradient-to-r from-primary to-secondary;
+}
+
+.nature-button {
+  @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+}
+
+.nature-button-primary {
+  @apply bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:opacity-90 hover:translate-y-[-2px] transition-all duration-300;
+}
+
+.nature-button-secondary {
+  @apply bg-secondary text-secondary-foreground shadow-md hover:shadow-lg hover:opacity-90 hover:translate-y-[-2px] transition-all duration-300;
+}
+
+.nature-button-accent {
+  @apply bg-accent text-accent-foreground shadow-md hover:shadow-lg hover:opacity-90 hover:translate-y-[-2px] transition-all duration-300;
+}
+
+.nature-heading {
+  @apply text-3xl font-bold text-foreground;
+}
+
+.nature-subheading {
+  @apply text-xl font-semibold text-muted-foreground;
+}
+
+.nature-text {
+  @apply text-base text-foreground;
+}
+
+/* Wave background */
+.wave-bg {
+  @apply relative overflow-hidden;
+}
+
+.wave-bg::before {
+  content: "";
+  @apply absolute inset-0 bg-pattern-waves opacity-5 animate-wave;
+}
+
+.wave-bg::after {
+  content: "";
+  @apply absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5;
+}
+
+/* Leaf pattern background */
+.leaf-bg {
+  @apply relative overflow-hidden;
+}
+
+.leaf-bg::before {
+  content: "";
+  @apply absolute inset-0 bg-pattern-leaves opacity-5;
+}
+
+/* Tranquil Mind specific styles */
+.tranquil-card {
+  @apply p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg bg-card border border-primary/20 hover:border-primary/30;
+}
+
+.tranquil-gradient {
+  @apply bg-gradient-to-r from-primary to-secondary;
+}
+
+.tranquil-button {
+  @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+}
+
+.tranquil-button-primary {
+  @apply bg-primary text-primary-foreground hover:opacity-90;
+}
+
+.tranquil-button-secondary {
+  @apply bg-secondary text-secondary-foreground hover:opacity-90;
+}
+
+.tranquil-button-accent {
+  @apply bg-accent text-accent-foreground hover:opacity-90;
+}
+
+.tranquil-heading {
+  @apply text-3xl font-bold text-foreground;
+}
+
+.tranquil-subheading {
+  @apply text-xl font-semibold text-muted-foreground;
+}
+
+.tranquil-text {
+  @apply text-base text-foreground;
 } 

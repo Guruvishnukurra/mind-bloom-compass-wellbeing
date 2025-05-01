@@ -1,4 +1,3 @@
-
 import React from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -103,43 +102,43 @@ const Index = () => {
       <section className="py-12 bg-background">
         <div className="container px-4 md:px-6">
           <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold tracking-tight">What Our Users Say</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">What Our Users Say</h2>
             <p className="text-muted-foreground mt-2">Real stories from people like you</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-xl shadow">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
               <p className="italic text-muted-foreground mb-4">
                 "This app has been a game-changer for my anxiety. The daily check-ins and guided meditations have helped me become more aware of my feelings."
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-wellness-blue"></div>
+                <div className="w-10 h-10 rounded-full bg-primary/20"></div>
                 <div>
-                  <p className="font-medium">Alex M.</p>
+                  <p className="font-medium text-foreground">Alex M.</p>
                   <p className="text-sm text-muted-foreground">Marketing Manager</p>
                 </div>
               </div>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
               <p className="italic text-muted-foreground mb-4">
                 "The journaling prompts have helped me process difficult emotions and gain clarity. I've noticed significant improvements in my overall wellbeing."
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-wellness-green"></div>
+                <div className="w-10 h-10 rounded-full bg-secondary/20"></div>
                 <div>
-                  <p className="font-medium">Jamie K.</p>
+                  <p className="font-medium text-foreground">Jamie K.</p>
                   <p className="text-sm text-muted-foreground">Graduate Student</p>
                 </div>
               </div>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
               <p className="italic text-muted-foreground mb-4">
-                "As a therapist, I recommend this app to my clients as a supplement to our sessions. The evidence-based approach sets it apart from others."
+                "The mood tracking feature has helped me identify patterns in my emotional wellbeing. I can now take proactive steps to maintain my mental health."
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-wellness-purple"></div>
+                <div className="w-10 h-10 rounded-full bg-accent/20"></div>
                 <div>
-                  <p className="font-medium">Dr. Rivera</p>
-                  <p className="text-sm text-muted-foreground">Clinical Psychologist</p>
+                  <p className="font-medium text-foreground">Sam R.</p>
+                  <p className="text-sm text-muted-foreground">Software Engineer</p>
                 </div>
               </div>
             </div>

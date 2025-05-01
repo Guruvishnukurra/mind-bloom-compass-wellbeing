@@ -1,0 +1,156 @@
+[1mdiff --git a/src/pages/Dashboard.tsx b/src/pages/Dashboard.tsx[m
+[1mindex b730ee3..5478825 100644[m
+[1m--- a/src/pages/Dashboard.tsx[m
+[1m+++ b/src/pages/Dashboard.tsx[m
+[36m@@ -11,13 +11,33 @@[m [mimport JournalList from "@/components/journal/JournalList";[m
+ import { AchievementsList } from "@/components/achievements/AchievementsList";[m
+ import { ResourcesList } from "@/components/resources/ResourcesList";[m
+ import { OpenAIChatBot } from "@/components/chat/OpenAIChatBot";[m
+[31m-import { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2, Heart, CheckSquare, MessageSquare } from "lucide-react";[m
+[32m+[m[32mimport { Calendar, Brain, BookOpen, Trophy, Quote, ChevronRight, BarChart2, Loader2, Heart, CheckSquare, MessageSquare, Home, Inbox, Layout, TrendingUp, Building2, CreditCard, Link2, Target } from "lucide-react";[m
+[32m+[m
+[32m+[m[32m// Sidebar navigation items[m
+[32m+[m[32mconst sidebarItems = [[m
+[32m+[m[32m  { icon: Home, label: "Home", href: "/" },[m
+[32m+[m[32m  { icon: Inbox, label: "Inbox", href: "/inbox" },[m
+[32m+[m[32m  { icon: BarChart2, label: "Reports", href: "/reports" },[m
+[32m+[m[32m];[m
+[32m+[m
+[32m+[m[32mconst analyticsItems = [[m
+[32m+[m[32m  { icon: Layout, label: "Dashboard", href: "/dashboard" },[m
+[32m+[m[32m  { icon: TrendingUp, label: "Trends", href: "/trends" },[m
+[32m+[m[32m  { icon: Target, label: "Campaigns", href: "/campaigns" },[m
+[32m+[m[32m];[m
+[32m+[m
+[32m+[m[32mconst settingsItems = [[m
+[32m+[m[32m  { icon: Building2, label: "Company", href: "/company" },[m
+[32m+[m[32m  { icon: CreditCard, label: "Payments", href: "/payments" },[m
+[32m+[m[32m  { icon: Link2, label: "Integrations", href: "/integrations" },[m
+[32m+[m[32m];[m
+ [m
+ export default function Dashboard() {[m
+   const { user } = useAuth();[m
+   const navigate = useNavigate();[m
+   const quote = useQuotes();[m
+   const [isLoading, setIsLoading] = useState(true);[m
+[32m+[m[32m  const [streakCount, setStreakCount] = useState(7); // Example streak count[m
+ [m
+   useEffect(() => {[m
+     // Simulate loading time for components to initialize[m
+[36m@@ -28,6 +48,17 @@[m [mexport default function Dashboard() {[m
+     return () => clearTimeout(timer);[m
+   }, []);[m
+ [m
+[32m+[m[32m  const SidebarItem = ({ icon: Icon, label, href }: { icon: any; label: string; href: string }) => ([m
+[32m+[m[32m    <Button[m
+[32m+[m[32m      variant="ghost"[m
+[32m+[m[32m      className="w-full justify-start gap-2 font-normal hover:bg-slate-100"[m
+[32m+[m[32m      onClick={() => navigate(href)}[m
+[32m+[m[32m    >[m
+[32m+[m[32m      <Icon className="h-4 w-4" />[m
+[32m+[m[32m      {label}[m
+[32m+[m[32m    </Button>[m
+[32m+[m[32m  );[m
+[32m+[m
+   if (isLoading) {[m
+     return ([m
+       <div className="flex items-center justify-center min-h-screen">[m
+[36m@@ -37,619 +68,183 @@[m [mexport default function Dashboard() {[m
+   }[m
+ [m
+   return ([m
+[31m-    <div className="min-h-screen p-4 space-y-6 bg-background">[m
+[31m-      {/* Enhanced Header with animated gradient text */}[m
+[31m-      <motion.div[m
+[31m-        initial={{ opacity: 0, y: -20 }}[m
+[31m-        animate={{ opacity: 1, y: 0 }}[m
+[31m-        transition={{ [m
+[31m-          type: "spring", [m
+[31m-          stiffness: 100, [m
+[31m-          damping: 15,[m
+[31m-          duration: 0.7 [m
+[31m-        }}[m
+[31m-        className="text-center mb-10 container mx-auto relative"[m
+[31m-      >[m
+[31m-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-warm-yellow-100/30 to-soft-teal-100/30 rounded-full blur-3xl opacity-70 transform -translate-y-1/2"></div>[m
+[31m-        <motion.h1 [m
+[31m-          className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-warm-yellow-500 via-terracotta-400 to-soft-teal-500 bg-clip-text text-transparent font-heading tracking-tight"[m
+[31m-          initial={{ scale: 0.9 }}[m
+[31m-          animate={{ scale: 1 }}[m
+[31m-          transition={{ delay: 0.2, duration: 0.5 }}[m
+[31m-        >[m
+[31m-          Mind Bloom[m
+[31m-        </motion.h1>[m
+[31m-        <motion.p [m
+[31m-          className="text-deep-slate-800/80 mt-3 font-body text-lg md:text-xl"[m
+[31m-          initial={{ opacity: 0 }}[m
+[31m-          animate={{ opacity: 1 }}[m
+[31m-          transition={{ delay: 0.4, duration: 0.5 }}[m
+[31m-        >[m
+[31m-          Your journey to mental wellness[m
+[31m-        </motion.p>[m
+[31m-      </motion.div>[m
+[31m-      [m
+[31m-      {/* Enhanced Daily Quote Section */}[m
+[31m-      <motion.div[m
+[31m-        initial={{ opacity: 0, scale: 0.95 }}[m
+[31m-        animate={{ opacity: 1, scale: 1 }}[m
+[31m-        transition={{ [m
+[31m-          delay: 0.2, [m
+[31m-          type: "spring", [m
+[31m-          stiffness: 100, [m
+[31m-          damping: 20 [m
+[31m-        }}[m
+[31m-        className="relative overflow-hidden rounded-3xl p-8 mb-10 container mx-auto shadow-lg border border-warm-yellow-200 group"[m
+[31m-        style={{[m
+[31m-          backgroundImage: "url('/yoga-inspo.jpg')",[m
+[31m-          backgroundSize: "cover",[m
+[31m-          backgroundPosition: "center",[m
+[31m-        }}[m
+[31m-      >[m
+[31m-        {/* Enhanced layered overlays for depth and visual interest */}[m
+[31m-        <motion.div [m
+[31m-          className="absolute inset-0 bg-gradient-to-r from-warm-yellow-50/80 to-warm-yellow-100/80 backdrop-blur-sm"[m
+[31m-          initial={{ opacity: 0.7 }}[m
+[31m-          animate={{ opacity: 0.8 }}[m
+[31m-          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}[m
+[31m-        />[m
+[31m-        <div className="absolute inset-0 bg-gradient-to-br from-soft-teal-200/20 to-warm-yellow-200/20 opacity-50" />[m
+[31m-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_70%)]" />[m
+[31m-        <motion.div [m
+[31m-          className="absolute inset-0 opacity-10"[m
+[31m-          animate={{ [m
+[31m-            background: [[m
+[31m-              "radial-gradient(circle at 20% 30%, rgba(255, 206, 60, 0.15), transparent 70%)",[m
+[31m-              "radial-gradient(circle at 70% 60%, rgba(255, 206, 60, 0.15), transparent 70%)",[m
+[31m-              "radial-gradient(circle at 40% 80%, rgba(255, 206, 60, 0.15), transparent 70%)",[m
+[31m-              "radial-gradient(circle at 20% 30%, rgba(255, 206, 60, 0.15), transparent 70%)"[m
+[31m-            ][m
+[31m-          }}[m
+[31m-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}[m
+[31m-        />[m
+[31m-        [m
+[31m-        <div className="relative z-10 py-2">[m
+[31m-          <motion.div [m
+[31m-            className="flex items-center gap-2 mb-3"[m
+[31m-            initial={{ x: -20, opacity: 0 }}[m
+[31m-            animate={{ x: 0, opacity: 1 }}[m
+[31m-            transition={{ delay: 0.4 }}[m
+[31m-          >[m
+[31m-            <div className="bg-white/30 backdrop-blur-md p-2 rounded-full shadow-sm">[m
+[31m-              <Quote className="w-5 h-5 text-terracotta-500 animate-bounce-gentle" />[m
+[31m-            </div>[m
+[31m-            <h3 className="text-xl font-medium font-heading text-deep-slate-800 text-shadow-sm">[m
+[31m-              Daily Inspiration[m
+[31m-            </h3>[m
+[31m-          </motion.div>[m
+[31m-          [m
+[31m-          <motion.div[m
+[31m-            className="bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 shadow-sm"[m
+[31m-            initial={{ y: 20, opacity: 0 }}[m
+[31m-            animate={{ y: 0, opacity: 1 }}[m
+[31m-            transition={{ delay: 0.5 }}[m
+[31m-            whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}[m
+[31m-          >[m
+[31m-            <p className="italic text-2xl md:text-3xl font-accent text-deep-slate-800 text-shadow-sm font-semibold leading-relaxed">[m
+[31m-              {quote?.text || "The journey of a thousand miles b
