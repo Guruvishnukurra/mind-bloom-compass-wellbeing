@@ -28,35 +28,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabaseUrl || !supabaseKey || 
         supabaseUrl === 'your_supabase_url_here' || 
         supabaseKey === 'your_supabase_anon_key_here') {
-      console.warn('Supabase credentials not properly configured. Using demo mode with limited functionality.');
-      
-      // Create a demo user for development
-      const demoUser = {
-        id: 'demo-user-id',
-        email: 'demo@example.com',
-        user_metadata: {
-          name: 'Demo User'
-        }
-      } as User;
-      
-      setUser(demoUser);
+      console.error('Supabase credentials not properly configured. Please check your .env file.');
+      setError('Authentication service is not properly configured. Please contact support.');
       setLoading(false);
       return;
     }
 
     try {
       // Get initial session
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }).catch(err => {
-        console.error('Error getting session:', err);
+      supabase.auth.getSession().then(({ data: { session }, error: sessionError }) => {
+        if (sessionError) {
+          console.error('Error getting session:', sessionError);
+          setError('Failed to get authentication session. Please try again.');
+        } else {
+          setSession(session);
+          setUser(session?.user ?? null);
+        }
         setLoading(false);
       });
 
       // Listen for auth changes
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -67,6 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
     } catch (error) {
       console.error('Error initializing auth:', error);
+      setError('Failed to initialize authentication. Please try again.');
       setLoading(false);
     }
   }, []);
@@ -74,92 +67,70 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       setError(null);
+      setLoading(true);
       
-      // Check if Supabase is properly configured
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
       
-      if (!supabaseUrl || !supabaseKey || 
-          supabaseUrl === 'your_supabase_url_here' || 
-          supabaseKey === 'your_supabase_anon_key_here') {
-        console.warn('Using demo mode - creating demo user');
-        
-        // Create a demo user for development
-        const demoUser = {
-          id: 'demo-user-id',
-          email: email,
-          user_metadata: {
-            name: email.split('@')[0]
-          }
-        } as User;
-        
-        setUser(demoUser);
-        return;
+      if (signInError) {
+        if (signInError.message.includes('Invalid login credentials')) {
+          throw new Error('Invalid email or password. Please try again.');
+        } else if (signInError.message.includes('Email not confirmed')) {
+          throw new Error('Please confirm your email before signing in.');
+        } else {
+          throw signInError;
+        }
       }
-      
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred during sign in');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const signUp = async (email: string, password: string) => {
     try {
       setError(null);
+      setLoading(true);
       
-      // Check if Supabase is properly configured
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const { error: signUpError } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
       
-      if (!supabaseUrl || !supabaseKey || 
-          supabaseUrl === 'your_supabase_url_here' || 
-          supabaseKey === 'your_supabase_anon_key_here') {
-        console.warn('Using demo mode - creating demo user');
-        
-        // Create a demo user for development
-        const demoUser = {
-          id: 'demo-user-id',
-          email: email,
-          user_metadata: {
-            name: email.split('@')[0]
-          }
-        } as User;
-        
-        setUser(demoUser);
-        return;
+      if (signUpError) {
+        if (signUpError.message.includes('User already registered')) {
+          throw new Error('An account with this email already exists.');
+        } else {
+          throw signUpError;
+        }
       }
-      
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred during sign up');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const signOut = async () => {
     try {
       setError(null);
+      setLoading(true);
       
-      // Check if Supabase is properly configured
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const { error: signOutError } = await supabase.auth.signOut();
       
-      if (!supabaseUrl || !supabaseKey || 
-          supabaseUrl === 'your_supabase_url_here' || 
-          supabaseKey === 'your_supabase_anon_key_here') {
-        console.warn('Using demo mode - signing out demo user');
-        setUser(null);
-        return;
+      if (signOutError) {
+        throw signOutError;
       }
-      
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred during sign out');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -55,11 +55,22 @@ export default {
 					teal: "hsl(var(--wellness-teal))",
 					sage: "hsl(var(--wellness-sage))",
 					lavender: "hsl(var(--wellness-lavender))",
-					blue: "hsl(var(--wellness-blue))",
-					"soft-coral": "hsl(var(--wellness-soft-coral))",
-					amber: "hsl(var(--wellness-amber))",
-					purple: "hsl(var(--wellness-purple))",
-					"pale-yellow": "hsl(var(--wellness-pale-yellow))",
+					blue: "hsl(var(--wellness-deep-ocean))",
+					"soft-coral": "hsl(var(--wellness-terracotta))",
+					amber: "hsl(var(--wellness-gold))",
+					purple: "hsl(var(--wellness-lavender))",
+					"pale-yellow": "hsl(var(--wellness-cream))",
+					"deep-ocean": "hsl(var(--wellness-deep-ocean))",
+					"deep-ocean-dark": "hsl(var(--wellness-deep-ocean-dark))",
+					"deep-ocean-light": "hsl(var(--wellness-deep-ocean-light))",
+					"sage-dark": "hsl(var(--wellness-sage-dark))",
+					"sage-light": "hsl(var(--wellness-sage-light))",
+					"terracotta-dark": "hsl(var(--wellness-terracotta-dark))",
+					"terracotta-light": "hsl(var(--wellness-terracotta-light))",
+					"lavender-dark": "hsl(var(--wellness-lavender-dark))",
+					"lavender-light": "hsl(var(--wellness-lavender-light))",
+					"gold-dark": "hsl(var(--wellness-gold-dark))",
+					"gold-light": "hsl(var(--wellness-gold-light))",
 				}
 			},
 			borderRadius: {
@@ -168,5 +179,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [],
 } satisfies Config;
