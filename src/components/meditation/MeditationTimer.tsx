@@ -709,7 +709,7 @@ export function MeditationTimer() {
                   <Button
                     onClick={toggleTimer}
                     size="lg"
-                    className="w-full py-8 mt-6 text-lg font-medium bg-wellness-blue hover:bg-wellness-blue/90 text-white"
+                    className="w-full py-8 mt-6 text-lg font-medium bg-wellness-deep-ocean hover:bg-wellness-deep-ocean-dark text-white"
                   >
                     <Play className="mr-2 h-6 w-6" />
                     Start Meditation
