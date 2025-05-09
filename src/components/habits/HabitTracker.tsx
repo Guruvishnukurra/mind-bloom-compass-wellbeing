@@ -225,6 +225,11 @@ export function HabitTracker() {
     const habit = habits.find(h => h.id === habitId);
     const habitName = habit ? habit.name : 'Habit';
     
+    // Clear any existing celebration timeout
+    if (showCelebration) {
+      setShowCelebration(false);
+    }
+    
     // Check for milestone achievements with garden metaphors
     if (totalCompletions === 1) {
       setCelebrationMessage(`🌱 First sprout! "${habitName}" has begun to grow!`);
@@ -249,11 +254,6 @@ export function HabitTracker() {
       setShowCelebration(true);
     }
     
-    // Hide celebration after 3 seconds
-    if (showCelebration) {
-      setTimeout(() => setShowCelebration(false), 3000);
-    }
-    
     // Check for streaks
     const streak = calculateStreak(habitId);
     if (streak === 7) {
@@ -269,6 +269,14 @@ export function HabitTracker() {
       setCelebrationMessage(`🌈 ${streak}-day streak! "${habitName}" is creating a rainbow of benefits in your life!`);
       setShowCelebration(true);
     }
+    
+    // Set timeout to hide celebration after 3 seconds
+    const timeoutId = setTimeout(() => {
+      setShowCelebration(false);
+    }, 3000);
+    
+    // Cleanup timeout on component unmount or when new celebration is triggered
+    return () => clearTimeout(timeoutId);
   };
 
   const calculateStreak = (habitId: string): number => {
