@@ -37,7 +37,7 @@ No external dataset was used. The application relies on real-time user input and
 # Mind Bloom / Compass Wellbeing 🌱
 
 Millions struggle in silence—our mission is to create an accessible, stigma-free platform that empowers everyone to take charge of their mental well-being.  
-Live demo: [mind-bloom-compass-wellbeing.vercel.app](https://mind-bloom-compass-wellbeing.vercel.app)  
+Live demo: [mind-bloom-compass-wellbeing.vercel.app][(https://mind-bloom-compass-wellbeing.vercel.app) ](https://mind-bloom-compass-wellbeing-p1fg.vercel.app/) 
 
 ---
 
