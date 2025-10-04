@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { SUBSCRIPTION_PLANS, SUBSCRIPTION_PRICES, FEATURES, initializeRazorpay, createOrder, verifyPayment } from '@/lib/razorpay';
 import { Button } from '@/components/ui/button';

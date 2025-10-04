@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { useAchievements } from '@/contexts/AchievementContext';
 import { useStats } from '@/contexts/StatsContext';
 import { AchievementsList } from '@/components/achievements/AchievementsList';
