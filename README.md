@@ -1,102 +1,135 @@
-# Welcome to your Lovable project
+# Mind Bloom / Compass Wellbeing 🌱
 
-## Project info
+Millions struggle in silence—our mission is to create an accessible, stigma-free platform that empowers everyone to take charge of their mental well-being.  
+Live demo: [mind-bloom-compass-wellbeing.vercel.app](https://mind-bloom-compass-wellbeing.vercel.app)  
 
-**URL**: https://lovable.dev/projects/3e543e6a-4f74-455b-8475-4937b91b77b7
+---
 
-## How can I edit this code?
+## 🧠 About
 
-There are several ways of editing your application.
+Mind Bloom is a mental wellness platform combining **AI**, **community features**, and **resource tools** to support emotional health. It aims to reduce stigma, provide intelligent guidance, and be a safe space for people seeking well-being support.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3e543e6a-4f74-455b-8475-4937b91b77b7) and start prompting.
+## ✨ Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- AI Wellbeing Assistant (powered by OpenAI) for mental health advice & prompts  
+- Authentication & database using Supabase  
+- Structured UI with **shadcn-ui**, **Tailwind CSS**, and **React + TypeScript**  
+- Responsive, clean frontend built with Vite  
+- Environment-based configuration (using `.env` / `.env.example`)  
+- (Optional) Future: journaling, mood tracking, community boards, etc.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠 Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+| Layer | Technology |
+|---|---|
+| Frontend | React, TypeScript, Vite |
+| UI / Styling | shadcn-ui, Tailwind CSS |
+| Backend / Auth / DB | Supabase |
+| AI / NLP | OpenAI API |
+| Deployment | Vercel (or similar) |
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🚀 Setup / Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. **Clone the repo**  
+   ```bash
+   git clone https://github.com/Guruvishnukurra/mind-bloom-compass-wellbeing.git
+   cd mind-bloom-compass-wellbeing
+Install dependencies
 
-# Step 3: Install the necessary dependencies.
-npm i
+npm install
+# or `yarn` if you prefer
 
-# Step 4: Set up environment variables
-cp .env.example .env
-# Edit the .env file with your Supabase credentials
 
-# Step 5: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Set up environment variables
 
-**Edit a file directly in GitHub**
+Copy .env.example to .env
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Populate with your credentials:
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-- Supabase (for authentication and database)
-
-## Environment Variables
-
-This project requires the following environment variables to be set in a `.env` file:
-
-```
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
+VITE_OPENAI_API_KEY=your_openai_api_key
 
-You can copy the `.env.example` file to `.env` and update it with your Supabase credentials. You can find these credentials in your Supabase project dashboard under Settings > API.
 
-## OpenAI Integration
+Run development server
 
-This project uses OpenAI's API to power the AI Wellbeing Assistant. To use this feature, you need to:
+npm run dev
 
-1. Get an API key from [OpenAI's platform](https://platform.openai.com/api-keys)
-2. Add your API key to the `.env` file:
 
-```
-VITE_OPENAI_API_KEY=your-openai-api-key-here
-```
+Open in browser
+It should launch at http://localhost:3000 (or whichever port Vite assigns).
 
-The AI assistant can provide guidance on mental health topics, meditation techniques, stress management, and more.
+⛓ Environment Variables / Secrets
 
-## How can I deploy this project?
+You’ll need the following keys (fill these in .env):
 
-Simply open [Lovable](https://lovable.dev/projects/3e543e6a-4f74-455b-8475-4937b91b77b7) and click on Share -> Publish.
+VITE_SUPABASE_URL
 
-## Can I connect a custom domain to my Lovable project?
+VITE_SUPABASE_ANON_KEY
 
-Yes it is!
+VITE_OPENAI_API_KEY
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+⚠️ Security Tip: Never commit your real .env file — only .env.example. Make sure .gitignore covers .env.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+📈 Deployment
+
+This project is optimized for deployment on platforms like Vercel.
+Just connect your GitHub repo, set the environment variables in the deployment config, and push to main (or your main branch). Vercel will handle builds and hosting.
+
+Optionally, you can also connect a custom domain in your deployment settings.
+
+🚧 Roadmap / Future Work
+
+Add mood tracking & journaling
+
+Community forums or peer support boards
+
+Push notifications & reminders
+
+Better analytics & usage dashboards
+
+Mobile app version or PWA support
+
+💡 Contributing
+
+Fork the repo
+
+Create a feature branch: git checkout -b feature/YourFeature
+
+Make changes & commit: git commit -m "Add your feature"
+
+Push: git push origin feature/YourFeature
+
+Open a Pull Request — describe what you changed & why
+
+Before contributing, please check [issues] or open a new issue for discussion.
+
+📄 License
+
+Specify your license here (e.g. MIT, Apache 2.0, etc.)
+
+🏷️ Acknowledgments
+
+Built using Supabase
+
+Uses OpenAI API for AI features
+
+UI powered by shadcn-ui + Tailwind CSS
+
+Inspired by the need for destigmatizing mental health and building accessible tools
+
+📞 Contact
+
+If you want to reach out:
+
+GitHub: @Guruvishnukurra
+
+(Optional) Email / Twitter / etc.
+
+
