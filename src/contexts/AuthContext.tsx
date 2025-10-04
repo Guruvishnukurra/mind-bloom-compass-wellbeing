@@ -126,10 +126,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setError(null);
       setLoading(true);
       
-      // Validate phone number format
+      // Validate Indian phone number format
       const cleanPhone = phoneNumber.replace(/\D/g, '');
-      if (cleanPhone.length < 10) {
-        throw new Error('Please enter a valid phone number');
+      let phoneToUse = cleanPhone;
+      
+      if (cleanPhone.length === 10) {
+        // Add +91 country code for 10-digit numbers
+        phoneToUse = '91' + cleanPhone;
+      } else if (cleanPhone.length === 12 && cleanPhone.startsWith('91')) {
+        // Already has country code
+        phoneToUse = cleanPhone;
+      } else if (cleanPhone.length === 13 && cleanPhone.startsWith('91')) {
+        // Already has country code
+        phoneToUse = cleanPhone;
+      } else {
+        throw new Error('Please enter a valid 10-digit Indian phone number');
       }
       
       // Use the formatted phone number for display but clean phone for processing

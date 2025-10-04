@@ -19,16 +19,32 @@ export function PhoneAuthForm() {
   const [resendCooldown, setResendCooldown] = useState(0);
   const { sendOTP, verifyOTP } = useAuth();
 
-  // Format phone number as user types
+  // Format Indian phone number as user types
   const formatPhoneNumber = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
-    if (match) {
-      const [, area, exchange, number] = match;
-      if (number) return `(${area}) ${exchange}-${number}`;
-      if (exchange) return `(${area}) ${exchange}`;
-      if (area) return `(${area}`;
+    
+    // Handle Indian phone numbers (10 digits + country code)
+    if (cleaned.length <= 10) {
+      // Format as XXXX-XXX-XXX for 10-digit numbers
+      const match = cleaned.match(/^(\d{0,4})(\d{0,3})(\d{0,3})$/);
+      if (match) {
+        const [, part1, part2, part3] = match;
+        if (part3) return `${part1}-${part2}-${part3}`;
+        if (part2) return `${part1}-${part2}`;
+        if (part1) return part1;
+      }
+    } else if (cleaned.length <= 13 && cleaned.startsWith('91')) {
+      // Format as +91-XXXX-XXX-XXX for numbers with country code
+      const withoutCountryCode = cleaned.slice(2);
+      const match = withoutCountryCode.match(/^(\d{0,4})(\d{0,3})(\d{0,3})$/);
+      if (match) {
+        const [, part1, part2, part3] = match;
+        if (part3) return `+91-${part1}-${part2}-${part3}`;
+        if (part2) return `+91-${part1}-${part2}`;
+        if (part1) return `+91-${part1}`;
+      }
     }
+    
     return cleaned;
   };
 
@@ -39,8 +55,20 @@ export function PhoneAuthForm() {
     try {
       // Clean phone number for processing
       const cleanPhone = phoneNumber.replace(/\D/g, '');
-      if (cleanPhone.length < 10) {
-        toast.error('Please enter a valid phone number');
+      
+      // Validate Indian phone number (10 digits or 12 digits with +91)
+      let phoneToUse = cleanPhone;
+      if (cleanPhone.length === 10) {
+        // Add +91 country code for 10-digit numbers
+        phoneToUse = '91' + cleanPhone;
+      } else if (cleanPhone.length === 12 && cleanPhone.startsWith('91')) {
+        // Already has country code
+        phoneToUse = cleanPhone;
+      } else if (cleanPhone.length === 13 && cleanPhone.startsWith('91')) {
+        // Already has country code
+        phoneToUse = cleanPhone;
+      } else {
+        toast.error('Please enter a valid 10-digit Indian phone number');
         return;
       }
 
@@ -139,14 +167,14 @@ export function PhoneAuthForm() {
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="(555) 123-4567"
+                  placeholder="9876-543-210 or +91-9876-543-210"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(formatPhoneNumber(e.target.value))}
                   required
                   className="text-center"
                 />
                 <p className="text-xs text-muted-foreground text-center">
-                  We'll send you a verification code via SMS
+                  Enter your 10-digit Indian mobile number. We'll send you a verification code via SMS.
                 </p>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>

@@ -44,26 +44,34 @@ class OTPService {
   // Send OTP via SMS
   async sendOTP(phoneNumber: string): Promise<{ success: boolean; message: string }> {
     try {
+      // Format phone number for Indian numbers
+      let formattedPhone = phoneNumber.replace(/\D/g, '');
+      if (formattedPhone.length === 10) {
+        formattedPhone = '+91' + formattedPhone;
+      } else if (formattedPhone.length === 12 && formattedPhone.startsWith('91')) {
+        formattedPhone = '+' + formattedPhone;
+      }
+      
       const code = this.generateOTP();
-      this.storeOTP(phoneNumber, code);
+      this.storeOTP(formattedPhone, code);
 
       switch (this.config.provider) {
         case 'mock':
           // For development/testing - just log the OTP
-          console.log(`[MOCK SMS] OTP for ${phoneNumber}: ${code}`);
+          console.log(`[MOCK SMS] OTP for ${formattedPhone}: ${code}`);
           return {
             success: true,
             message: 'OTP sent successfully (check console for development)'
           };
 
         case 'twilio':
-          return await this.sendViaTwilio(phoneNumber, code);
+          return await this.sendViaTwilio(formattedPhone, code);
 
         case 'aws-sns':
-          return await this.sendViaAWSSNS(phoneNumber, code);
+          return await this.sendViaAWSSNS(formattedPhone, code);
 
         case 'firebase':
-          return await this.sendViaFirebase(phoneNumber, code);
+          return await this.sendViaFirebase(formattedPhone, code);
 
         default:
           throw new Error('Unsupported SMS provider');

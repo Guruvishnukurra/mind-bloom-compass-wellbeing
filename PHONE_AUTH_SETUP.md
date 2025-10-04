@@ -75,12 +75,20 @@ Run the following migration to add phone number support:
 
 ## How It Works
 
-1. **User enters phone number**: The user enters their phone number in the format (555) 123-4567
+1. **User enters phone number**: The user enters their Indian mobile number in the format 9876-543-210 or +91-9876-543-210
 2. **OTP is sent**: The system sends a 6-digit OTP to the provided phone number
 3. **User verifies OTP**: The user enters the 6-digit code they received
 4. **Account creation/sign-in**: 
    - If it's a new phone number, a new account is created
    - If it's an existing phone number, the user is signed in
+
+## Indian Phone Number Support
+
+The system is specifically configured for Indian phone numbers:
+- **10-digit format**: 9876-543-210 (automatically adds +91 country code)
+- **12-digit format**: +91-9876-543-210 (with country code)
+- **Validation**: Ensures proper Indian mobile number format
+- **SMS delivery**: Optimized for Indian mobile networks
 
 ## Features
 
