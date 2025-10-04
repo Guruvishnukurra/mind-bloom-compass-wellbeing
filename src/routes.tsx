@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { AuthMethodSelector } from '@/components/auth/AuthMethodSelector';
-import Dashboard from '@/pages/Dashboard';
+import { Dashboard } from '@/pages/Dashboard';
 import { Journal } from '@/pages/Journal';
 import { Meditation } from '@/pages/Meditation';
 import Resources from '@/pages/Resources';
