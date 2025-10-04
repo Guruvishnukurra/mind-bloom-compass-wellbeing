@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 import { Bell, Play, Pause, RotateCcw, Volume2, VolumeX, Wind, Leaf, Moon, Sun, Heart, Brain, CloudSun, CloudMoon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { useStats } from '@/contexts/StatsContext';
+import { useToast } from '@/components/ui/use-toast';
 
 const MEDITATION_TYPES = [
   { 
@@ -129,16 +131,24 @@ const BREATHING_PATTERNS = {
   'notice-return-sustain': { in: 5, hold: 2, out: 5, pause: 0 },
 };
 
-export function MeditationTimer() {
+interface MeditationTimerProps {
+  duration: number; // in minutes
+  onComplete?: () => void;
+}
+
+export const MeditationTimer: React.FC<MeditationTimerProps> = ({
+  duration,
+  onComplete,
+}) => {
   const { user } = useAuth();
   const [selectedType, setSelectedType] = useState(MEDITATION_TYPES[0]);
-  const [timeLeft, setTimeLeft] = useState(selectedType.duration);
+  const [timeLeft, setTimeLeft] = useState(duration * 60); // Convert to seconds
   const [isActive, setIsActive] = useState(false);
   const [sessionCompleted, setSessionCompleted] = useState(false);
   const [volume, setVolume] = useState(50);
   const [isMuted, setIsMuted] = useState(false);
   const [useGuided, setUseGuided] = useState(false);
-  const [customDuration, setCustomDuration] = useState(selectedType.duration);
+  const [customDuration, setCustomDuration] = useState(duration * 60);
   const [breathingPhase, setBreathingPhase] = useState<'inhale' | 'hold' | 'exhale' | 'pause'>('inhale');
   const [breathingProgress, setBreathingProgress] = useState(0);
   const [showBreathingGuide, setShowBreathingGuide] = useState(true);
@@ -149,9 +159,11 @@ export function MeditationTimer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ambienceRef = useRef<HTMLAudioElement | null>(null);
   const bellRef = useRef<HTMLAudioElement | null>(null);
+  const { incrementMeditationSessions } = useStats();
+  const { toast } = useToast();
 
   // Format time as mm:ss
-  const formatTime = (seconds: number) => {
+  const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
@@ -262,11 +274,17 @@ export function MeditationTimer() {
         setSessionCompleted(true);
       }, 3000);
       
+      await incrementMeditationSessions();
+      toast({
+        title: 'Meditation Complete!',
+        description: 'Great job! You\'ve earned 50 points.',
+      });
+      
     } catch (error) {
       console.error('Error saving meditation session:', error);
       toast.error('Failed to save meditation session');
     }
-  }, [user, selectedType, customDuration, useGuided, volume, isMuted, streakCount]);
+  }, [user, selectedType, customDuration, useGuided, volume, isMuted, streakCount, incrementMeditationSessions, toast]);
 
   // Timer effect
   useEffect(() => {
@@ -463,8 +481,8 @@ export function MeditationTimer() {
   const handleTypeChange = (value: string) => {
     const newType = MEDITATION_TYPES.find(type => type.id === value) || MEDITATION_TYPES[0];
     setSelectedType(newType);
-    setTimeLeft(newType.duration);
-    setCustomDuration(newType.duration);
+    setTimeLeft(newType.duration * 60);
+    setCustomDuration(newType.duration * 60);
     setIsActive(false);
     setSessionCompleted(false);
     
@@ -578,6 +596,8 @@ export function MeditationTimer() {
     }
     return 100; // Hold and pause at 100%
   };
+
+  const progress = ((duration * 60 - timeLeft) / (duration * 60)) * 100;
 
   return (
     <Card className="w-full max-w-md mx-auto relative overflow-hidden">

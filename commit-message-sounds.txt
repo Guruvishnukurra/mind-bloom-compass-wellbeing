@@ -1,9 +1,0 @@
-Include sound files in repository
-
-1. Added all required sound files directly in the repository
-2. Removed sound download scripts from package.json
-3. Updated README.md to reflect that sound files are included
-4. Added new script for downloading reliable sounds
-
-This change ensures that users don't have to download sound files separately.
-The application will work out of the box with the included sound files.

@@ -1,9 +1,0 @@
-Add script to create guaranteed MP3 files during build
-
-1. Created a new script to generate guaranteed MP3 files
-2. Updated package.json to use the new script for build and dev
-3. Ensured MP3 files are created with valid audio data
-
-This change ensures that valid MP3 files are created during the build process,
-not by the end users. The application will work out of the box with the generated
-sound files, which are guaranteed to work in all browsers.

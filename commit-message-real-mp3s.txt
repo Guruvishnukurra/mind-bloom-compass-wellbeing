@@ -1,9 +1,0 @@
-Add script to download real MP3 files during build
-
-1. Created a new script to download real MP3 files from Pixabay
-2. Updated package.json to use the new script for build and dev
-3. Ensured fallback files are created if download fails
-
-This change ensures that real MP3 files are downloaded during the build process,
-not by the end users. The application will work out of the box with the downloaded
-sound files, and fallback files are created if the download fails.

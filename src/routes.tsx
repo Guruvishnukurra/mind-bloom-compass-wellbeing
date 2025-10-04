@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { AuthForm } from '@/components/auth/AuthForm';
+import { AuthMethodSelector } from '@/components/auth/AuthMethodSelector';
 import Dashboard from '@/pages/Dashboard';
 import { Journal } from '@/pages/Journal';
 import { Meditation } from '@/pages/Meditation';
@@ -61,7 +61,7 @@ export function AppRoutes() {
     <Routes>
       <Route
         path="/auth"
-        element={!user ? <AuthForm /> : <Navigate to="/dashboard" />}
+        element={!user ? <AuthMethodSelector /> : <Navigate to="/dashboard" />}
       />
       <Route
         path="/dashboard"

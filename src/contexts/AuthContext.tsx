@@ -1,13 +1,18 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import otpService from '@/lib/otp-service';
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  // Email/Password auth (legacy)
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
+  // Phone/OTP auth (new)
+  sendOTP: (phoneNumber: string) => Promise<{ success: boolean; message: string }>;
+  verifyOTP: (phoneNumber: string, otp: string) => Promise<void>;
   signOut: () => Promise<void>;
   error: string | null;
 }
@@ -116,6 +121,105 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const sendOTP = async (phoneNumber: string) => {
+    try {
+      setError(null);
+      setLoading(true);
+      
+      // Validate phone number format
+      const cleanPhone = phoneNumber.replace(/\D/g, '');
+      if (cleanPhone.length < 10) {
+        throw new Error('Please enter a valid phone number');
+      }
+      
+      // Use the formatted phone number for display but clean phone for processing
+      const result = await otpService.sendOTP(phoneNumber);
+      return result;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to send OTP';
+      setError(errorMessage);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyOTP = async (phoneNumber: string, otp: string) => {
+    try {
+      setError(null);
+      setLoading(true);
+      
+      // Verify OTP with our service
+      const isValidOTP = otpService.verifyOTP(phoneNumber, otp);
+      if (!isValidOTP) {
+        throw new Error('Invalid or expired OTP. Please try again.');
+      }
+      
+      // Clean phone number for database operations
+      const cleanPhone = phoneNumber.replace(/\D/g, '');
+      
+      // Check if user exists with this phone number
+      const { data: existingUser, error: userError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('phone', cleanPhone)
+        .single();
+      
+      if (userError && userError.code !== 'PGRST116') {
+        throw new Error('Database error occurred');
+      }
+      
+      if (existingUser) {
+        // User exists, sign them in using their email
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: existingUser.email,
+          password: 'phone_auth_placeholder' // This is a placeholder - in production, use proper phone auth
+        });
+        
+        if (signInError) {
+          // For now, we'll create a new session by signing up again
+          // In production, you should implement proper phone authentication
+          const { error: signUpError } = await supabase.auth.signUp({
+            email: `${cleanPhone}@mindbloom.local`,
+            password: Math.random().toString(36).slice(-8),
+            options: {
+              data: {
+                phone: cleanPhone,
+                full_name: existingUser.full_name || 'User'
+              }
+            }
+          });
+          
+          if (signUpError) {
+            throw new Error('Sign in failed. Please try again.');
+          }
+        }
+      } else {
+        // New user, create account
+        const { error: signUpError } = await supabase.auth.signUp({
+          email: `${cleanPhone}@mindbloom.local`,
+          password: Math.random().toString(36).slice(-8),
+          options: {
+            data: {
+              phone: cleanPhone,
+              full_name: 'User'
+            }
+          }
+        });
+        
+        if (signUpError) {
+          throw new Error('Failed to create account. Please try again.');
+        }
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'OTP verification failed';
+      setError(errorMessage);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const signOut = async () => {
     try {
       setError(null);
@@ -140,6 +244,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     signIn,
     signUp,
+    sendOTP,
+    verifyOTP,
     signOut,
     error
   };

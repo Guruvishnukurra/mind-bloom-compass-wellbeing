@@ -1,9 +1,0 @@
-Update sound file error messages
-
-1. Updated error messages in CalmingSounds component
-2. Updated error messages in MeditationTimer component
-3. Removed references to downloading sound files in error messages
-
-These changes improve the user experience by providing more helpful error messages
-when there are issues playing sound files, rather than suggesting users need to
-download files that are already included in the repository.

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,178 +11,141 @@ import { Loader2, Plus, Leaf, Trees, Sprout, Award, Sparkles, Droplets } from 'l
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
-
-export interface Habit {
-  id: string;
-  user_id: string;
-  name: string;
-  description?: string;
-  category: string;
-  frequency: 'daily' | 'weekly' | 'monthly' | 'custom';
-  frequency_value?: number;
-  frequency_unit?: 'day' | 'week' | 'month';
-  time_of_day?: string;
-  reminder: boolean;
-  reminder_time?: string;
-  color: string;
-  icon: string;
-  created_at: string;
-  archived: boolean;
-}
-
-export interface HabitCompletion {
-  id: string;
-  habit_id: string;
-  user_id: string;
-  completed_at: string;
-  notes?: string;
-}
-
-// Local storage keys
-const HABITS_STORAGE_KEY = 'mindbloom_habits';
-const COMPLETIONS_STORAGE_KEY = 'mindbloom_habit_completions';
+import { useStats } from '@/contexts/StatsContext';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { habitService, Habit, HabitCompletion } from '@/lib/habit-service';
 
 export function HabitTracker() {
   const { user } = useAuth();
+  const { toast } = useToast();
   const [habits, setHabits] = useState<Habit[]>([]);
   const [completions, setCompletions] = useState<HabitCompletion[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [activeTab, setActiveTab] = useState('active');
-  const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
+  const [editingHabit, setEditingHabit] = useState<Habit | undefined>();
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationMessage, setCelebrationMessage] = useState('');
+  const [newHabitName, setNewHabitName] = useState('');
+  const { incrementHabitCompletions } = useStats();
 
   useEffect(() => {
     if (user) {
-      loadHabitsFromLocalStorage();
-      loadCompletionsFromLocalStorage();
+      loadHabits();
+      loadCompletions();
     }
   }, [user]);
 
-  const loadHabitsFromLocalStorage = () => {
+  const loadHabits = async () => {
+    if (!user) return;
+
     try {
-      const storedHabits = localStorage.getItem(HABITS_STORAGE_KEY);
-      if (storedHabits) {
-        const parsedHabits = JSON.parse(storedHabits) as Habit[];
-        // Filter habits for current user
-        const userHabits = parsedHabits.filter(habit => habit.user_id === user?.id);
-        setHabits(userHabits);
-      }
+      setLoading(true);
+      const userHabits = await habitService.getHabits(user.id);
+      setHabits(userHabits);
     } catch (error) {
-      console.error('Error loading habits from local storage:', error);
-      toast.error('Failed to load habits');
+      console.error('Error loading habits:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load habits',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const loadCompletionsFromLocalStorage = () => {
-    try {
-      const storedCompletions = localStorage.getItem(COMPLETIONS_STORAGE_KEY);
-      if (storedCompletions) {
-        const parsedCompletions = JSON.parse(storedCompletions) as HabitCompletion[];
-        // Filter completions for current user
-        const userCompletions = parsedCompletions.filter(completion => completion.user_id === user?.id);
-        setCompletions(userCompletions);
-      }
-    } catch (error) {
-      console.error('Error loading completions from local storage:', error);
-    }
-  };
-
-  const saveHabitsToLocalStorage = (updatedHabits: Habit[]) => {
-    try {
-      // Get all habits from storage first
-      const storedHabits = localStorage.getItem(HABITS_STORAGE_KEY);
-      let allHabits: Habit[] = [];
-      
-      if (storedHabits) {
-        // Parse stored habits
-        allHabits = JSON.parse(storedHabits) as Habit[];
-        // Remove current user's habits
-        allHabits = allHabits.filter(habit => habit.user_id !== user?.id);
-      }
-      
-      // Add updated habits for current user
-      allHabits = [...allHabits, ...updatedHabits];
-      
-      // Save back to local storage
-      localStorage.setItem(HABITS_STORAGE_KEY, JSON.stringify(allHabits));
-    } catch (error) {
-      console.error('Error saving habits to local storage:', error);
-    }
-  };
-
-  const saveCompletionsToLocalStorage = (updatedCompletions: HabitCompletion[]) => {
-    try {
-      // Get all completions from storage first
-      const storedCompletions = localStorage.getItem(COMPLETIONS_STORAGE_KEY);
-      let allCompletions: HabitCompletion[] = [];
-      
-      if (storedCompletions) {
-        // Parse stored completions
-        allCompletions = JSON.parse(storedCompletions) as HabitCompletion[];
-        // Keep completions from other users
-        allCompletions = allCompletions.filter(completion => completion.user_id !== user?.id);
-      }
-      
-      // Add updated completions for current user
-      allCompletions = [...allCompletions, ...updatedCompletions];
-      
-      // Save back to local storage
-      localStorage.setItem(COMPLETIONS_STORAGE_KEY, JSON.stringify(allCompletions));
-    } catch (error) {
-      console.error('Error saving completions to local storage:', error);
-    }
-  };
-
-  const handleHabitCreated = (newHabit: Habit) => {
-    const updatedHabits = [...habits, newHabit];
-    setHabits(updatedHabits);
-    saveHabitsToLocalStorage(updatedHabits);
-    setShowForm(false);
-    
-    // Show celebration for new habit
-    setCelebrationMessage('🌱 New habit planted in your garden!');
-    setShowCelebration(true);
-    setTimeout(() => setShowCelebration(false), 3000);
-  };
-
-  const handleHabitUpdated = (updatedHabit: Habit) => {
-    const updatedHabits = habits.map(habit => 
-      habit.id === updatedHabit.id ? updatedHabit : habit
-    );
-    setHabits(updatedHabits);
-    saveHabitsToLocalStorage(updatedHabits);
-    setEditingHabit(null);
-    setShowForm(false);
-    toast.success('Habit updated successfully');
-  };
-
-  const handleHabitCompleted = (habitId: string) => {
+  const loadCompletions = async () => {
     if (!user) return;
-    
-    const newCompletion: HabitCompletion = {
-      id: uuidv4(),
-      habit_id: habitId,
-      user_id: user.id,
-      completed_at: new Date().toISOString(),
-    };
-    
-    const updatedCompletions = [...completions, newCompletion];
-    setCompletions(updatedCompletions);
-    saveCompletionsToLocalStorage(updatedCompletions);
-    
-    // Find the habit name
-    const habit = habits.find(h => h.id === habitId);
-    const habitName = habit ? habit.name : 'Habit';
-    
-    // Simple success message
-    toast.success(`${habitName} completed! Your plant is growing.`);
-    
-    // Check for streaks and milestones
-    checkForMilestones(habitId);
+
+    try {
+      const userCompletions = await habitService.getHabitCompletions(user.id);
+      setCompletions(userCompletions);
+    } catch (error) {
+      console.error('Error loading completions:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load habit completions',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleHabitCreated = async (newHabit: Omit<Habit, 'id'>) => {
+    if (!user) return;
+
+    try {
+      const createdHabit = await habitService.createHabit({
+        ...newHabit,
+        user_id: user.id,
+      });
+
+      if (createdHabit) {
+        setHabits(prev => [...prev, createdHabit]);
+        setShowForm(false);
+        
+        // Show celebration for new habit
+        setCelebrationMessage('🌱 New habit planted in your garden!');
+        setShowCelebration(true);
+        setTimeout(() => setShowCelebration(false), 3000);
+      }
+    } catch (error) {
+      console.error('Error creating habit:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to create habit',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleHabitUpdated = async (habitId: string, updates: Partial<Habit>) => {
+    try {
+      const updatedHabit = await habitService.updateHabit(habitId, updates);
+      if (updatedHabit) {
+        setHabits(prev => prev.map(h => h.id === habitId ? updatedHabit : h));
+        setShowForm(false);
+        setEditingHabit(undefined);
+      }
+    } catch (error) {
+      console.error('Error updating habit:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update habit',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleHabitCompleted = async (habitId: string) => {
+    if (!user) return;
+
+    try {
+      const completion = await habitService.completeHabit(habitId, user.id);
+      if (completion) {
+        setCompletions(prev => [...prev, completion]);
+        
+        // Update habit streak
+        const streak = await habitService.getHabitStreak(habitId);
+        const habit = habits.find(h => h.id === habitId);
+        if (habit) {
+          await handleHabitUpdated(habitId, { streak });
+        }
+
+        // Show celebration for completion
+        setCelebrationMessage('✨ Great job completing your habit!');
+        setShowCelebration(true);
+        setTimeout(() => setShowCelebration(false), 3000);
+      }
+    } catch (error) {
+      console.error('Error completing habit:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to complete habit',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleEditHabit = (habit: Habit) => {
@@ -190,28 +153,55 @@ export function HabitTracker() {
     setShowForm(true);
   };
 
-  const handleArchiveHabit = (habitId: string) => {
-    if (!user) return;
-    
-    const updatedHabits = habits.map(habit => 
-      habit.id === habitId ? { ...habit, archived: true } : habit
-    );
-    
-    setHabits(updatedHabits);
-    saveHabitsToLocalStorage(updatedHabits);
-    toast.success('Habit moved to dormant garden');
+  const handleArchiveHabit = async (habitId: string) => {
+    try {
+      await handleHabitUpdated(habitId, { archived: true });
+    } catch (error) {
+      console.error('Error archiving habit:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to archive habit',
+        variant: 'destructive',
+      });
+    }
   };
 
-  const handleRestoreHabit = (habitId: string) => {
-    if (!user) return;
+  const handleRestoreHabit = async (habitId: string) => {
+    try {
+      await handleHabitUpdated(habitId, { archived: false });
+    } catch (error) {
+      console.error('Error restoring habit:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to restore habit',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const deleteHabit = async (habitId: string) => {
+    try {
+      await habitService.deleteHabit(habitId);
+      setHabits(prev => prev.filter(h => h.id !== habitId));
+    } catch (error) {
+      console.error('Error deleting habit:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete habit',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const getGrowthStageIcon = (habitId: string) => {
+    const habit = habits.find(h => h.id === habitId);
+    if (!habit) return <Leaf className="h-5 w-5 text-deep-ocean-400" />;
     
-    const updatedHabits = habits.map(habit => 
-      habit.id === habitId ? { ...habit, archived: false } : habit
-    );
-    
-    setHabits(updatedHabits);
-    saveHabitsToLocalStorage(updatedHabits);
-    toast.success('Habit replanted in your active garden');
+    const streak = habit.streak || 0;
+    if (streak >= 100) return <Award className="h-5 w-5 text-gold-500" />;
+    if (streak >= 30) return <Trees className="h-5 w-5 text-wellness-green" />;
+    if (streak >= 7) return <Sprout className="h-5 w-5 text-sage-500" />;
+    return <Leaf className="h-5 w-5 text-deep-ocean-400" />;
   };
 
   const checkForMilestones = (habitId: string) => {
@@ -320,18 +310,6 @@ export function HabitTracker() {
     return streak;
   };
 
-  // Get the growth stage icon based on completion count
-  const getGrowthStageIcon = (habitId: string) => {
-    const habitCompletions = completions.filter(c => c.habit_id === habitId).length;
-    
-    if (habitCompletions === 0) return <Sprout className="h-6 w-6" />;
-    if (habitCompletions < 3) return <Sprout className="h-6 w-6" />;
-    if (habitCompletions < 7) return <Leaf className="h-6 w-6" />;
-    if (habitCompletions < 21) return <Leaf className="h-6 w-6" />;
-    if (habitCompletions < 30) return <Trees className="h-6 w-6" />;
-    return <Trees className="h-6 w-6" />;
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -348,38 +326,60 @@ export function HabitTracker() {
       <CardHeader className="border-b border-sage-200">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <CardTitle className="text-xl flex items-center gap-2 font-heading text-deep-ocean-600">
-              <Trees className="h-5 w-5 text-sage-500" />
-              Growth Garden
+            <CardTitle className="text-2xl font-bold text-deep-ocean-600 font-heading">
+              Your Habit Garden
             </CardTitle>
-            <CardDescription className="mt-1 text-deep-ocean-600/70">
-              Plant, nurture, and watch your habits bloom
+            <CardDescription className="text-deep-ocean-600/70">
+              Nurture your habits and watch them grow
             </CardDescription>
           </div>
-          <Button 
-            onClick={() => {
-              setEditingHabit(null);
-              setShowForm(!showForm);
-            }}
-            className="bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white shadow-md"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            {showForm ? 'Cancel' : 'Plant New Habit'}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Input
+              placeholder="Quick add habit..."
+              value={newHabitName}
+              onChange={(e) => setNewHabitName(e.target.value)}
+              className="max-w-[200px]"
+            />
+            <Button
+              onClick={() => {
+                if (newHabitName.trim()) {
+                  handleHabitCreated({
+                    user_id: user?.id || '',
+                    name: newHabitName.trim(),
+                    description: '',
+                    category: '',
+                    frequency: 'daily',
+                    color: '#4AD295',
+                    icon: 'leaf',
+                    created_at: new Date().toISOString(),
+                    archived: false,
+                    completed: false,
+                    streak: 0,
+                    lastCompleted: null,
+                    reminder: false,
+                  });
+                  setNewHabitName('');
+                }
+              }}
+              className="bg-wellness-green hover:bg-wellness-green-dark"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add
+            </Button>
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="pt-6">
-        {/* Celebration overlay */}
+
+      <CardContent className="p-6">
         {showCelebration && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mb-6 p-4 rounded-lg bg-wellness-green/10 border border-wellness-green/20"
           >
-            <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg border border-sage-300 max-w-md text-center">
-              <Sparkles className="h-12 w-12 text-gold-500 mx-auto mb-3 animate-pulse-glow" />
-              <h3 className="text-xl font-medium text-deep-ocean-600 mb-2 font-heading">Achievement Unlocked!</h3>
+            <div className="flex items-center gap-3">
+              <div className="text-2xl">🎉</div>
               <p className="text-lg text-deep-ocean-600/80">{celebrationMessage}</p>
             </div>
           </motion.div>
@@ -421,108 +421,33 @@ export function HabitTracker() {
                 Dormant Plants
               </TabsTrigger>
             </TabsList>
-            
-            <TabsContent value="active" className="space-y-6">
-              {activeHabits.length === 0 ? (
-                <div className="text-center py-8 px-4 bg-sage-50 rounded-xl border border-sage-200">
-                  <Leaf className="h-12 w-12 text-sage-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2 text-deep-ocean-600 font-heading">Your Garden Awaits</h3>
-                  <p className="text-deep-ocean-600/70 mb-6 max-w-md mx-auto">
-                    Your garden is ready for planting! Start by adding your first habit and watch it grow with consistent care.
-                  </p>
-                  <Button 
-                    onClick={() => {
-                      setEditingHabit(null);
-                      setShowForm(true);
-                    }}
-                    className="bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white shadow-md"
-                  >
-                    <Sprout className="mr-2 h-4 w-4" />
-                    Plant Your First Habit
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  <div className="p-4 rounded-lg bg-sage-50 border border-sage-200 mb-6">
-                    <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
-                      <Trees className="h-5 w-5 text-sage-500" />
-                      Your Growing Garden
-                    </h3>
-                    <p className="text-sm text-deep-ocean-600/70">
-                      Nurture your habits daily to help them flourish. Each completion helps your habits grow stronger.
-                    </p>
-                  </div>
-                  
-                  <HabitList 
-                    habits={activeHabits}
-                    completions={completions}
-                    onComplete={handleHabitCompleted}
-                    onEdit={handleEditHabit}
-                    onArchive={handleArchiveHabit}
-                    getGrowthStageIcon={getGrowthStageIcon}
-                  />
-                  
-                  <div className="mt-8 p-4 rounded-lg bg-deep-ocean-50 border border-deep-ocean-200">
-                    <h3 className="text-lg font-medium flex items-center gap-2 mb-3 text-deep-ocean-600 font-heading">
-                      <Sprout className="h-5 w-5 text-deep-ocean-500" />
-                      Habit Seeds to Plant
-                    </h3>
-                    <p className="text-sm text-deep-ocean-600/70 mb-4">
-                      Consider adding these habits to your garden for a more balanced wellness routine.
-                    </p>
-                    <HabitSuggestions 
-                      existingHabits={activeHabits}
-                      onSelectSuggestion={(habit) => {
-                        
-                        setShowForm(true);
-                      }}
-                    />
-                  </div>
-                </>
-              )}
+
+            <TabsContent value="active" className="space-y-4">
+              <HabitList
+                habits={activeHabits}
+                completions={completions}
+                onComplete={handleHabitCompleted}
+                onEdit={handleEditHabit}
+                onArchive={handleArchiveHabit}
+                getGrowthStageIcon={getGrowthStageIcon}
+              />
             </TabsContent>
-            
+
             <TabsContent value="stats">
-              <div className="p-4 rounded-lg bg-deep-ocean-50 border border-deep-ocean-200 mb-6">
-                <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
-                  <Award className="h-5 w-5 text-deep-ocean-500" />
-                  Garden Growth Analytics
-                </h3>
-                <p className="text-sm text-deep-ocean-600/70">
-                  Track how your habits are growing and flourishing over time.
-                </p>
-              </div>
               <HabitStats habits={habits} completions={completions} />
             </TabsContent>
-            
+
             <TabsContent value="archived">
-              <div className="p-4 rounded-lg bg-gold-50 border border-gold-200 mb-6">
-                <h3 className="text-lg font-medium flex items-center gap-2 mb-2 text-deep-ocean-600 font-heading">
-                  <Leaf className="h-5 w-5 text-gold-500" />
-                  Dormant Plants
-                </h3>
-                <p className="text-sm text-deep-ocean-600/70">
-                  These habits are currently dormant. You can replant them in your active garden anytime.
-                </p>
-              </div>
-              
-              {archivedHabits.length === 0 ? (
-                <div className="text-center py-8 bg-cream-100 rounded-lg border border-gold-100">
-                  <Leaf className="h-10 w-10 text-gold-300 mx-auto mb-3" />
-                  <p className="text-deep-ocean-600/60">Your dormant garden is empty.</p>
-                </div>
-              ) : (
-                <HabitList 
-                  habits={archivedHabits}
-                  completions={completions}
-                  onComplete={handleHabitCompleted}
-                  onEdit={handleEditHabit}
-                  onArchive={handleArchiveHabit}
-                  onRestore={handleRestoreHabit}
-                  isArchiveView
-                  getGrowthStageIcon={getGrowthStageIcon}
-                />
-              )}
+              <HabitList
+                habits={archivedHabits}
+                completions={completions}
+                onComplete={handleHabitCompleted}
+                onEdit={handleEditHabit}
+                onArchive={handleArchiveHabit}
+                onRestore={handleRestoreHabit}
+                isArchiveView
+                getGrowthStageIcon={getGrowthStageIcon}
+              />
             </TabsContent>
           </Tabs>
         )}

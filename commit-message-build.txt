@@ -1,9 +1,0 @@
-Add automatic sound file download during build process
-
-1. Created a new script to download sound files during build
-2. Updated package.json to run the download script before build
-3. Updated README.md to reflect the new build process
-
-This change ensures that sound files are downloaded automatically during the build process,
-not by the end users. The application will work out of the box with the downloaded sound files,
-and fallback files are created if the download fails.

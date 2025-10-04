@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Habit, HabitCompletion } from './HabitTracker';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Habit, HabitCompletion } from '@/lib/habit-service';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
@@ -25,7 +25,9 @@ import {
   CheckCircle2,
   Clock,
   Calendar,
-  Flame
+  Flame,
+  Droplets,
+  Sun
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -317,6 +319,14 @@ export function HabitStats({ habits, completions }: HabitStatsProps) {
 
   const COLORS = ['#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f97316', '#ef4444', '#f59e0b', '#06b6d4'];
 
+  const getLastCompletionDate = () => {
+    if (completions.length === 0) return 'No completions yet';
+    const lastCompletion = completions.sort((a, b) => 
+      new Date(b.completed_at).getTime() - new Date(a.completed_at).getTime()
+    )[0];
+    return new Date(lastCompletion.completed_at).toLocaleDateString();
+  };
+
   if (!habits.length) {
     return (
       <div className="text-center py-8">
@@ -330,257 +340,88 @@ export function HabitStats({ habits, completions }: HabitStatsProps) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Active Habits</p>
-                <p className="text-2xl font-bold">{totalStats.activeHabits}</p>
-              </div>
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <CheckCircle2 className="h-6 w-6 text-primary" />
-              </div>
-            </div>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-deep-ocean-600/70">
+              Active Habits
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-deep-ocean-600">{totalStats.activeHabits}</div>
           </CardContent>
         </Card>
-        
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Completions</p>
-                <p className="text-2xl font-bold">{totalStats.totalCompletions}</p>
-              </div>
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Award className="h-6 w-6 text-primary" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">This Week</p>
-                <p className="text-2xl font-bold">{totalStats.completionsThisWeek}</p>
-              </div>
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Calendar className="h-6 w-6 text-primary" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Best Streak</p>
-                <p className="text-2xl font-bold">{totalStats.bestStreak} days</p>
-              </div>
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-primary" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
         <Card>
           <CardHeader className="pb-2">
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle>Completion History</CardTitle>
-                <CardDescription>
-                  Track your habit completion over time
-                </CardDescription>
-              </div>
-              <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder="Time Range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="week">Past Week</SelectItem>
-                  <SelectItem value="month">Past Month</SelectItem>
-                  <SelectItem value="year">Past Year</SelectItem>
-                  <SelectItem value="all">All Time</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <CardTitle className="text-sm font-medium text-deep-ocean-600/70">
+              Total Completions
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={chartData}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="displayDate" 
-                    tickFormatter={formatXAxis}
-                    minTickGap={15}
-                  />
-                  <YAxis allowDecimals={false} />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="count" fill="#10b981" name="Completions" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <div className="text-2xl font-bold text-deep-ocean-600">{totalStats.totalCompletions}</div>
           </CardContent>
         </Card>
-        
+
         <Card>
-          <CardHeader>
-            <CardTitle>Habits by Category</CardTitle>
-            <CardDescription>
-              Distribution of your habits and completions
-            </CardDescription>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-deep-ocean-600/70">
+              Best Streak
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={categoryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="habits"
-                    nameKey="name"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            <div className="text-2xl font-bold text-deep-ocean-600">{totalStats.bestStreak} days</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-deep-ocean-600/70">
+              Completion Rate
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-deep-ocean-600">{totalStats.completionRate}%</div>
           </CardContent>
         </Card>
       </div>
-      
+
       <Card>
         <CardHeader>
-          <CardTitle>Current Streaks</CardTitle>
-          <CardDescription>
-            Your longest active habit streaks
-          </CardDescription>
+          <CardTitle className="text-lg font-medium text-deep-ocean-600">
+            Garden Overview
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          {streakData.length > 0 ? (
-            <div className="space-y-4">
-              {streakData.map((item, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <Badge variant="outline" className="mr-2">
-                        {index + 1}
-                      </Badge>
-                      <span className="font-medium">{item.name}</span>
-                    </div>
-                    <Badge className="bg-orange-500 hover:bg-orange-600">
-                      <Flame className="h-3 w-3 mr-1" />
-                      {item.streak} days
-                    </Badge>
-                  </div>
-                  <Progress value={item.streak > 30 ? 100 : (item.streak / 30) * 100} className="h-2" />
-                </div>
-              ))}
+        <CardContent className="space-y-6">
+          <div>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-deep-ocean-600/70">Overall Progress</span>
+              <span className="text-deep-ocean-600">{totalStats.completionRate}%</span>
             </div>
-          ) : (
-            <p className="text-muted-foreground text-center py-4">
-              No active streaks yet. Complete your habits consistently to build streaks!
-            </p>
-          )}
-        </CardContent>
-      </Card>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle>Milestones</CardTitle>
-          <CardDescription>
-            Achievement targets to aim for
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+            <Progress value={totalStats.completionRate} className="h-2" />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className={cn(
-              "border rounded-lg p-4 flex flex-col items-center text-center",
-              totalStats.totalCompletions >= 10 ? "bg-green-50 border-green-200" : "bg-gray-50"
-            )}>
-              <div className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center mb-2",
-                totalStats.totalCompletions >= 10 ? "bg-green-100" : "bg-gray-100"
-              )}>
-                <Trophy className={cn(
-                  "h-6 w-6",
-                  totalStats.totalCompletions >= 10 ? "text-green-500" : "text-gray-400"
-                )} />
+            <div className="bg-sage-50 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <Flame className="h-4 w-4 text-wellness-amber" />
+                <span className="text-sm font-medium text-deep-ocean-600">Best Streak</span>
               </div>
-              <h3 className="font-medium">Habit Starter</h3>
-              <p className="text-sm text-muted-foreground mb-2">10 total completions</p>
-              <Progress 
-                value={Math.min(100, (totalStats.totalCompletions / 10) * 100)} 
-                className="h-2 w-full" 
-              />
-              <p className="text-xs mt-2">
-                {totalStats.totalCompletions}/10 completions
-              </p>
+              <div className="text-2xl font-bold text-deep-ocean-600">{totalStats.bestStreak} days</div>
             </div>
-            
-            <div className={cn(
-              "border rounded-lg p-4 flex flex-col items-center text-center",
-              totalStats.completionsThisWeek >= 7 ? "bg-green-50 border-green-200" : "bg-gray-50"
-            )}>
-              <div className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center mb-2",
-                totalStats.completionsThisWeek >= 7 ? "bg-green-100" : "bg-gray-100"
-              )}>
-                <CalendarIcon className={cn(
-                  "h-6 w-6",
-                  totalStats.completionsThisWeek >= 7 ? "text-green-500" : "text-gray-400"
-                )} />
+
+            <div className="bg-sage-50 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <Droplets className="h-4 w-4 text-wellness-blue" />
+                <span className="text-sm font-medium text-deep-ocean-600">Total Nurturing</span>
               </div>
-              <h3 className="font-medium">Weekly Warrior</h3>
-              <p className="text-sm text-muted-foreground mb-2">7 completions this week</p>
-              <Progress 
-                value={Math.min(100, (totalStats.completionsThisWeek / 7) * 100)} 
-                className="h-2 w-full" 
-              />
-              <p className="text-xs mt-2">
-                {totalStats.completionsThisWeek}/7 completions
-              </p>
+              <div className="text-2xl font-bold text-deep-ocean-600">{totalStats.totalCompletions} times</div>
             </div>
-            
-            <div className={cn(
-              "border rounded-lg p-4 flex flex-col items-center text-center",
-              totalStats.bestStreak >= 7 ? "bg-green-50 border-green-200" : "bg-gray-50"
-            )}>
-              <div className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center mb-2",
-                totalStats.bestStreak >= 7 ? "bg-green-100" : "bg-gray-100"
-              )}>
-                <Flame className={cn(
-                  "h-6 w-6",
-                  totalStats.bestStreak >= 7 ? "text-green-500" : "text-gray-400"
-                )} />
+
+            <div className="bg-sage-50 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <Sun className="h-4 w-4 text-wellness-amber" />
+                <span className="text-sm font-medium text-deep-ocean-600">Last Tended</span>
               </div>
-              <h3 className="font-medium">Streak Master</h3>
-              <p className="text-sm text-muted-foreground mb-2">7-day streak</p>
-              <Progress 
-                value={Math.min(100, (totalStats.bestStreak / 7) * 100)} 
-                className="h-2 w-full" 
-              />
-              <p className="text-xs mt-2">
-                {totalStats.bestStreak}/7 days
-              </p>
+              <div className="text-2xl font-bold text-deep-ocean-600">{getLastCompletionDate()}</div>
             </div>
           </div>
         </CardContent>
