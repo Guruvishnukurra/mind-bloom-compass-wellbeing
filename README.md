@@ -1,3 +1,39 @@
+
+# Team Name:
+Mind Bloom 
+
+# Team Members:
+1. Guruvishnu Kurra  
+2. Ayush Tripathi
+3. Akash Patil
+4. Chinmay Kulkarni
+5. Siddhi Jambhale
+
+# Project Name:
+Mind Bloom – Compass for Wellbeing
+
+# Project Abstract:
+Mind Bloom is a mental wellness platform designed to promote emotional health, self-awareness, and mindfulness among individuals. It combines AI-powered interactions with mood tracking and habit-building tools to help users manage stress, anxiety, and everyday mental challenges. The platform provides a safe, stigma-free digital space for self-reflection, learning, and guided improvement in mental wellbeing.  
+
+Using Supabase for authentication and data storage, the app ensures secure handling of user information. An AI-powered assistant (integrated via OpenAI API) helps users with personalized wellness advice and journaling prompts. The intuitive and responsive interface is built with React, Tailwind CSS, and shadcn-ui for a modern, engaging user experience.
+
+# Tech Stack:
+- **Frontend:** React.js, TypeScript, Vite  
+- **UI / Styling:** Tailwind CSS, shadcn-ui  
+- **Backend / Database:** Supabase  
+- **AI / NLP:** OpenAI API  
+- **Hosting / Deployment:** Vercel  
+
+# Dataset Used (if any):
+No external dataset was used. The application relies on real-time user input and API-based responses from OpenAI for personalized interactions.
+
+
+
+
+
+
+
+
 # Mind Bloom / Compass Wellbeing 🌱
 
 Millions struggle in silence—our mission is to create an accessible, stigma-free platform that empowers everyone to take charge of their mental well-being.  
