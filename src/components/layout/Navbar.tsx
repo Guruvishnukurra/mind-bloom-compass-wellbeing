@@ -100,7 +100,9 @@ const Navbar: React.FC = () => {
             <div className="hidden md:flex items-center gap-3">
               <div className="bg-foreground/10 text-foreground px-3 py-1.5 rounded-full text-sm font-medium flex items-center">
                 <User className="h-4 w-4 mr-1.5 opacity-70" />
-                <span className="truncate max-w-[120px]">{user.email}</span>
+                <span className="truncate max-w-[120px]">
+                  {user.email?.includes('@mindbloom.local') ? 'Phone User' : user.email}
+                </span>
               </div>
               <Button
                 onClick={signOut}
@@ -113,7 +115,7 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <Link
-              to="/login"
+              to="/auth"
               className="hidden md:flex bg-accent hover:bg-accent-foreground text-foreground px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-md"
             >
               Sign In
