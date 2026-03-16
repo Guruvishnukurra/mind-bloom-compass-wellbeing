@@ -7,7 +7,7 @@ Mind Bloom
 2. Ayush Tripathi
 3. Akash Patil
 4. Aditya Raj
-5.Atul Raj
+5. Atul Raj
 
 
 # Project Name:
