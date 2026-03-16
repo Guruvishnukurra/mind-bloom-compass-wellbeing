@@ -6,8 +6,8 @@ Mind Bloom
 1. Guruvishnu Kurra  
 2. Ayush Tripathi
 3. Akash Patil
-4. Chinmay Kulkarni
-5. Siddhi Jambhale
+4. Aditya Raj
+5.Atul Raj
 
 # Project Name:
 Mind Bloom – Compass for Wellbeing
